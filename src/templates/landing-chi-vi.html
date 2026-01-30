@@ -2572,6 +2572,13 @@
             }
         }
     </style>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init('P3SYIlce9kdrhPUzy');
+        })();
+    </script>
 </head>
 <body>
     <!-- NAVIGATION -->
@@ -3110,22 +3117,22 @@
 
                 <div class="contact-form reveal-right">
                     <h3>Yêu cầu báo giá</h3>
-                    <form class="form-grid">
-                        <input type="text" placeholder="Họ và tên *" class="form-input" required>
-                        <input type="tel" placeholder="Số điện thoại *" class="form-input" required>
-                        <input type="email" placeholder="Email" class="form-input">
-                        <input type="text" placeholder="Tên công ty/Doanh nghiệp" class="form-input">
-                        <select class="form-input form-select">
+                    <form class="form-grid" id="contact-form">
+                        <input type="text" name="from_name" placeholder="Họ và tên *" class="form-input" required>
+                        <input type="tel" name="phone" placeholder="Số điện thoại *" class="form-input" required>
+                        <input type="email" name="email" placeholder="Email" class="form-input">
+                        <input type="text" name="company" placeholder="Tên công ty/Doanh nghiệp" class="form-input">
+                        <select name="product" class="form-input form-select">
                             <option value="">Loại hình kinh doanh</option>
-                            <option value="laundromat">Tiệm giặt tự phục vụ</option>
-                            <option value="hotel">Khách sạn/Resort</option>
-                            <option value="factory">Nhà máy/Công xưởng</option>
-                            <option value="school">Trường học/Ký túc xá</option>
-                            <option value="apartment">Căn hộ/Chung cư</option>
-                            <option value="spa">Spa/Salon</option>
-                            <option value="other">Khác</option>
+                            <option value="Tiệm giặt tự phục vụ">Tiệm giặt tự phục vụ</option>
+                            <option value="Khách sạn/Resort">Khách sạn/Resort</option>
+                            <option value="Nhà máy/Công xưởng">Nhà máy/Công xưởng</option>
+                            <option value="Trường học/Ký túc xá">Trường học/Ký túc xá</option>
+                            <option value="Căn hộ/Chung cư">Căn hộ/Chung cư</option>
+                            <option value="Spa/Salon">Spa/Salon</option>
+                            <option value="Khác">Khác</option>
                         </select>
-                        <textarea placeholder="Nội dung yêu cầu (Sản phẩm quan tâm, số lượng...)" class="form-input form-textarea"></textarea>
+                        <textarea name="message" placeholder="Nội dung yêu cầu (Sản phẩm quan tâm, số lượng...)" class="form-input form-textarea"></textarea>
                         <button type="submit" class="form-submit">
                             <i data-lucide="send" style="width: 18px; height: 18px; display: inline; vertical-align: middle; margin-right: 8px;"></i>
                             Gửi yêu cầu
@@ -3693,25 +3700,25 @@
             });
         });
 
-        // Form validation and submission
-        const form = document.querySelector('.contact-form form');
+        // Form validation and submission with EmailJS
+        const form = document.getElementById('contact-form');
         const submitBtn = form.querySelector('.form-submit');
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
             // Basic validation
-            const name = form.querySelector('input[placeholder="Họ và tên *"]');
-            const phone = form.querySelector('input[placeholder="Số điện thoại *"]');
+            const nameInput = form.querySelector('input[name="from_name"]');
+            const phoneInput = form.querySelector('input[name="phone"]');
 
-            if (!name.value.trim()) {
-                name.style.borderColor = 'var(--color-error)';
-                name.focus();
+            if (!nameInput.value.trim()) {
+                nameInput.style.borderColor = 'var(--color-error)';
+                nameInput.focus();
                 return;
             }
-            if (!phone.value.trim() || !/^[0-9]{9,11}$/.test(phone.value.replace(/\s/g, ''))) {
-                phone.style.borderColor = 'var(--color-error)';
-                phone.focus();
+            if (!phoneInput.value.trim() || !/^[0-9]{9,11}$/.test(phoneInput.value.replace(/\s/g, ''))) {
+                phoneInput.style.borderColor = 'var(--color-error)';
+                phoneInput.focus();
                 return;
             }
 
@@ -3719,33 +3726,61 @@
             submitBtn.textContent = 'Đang gửi...';
             submitBtn.disabled = true;
 
-            // Simulate submission
-            setTimeout(() => {
-                // Create success message
-                const successMsg = document.createElement('div');
-                successMsg.style.cssText = `
-                    background: var(--color-success);
-                    color: white;
-                    padding: 16px 24px;
-                    clip-path: var(--chamfer-sm);
-                    text-align: center;
-                    font-weight: 600;
-                    margin-top: 16px;
-                    animation: fadeInUp 0.4s ease-out;
-                `;
-                successMsg.textContent = '✓ Cảm ơn bạn! Chúng tôi sẽ liên hệ lại sớm nhất.';
+            // Send email via EmailJS
+            emailjs.sendForm('service_3rzsjwo', 'template_xly1sze', form)
+                .then(() => {
+                    // Create success message
+                    const successMsg = document.createElement('div');
+                    successMsg.style.cssText = `
+                        background: var(--color-success);
+                        color: white;
+                        padding: 16px 24px;
+                        clip-path: var(--chamfer-sm);
+                        text-align: center;
+                        font-weight: 600;
+                        margin-top: 16px;
+                        animation: fadeInUp 0.4s ease-out;
+                    `;
+                    successMsg.textContent = '✓ Cảm ơn bạn! Chúng tôi sẽ liên hệ lại sớm nhất.';
 
-                form.reset();
-                form.appendChild(successMsg);
-                submitBtn.innerHTML = '<i data-lucide="send" style="width: 18px; height: 18px; display: inline; vertical-align: middle; margin-right: 8px;"></i>Gửi yêu cầu';
-                submitBtn.disabled = false;
-                lucide.createIcons();
+                    form.reset();
+                    form.appendChild(successMsg);
+                    submitBtn.innerHTML = '<i data-lucide="send" style="width: 18px; height: 18px; display: inline; vertical-align: middle; margin-right: 8px;"></i>Gửi yêu cầu';
+                    submitBtn.disabled = false;
+                    lucide.createIcons();
 
-                // Remove success message after 5 seconds
-                setTimeout(() => {
-                    successMsg.remove();
-                }, 5000);
-            }, 1000);
+                    // Remove success message after 5 seconds
+                    setTimeout(() => {
+                        successMsg.remove();
+                    }, 5000);
+                })
+                .catch((error) => {
+                    // Create error message
+                    const errorMsg = document.createElement('div');
+                    errorMsg.style.cssText = `
+                        background: var(--color-error);
+                        color: white;
+                        padding: 16px 24px;
+                        clip-path: var(--chamfer-sm);
+                        text-align: center;
+                        font-weight: 600;
+                        margin-top: 16px;
+                        animation: fadeInUp 0.4s ease-out;
+                    `;
+                    errorMsg.textContent = '✗ Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ trực tiếp qua Zalo.';
+
+                    form.appendChild(errorMsg);
+                    submitBtn.innerHTML = '<i data-lucide="send" style="width: 18px; height: 18px; display: inline; vertical-align: middle; margin-right: 8px;"></i>Gửi yêu cầu';
+                    submitBtn.disabled = false;
+                    lucide.createIcons();
+
+                    // Remove error message after 5 seconds
+                    setTimeout(() => {
+                        errorMsg.remove();
+                    }, 5000);
+
+                    console.error('EmailJS Error:', error);
+                });
         });
 
         // Reset border color on input focus
