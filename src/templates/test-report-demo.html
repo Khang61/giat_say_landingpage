@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biên Bản Kiểm Tra - The Clean Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           THE CLEAN LAB - TEST REPORT TEMPLATE
+           Biên Bản Kiểm Tra / Test Thiết Bị
+           Brand: "Titanium Command"
+           ============================================ */
+
+        :root {
+            --color-white: #ffffff;
+            --color-gray-50: #f8fafc;
+            --color-gray-100: #f0f2f5;
+            --color-gray-200: #e2e8f0;
+            --color-gray-300: #cbd5e1;
+            --color-gray-400: #94a3b8;
+            --color-gray-500: #64748b;
+            --color-gray-900: #0f172a;
+            --color-black: #111111;
+            --color-blue-500: #0055ff;
+            --color-green-500: #00cc66;
+            --color-orange-500: #ff4800;
+            --color-red-500: #dc2626;
+
+            --font-display: 'Inter', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            --chamfer-lg: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--color-gray-100);
+            color: var(--color-black);
+            line-height: 1.5;
+            padding: 40px;
+        }
+
+        .document {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--color-white);
+            border: 2px solid var(--color-black);
+            clip-path: var(--chamfer-lg);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .doc-header {
+            background: var(--color-black);
+            color: var(--color-white);
+            padding: 32px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-mark {
+            width: 56px;
+            height: 56px;
+            background: var(--color-white);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 28px;
+            clip-path: var(--chamfer-sm);
+        }
+
+        .brand-text h1 {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .brand-text h1 span { color: var(--color-gray-400); }
+
+        .brand-text p {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .doc-type {
+            text-align: right;
+        }
+
+        .doc-type h2 {
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .doc-type .doc-number {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--color-gray-400);
+            margin-top: 4px;
+        }
+
+        /* Device Info Bar */
+        .device-bar {
+            background: var(--color-blue-500);
+            color: var(--color-white);
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .device-name {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .device-serial {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Info Section */
+        .doc-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            padding: 24px 40px;
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+
+        .info-item {
+            background: var(--color-gray-50);
+            padding: 12px;
+            border: 1px solid var(--color-gray-200);
+        }
+
+        .info-item label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .info-item span {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* Content Section */
+        .doc-content {
+            padding: 32px 40px;
+        }
+
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-black);
+        }
+
+        /* Test Table */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+
+        thead { background: var(--color-gray-100); }
+
+        th {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            padding: 12px 12px;
+            text-align: left;
+            border-bottom: 2px solid var(--color-black);
+        }
+
+        th:nth-child(3), th:nth-child(4), th:nth-child(5),
+        td:nth-child(3), td:nth-child(4), td:nth-child(5) {
+            text-align: center;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--color-gray-200);
+            font-size: 13px;
+        }
+
+        .test-name { font-weight: 600; }
+        .test-spec {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-500);
+        }
+
+        .value-pass {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--color-green-500);
+        }
+
+        .value-fail {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--color-red-500);
+        }
+
+        .value-normal {
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        .status-pass {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(0, 204, 102, 0.15);
+            color: var(--color-green-500);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            clip-path: var(--chamfer-sm);
+        }
+
+        .status-fail {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(220, 38, 38, 0.15);
+            color: var(--color-red-500);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            clip-path: var(--chamfer-sm);
+        }
+
+        /* Summary Stats */
+        .test-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-box {
+            background: var(--color-gray-50);
+            border: 1px solid var(--color-gray-200);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-box.pass {
+            background: rgba(0, 204, 102, 0.1);
+            border-color: var(--color-green-500);
+        }
+
+        .stat-box.fail {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: var(--color-red-500);
+        }
+
+        .stat-value {
+            font-family: var(--font-mono);
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stat-box.pass .stat-value { color: var(--color-green-500); }
+        .stat-box.fail .stat-value { color: var(--color-red-500); }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            margin-top: 8px;
+        }
+
+        /* Result Box */
+        .result-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+            background: rgba(0, 204, 102, 0.1);
+            border: 2px solid var(--color-green-500);
+            clip-path: var(--chamfer-sm);
+            margin-bottom: 24px;
+        }
+
+        .result-box.fail {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: var(--color-red-500);
+        }
+
+        .result-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-green-500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .result-box.fail .result-icon {
+            background: var(--color-red-500);
+        }
+
+        .result-text h4 {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-green-500);
+            margin-bottom: 4px;
+        }
+
+        .result-box.fail .result-text h4 {
+            color: var(--color-red-500);
+        }
+
+        .result-text p {
+            font-size: 13px;
+            color: var(--color-gray-500);
+        }
+
+        /* Notes */
+        .notes-section {
+            background: var(--color-gray-50);
+            border: 1px solid var(--color-gray-200);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .notes-section h4 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            margin-bottom: 12px;
+        }
+
+        .notes-section p {
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* Signature Section */
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 32px 40px;
+            border-top: 2px solid var(--color-gray-200);
+            background: var(--color-gray-50);
+        }
+
+        .signature-box {
+            text-align: center;
+        }
+
+        .signature-box h4 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 8px;
+        }
+
+        .signature-box .name {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .signature-box .title {
+            font-size: 12px;
+            color: var(--color-gray-500);
+            margin-bottom: 36px;
+        }
+
+        .signature-line {
+            border-top: 2px solid var(--color-black);
+            padding-top: 8px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        .doc-footer {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--color-gray-200);
+        }
+
+        .contact-info {
+            font-size: 12px;
+            color: var(--color-gray-500);
+        }
+
+        .contact-info span { margin-right: 24px; }
+
+        .ref-code {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .document { border: none; clip-path: none; }
+            .device-bar, .stat-box, .status-pass, .status-fail, .result-box {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        <!-- Header -->
+        <header class="doc-header">
+            <div class="brand">
+                <div class="brand-mark">L</div>
+                <div class="brand-text">
+                    <h1>The Clean<span>Lab</span></h1>
+                    <p>Professional Laundry Services</p>
+                </div>
+            </div>
+            <div class="doc-type">
+                <h2>Biên Bản<br>Kiểm Tra</h2>
+                <div class="doc-number">QC-2025-0156</div>
+            </div>
+        </header>
+
+        <!-- Device Info -->
+        <div class="device-bar">
+            <div class="device-name">Máy Giặt Công Nghiệp TCL-W15</div>
+            <div class="device-serial">S/N: W15-2025-0891</div>
+        </div>
+
+        <!-- Info Section -->
+        <section class="doc-info">
+            <div class="info-item">
+                <label>Ngày Kiểm Tra</label>
+                <span>12/12/2025</span>
+            </div>
+            <div class="info-item">
+                <label>Loại Kiểm Tra</label>
+                <span>Kiểm tra xuất xưởng</span>
+            </div>
+            <div class="info-item">
+                <label>Người Kiểm Tra</label>
+                <span>Lê Văn C - QC Engineer</span>
+            </div>
+        </section>
+
+        <!-- Content -->
+        <section class="doc-content">
+            <h3 class="section-title">Kết Quả Kiểm Tra Chi Tiết</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40px">#</th>
+                        <th>Hạng Mục Test</th>
+                        <th style="width: 100px">Tiêu Chuẩn</th>
+                        <th style="width: 100px">Thực Tế</th>
+                        <th style="width: 80px">Kết Quả</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01</td>
+                        <td>
+                            <div class="test-name">Điện áp hoạt động</div>
+                            <div class="test-spec">3 pha 380V ±10%</div>
+                        </td>
+                        <td class="value-normal">380V</td>
+                        <td class="value-pass">382V</td>
+                        <td><span class="status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>
+                            <div class="test-name">Dòng điện khởi động</div>
+                            <div class="test-spec">Max 25A trong 3s</div>
+                        </td>
+                        <td class="value-normal">≤25A</td>
+                        <td class="value-pass">22.5A</td>
+                        <td><span class="status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>03</td>
+                        <td>
+                            <div class="test-name">Dòng điện vận hành</div>
+                            <div class="test-spec">Nominal 8-12A</div>
+                        </td>
+                        <td class="value-normal">8-12A</td>
+                        <td class="value-pass">10.2A</td>
+                        <td><span class="status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>04</td>
+                        <td>
+                            <div class="test-name">Tốc độ vắt</div>
+                            <div class="test-spec">800-1000 RPM</div>
+                        </td>
+                        <td class="value-normal">≥800 RPM</td>
+                        <td class="value-pass">950 RPM</td>
+                        <td><span class="status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>05</td>
+                        <td>
+                            <div class="test-name">Độ rung động</div>
+                            <div class="test-spec">Max 4mm/s RMS</div>
+                        </td>
+                        <td class="value-normal">≤4mm/s</td>
+                        <td class="value-pass">2.8mm/s</td>
+                        <td><span class="status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>06</td>
+                        <td>
+                            <div class="test-name">Nhiệt độ nước nóng</div>
+                            <div class="test-spec">60°C ±5°C</div>
+                        </td>
+                        <td class="value-normal">60°C</td>
+                        <td class="value-pass">62°C</td>
+                        <td><span class="status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>07</td>
+                        <td>
+                            <div class="test-name">Thời gian chu kỳ giặt</div>
+                            <div class="test-spec">45 phút ±5 phút</div>
+                        </td>
+                        <td class="value-normal">45 min</td>
+                        <td class="value-pass">44 min</td>
+                        <td><span class="status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>08</td>
+                        <td>
+                            <div class="test-name">Kiểm tra rò rỉ nước</div>
+                            <div class="test-spec">Không rò rỉ sau 30 min</div>
+                        </td>
+                        <td class="value-normal">0</td>
+                        <td class="value-pass">0</td>
+                        <td><span class="status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>09</td>
+                        <td>
+                            <div class="test-name">Cách điện</div>
+                            <div class="test-spec">≥2MΩ @ 500VDC</div>
+                        </td>
+                        <td class="value-normal">≥2MΩ</td>
+                        <td class="value-pass">5.6MΩ</td>
+                        <td><span class="status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>
+                            <div class="test-name">Tiếp địa</div>
+                            <div class="test-spec">≤0.1Ω</div>
+                        </td>
+                        <td class="value-normal">≤0.1Ω</td>
+                        <td class="value-pass">0.05Ω</td>
+                        <td><span class="status-pass">Pass</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Summary Stats -->
+            <div class="test-summary">
+                <div class="stat-box">
+                    <div class="stat-value">10</div>
+                    <div class="stat-label">Tổng Test</div>
+                </div>
+                <div class="stat-box pass">
+                    <div class="stat-value">10</div>
+                    <div class="stat-label">Đạt (Pass)</div>
+                </div>
+                <div class="stat-box fail">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Không Đạt</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Tỷ Lệ Đạt</div>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div class="result-box">
+                <div class="result-icon">✓</div>
+                <div class="result-text">
+                    <h4>Kết Luận: Đạt Tiêu Chuẩn Xuất Xưởng</h4>
+                    <p>Thiết bị đã vượt qua tất cả các bài test và đủ điều kiện giao cho khách hàng.</p>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="notes-section">
+                <h4>Ghi Chú Kỹ Thuật</h4>
+                <p>
+                    • Thiết bị hoạt động ổn định trong suốt quá trình kiểm tra.<br>
+                    • Các thông số đều nằm trong ngưỡng cho phép.<br>
+                    • Đề xuất: Kiểm tra định kỳ sau 6 tháng vận hành.
+                </p>
+            </div>
+        </section>
+
+        <!-- Signature Section -->
+        <section class="signature-section">
+            <div class="signature-box">
+                <h4>Người Kiểm Tra</h4>
+                <p class="name">Lê Văn C</p>
+                <p class="title">QC Engineer</p>
+                <div class="signature-line">Ký & Ghi rõ họ tên</div>
+            </div>
+            <div class="signature-box">
+                <h4>Phê Duyệt</h4>
+                <p class="name">Nguyễn Văn A</p>
+                <p class="title">Giám đốc Kỹ thuật</p>
+                <div class="signature-line">Ký & Ghi rõ họ tên</div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="doc-footer">
+            <div class="contact-info">
+                <span>📞 1900 888 999</span>
+                <span>✉ qc@thecleanlab.vn</span>
+                <span>🌐 thecleanlab.vn</span>
+            </div>
+            <div class="ref-code">
+                REF: TCL-QC-20251212-156K
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

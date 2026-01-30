@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animations Demo - The Clean Lab | Titanium Command</title>
+
+  <!-- Import tokens and animations -->
+  <link rel="stylesheet" href="./styles/tokens/index.css">
+  <link rel="stylesheet" href="./styles/animations/index.css">
+  <link rel="stylesheet" href="./styles/base.css">
+
+  <style>
+    body {
+      padding: 2rem;
+      background: var(--bg-primary);
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--text-primary);
+    }
+
+    .demo-header {
+      margin-bottom: 3rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border-default);
+    }
+
+    .demo-header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      color: var(--text-primary);
+    }
+
+    .demo-header p {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .demo-section {
+      margin-bottom: 4rem;
+    }
+
+    .demo-section h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin: 0 0 1rem 0;
+      color: var(--accent-primary);
+    }
+
+    .demo-section h3 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin: 2rem 0 1rem 0;
+      color: var(--text-secondary);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .demo-item {
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .demo-item p {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* Button demo styles */
+    .btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      background: var(--accent-primary);
+      color: var(--text-inverse);
+      border: 2px solid var(--accent-primary);
+      border-radius: 4px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent-primary);
+    }
+
+    /* Card demo styles */
+    .card {
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-default);
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .card-selectable {
+      border-color: var(--accent-primary);
+    }
+
+    .card-selected {
+      background: var(--bg-elevated);
+      border-color: var(--accent-primary);
+      box-shadow: 0 4px 12px rgba(0, 85, 255, 0.2);
+    }
+
+    /* Status indicators */
+    .status-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 auto;
+    }
+
+    .status-success { background: var(--status-success); }
+    .status-error { background: var(--status-error); }
+    .status-warning { background: var(--status-warning); }
+
+    /* Device demos */
+    .nfc-reader-demo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      border: 2px solid var(--border-default);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .card-slot-demo {
+      width: 200px;
+      height: 120px;
+      margin: 0 auto;
+      border: 2px solid var(--border-default);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-visual {
+      width: 140px;
+      height: 90px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-dry));
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .processing-demo {
+      width: 100%;
+      height: 4px;
+      background: var(--bg-elevated);
+      border-radius: 2px;
+      margin: 1rem 0;
+    }
+
+    .skeleton-demo {
+      height: 20px;
+      border-radius: 4px;
+      margin: 0.5rem 0;
+    }
+
+    /* Success check SVG */
+    .success-check-svg {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* Loading dots */
+    .loading-dots {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .loading-dots span {
+      width: 12px;
+      height: 12px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Interactive controls */
+    .controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .controls button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .controls button:hover {
+      background: var(--bg-subtle);
+    }
+
+    /* Page transition demo */
+    .page-demo {
+      min-height: 200px;
+      padding: 2rem;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-default);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-demo h3 {
+      margin: 0;
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-header">
+    <h1>Animation System Demo</h1>
+    <p>The Clean Lab - "Titanium Command" Industrial/Tactical Design System</p>
+  </div>
+
+  <!-- BUTTON ANIMATIONS -->
+  <section class="demo-section">
+    <h2>Button Animations</h2>
+
+    <h3>Press Effects</h3>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <button class="btn">Primary Button</button>
+        <p>Scale down on press</p>
+      </div>
+      <div class="demo-item">
+        <button class="btn btn-secondary">Secondary Button</button>
+        <p>Hover lift + press scale</p>
+      </div>
+      <div class="demo-item">
+        <button class="btn btn-loading">Loading</button>
+        <p>Spinner animation</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARD ANIMATIONS -->
+  <section class="demo-section">
+    <h2>Card Animations</h2>
+
+    <h3>Selection Transitions</h3>
+    <div class="demo-grid card-grid">
+      <div class="card card-selectable">
+        <h4>Wash Service</h4>
+        <p>Click to select</p>
+      </div>
+      <div class="card card-selectable">
+        <h4>Dry Service</h4>
+        <p>Hover & press effects</p>
+      </div>
+      <div class="card card-selected">
+        <h4>Selected</h4>
+        <p>Active state</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISUAL EFFECTS -->
+  <section class="demo-section">
+    <h2>Visual Effects</h2>
+
+    <h3>Scanline Effect</h3>
+    <div class="demo-grid">
+      <div class="demo-item scan-effect" style="height: 150px;">
+        <p>Vertical sweep animation</p>
+      </div>
+      <div class="demo-item tech-grid-animated" style="height: 150px;">
+        <p>Grid pulse effect</p>
+      </div>
+    </div>
+
+    <h3>Loading States</h3>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="processing-bar processing-demo"></div>
+        <p>Processing indicator</p>
+      </div>
+      <div class="demo-item">
+        <div class="skeleton skeleton-demo"></div>
+        <div class="skeleton skeleton-demo" style="width: 80%;"></div>
+        <div class="skeleton skeleton-demo" style="width: 60%;"></div>
+        <p>Skeleton shimmer</p>
+      </div>
+      <div class="demo-item">
+        <div class="loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <p>Loading dots</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUS ANIMATIONS -->
+  <section class="demo-section">
+    <h2>Status Animations</h2>
+
+    <h3>Status Indicators</h3>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="status-dot status-success status-dot-active"></div>
+        <p>Active pulse</p>
+      </div>
+      <div class="demo-item">
+        <svg class="success-check-svg" viewBox="0 0 50 50">
+          <circle cx="25" cy="25" r="20" fill="none" stroke="var(--status-success)" stroke-width="3"/>
+          <polyline class="success-check" points="15,25 22,32 35,18" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p>Success checkmark</p>
+      </div>
+      <div class="demo-item">
+        <button class="btn error-shake" onclick="this.classList.remove('error-shake'); void this.offsetWidth; this.classList.add('error-shake');">
+          Trigger Error
+        </button>
+        <p>Error shake animation</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEVICE ANIMATIONS -->
+  <section class="demo-section">
+    <h2>Device Animations</h2>
+
+    <h3>NFC Reader</h3>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="nfc-reader is-active nfc-reader-demo">📱</div>
+        <p>Wave effect on tap detection</p>
+      </div>
+      <div class="demo-item">
+        <div class="nfc-reader is-ready nfc-reader-demo">
+          <div class="nfc-icon">📡</div>
+        </div>
+        <p>Ready state pulse</p>
+      </div>
+    </div>
+
+    <h3>Card Slot</h3>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="card-slot-demo card-slot is-ready">
+          <div class="card-visual card-slot-icon" id="cardInsert"></div>
+        </div>
+        <div class="controls">
+          <button onclick="animateCardInsert()">Insert Card</button>
+          <button onclick="animateCardEject()">Eject Card</button>
+        </div>
+        <p>Card insert/eject animations</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE TRANSITIONS -->
+  <section class="demo-section">
+    <h2>Page Transitions</h2>
+
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="page-demo" id="pageDemo1">
+          <h3>Screen 1</h3>
+        </div>
+        <div class="controls">
+          <button onclick="transitionPage('pageDemo1', 'page-enter-slide')">Slide Up</button>
+          <button onclick="transitionPage('pageDemo1', 'page-enter-forward')">Slide Right</button>
+          <button onclick="transitionPage('pageDemo1', 'page-enter-zoom')">Zoom In</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HAPTICS DEMO -->
+  <section class="demo-section">
+    <h2>Haptic Feedback (Mobile/Kiosk)</h2>
+
+    <div class="demo-grid">
+      <div class="demo-item">
+        <button class="btn" onclick="testHaptic('light')">Light</button>
+        <p>Selection, toggle</p>
+      </div>
+      <div class="demo-item">
+        <button class="btn" onclick="testHaptic('medium')">Medium</button>
+        <p>Button press</p>
+      </div>
+      <div class="demo-item">
+        <button class="btn" onclick="testHaptic('success')">Success</button>
+        <p>Completion</p>
+      </div>
+      <div class="demo-item">
+        <button class="btn" onclick="testHaptic('error')">Error</button>
+        <p>Rejection</p>
+      </div>
+      <div class="demo-item">
+        <button class="btn" onclick="testHaptic('nfcSuccess')">NFC Read</button>
+        <p>Card detected</p>
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    // Import haptics utility
+    import haptics from './utils/haptics.ts';
+
+    // Make haptics available globally for demo
+    window.testHaptic = (pattern) => {
+      if (haptics[pattern]) {
+        haptics[pattern]();
+      }
+    };
+
+    // Card animation controls
+    window.animateCardInsert = () => {
+      const card = document.getElementById('cardInsert');
+      card.classList.remove('inserting', 'ejecting');
+      void card.offsetWidth; // Force reflow
+      card.classList.add('inserting');
+    };
+
+    window.animateCardEject = () => {
+      const card = document.getElementById('cardInsert');
+      card.classList.remove('inserting', 'ejecting');
+      void card.offsetWidth; // Force reflow
+      card.classList.add('ejecting');
+    };
+
+    // Page transition controls
+    window.transitionPage = (elementId, animationClass) => {
+      const element = document.getElementById(elementId);
+      // Remove all animation classes
+      element.classList.remove('page-enter-slide', 'page-enter-forward', 'page-enter-zoom', 'page-enter');
+      void element.offsetWidth; // Force reflow
+      element.classList.add(animationClass);
+    };
+
+    // Card selection demo
+    document.querySelectorAll('.card-selectable').forEach(card => {
+      card.addEventListener('click', function() {
+        document.querySelectorAll('.card-selectable').forEach(c => {
+          c.classList.remove('card-selected');
+        });
+        this.classList.add('card-selected');
+
+        // Trigger haptic feedback if available
+        if (haptics && haptics.light) {
+          haptics.light();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

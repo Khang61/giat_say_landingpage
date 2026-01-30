@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hợp Đồng Dịch Vụ - The Clean Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           THE CLEAN LAB - SERVICE CONTRACT TEMPLATE
+           Hợp Đồng Dịch Vụ / Cung Cấp Thiết Bị
+           Brand: "Titanium Command"
+           ============================================ */
+
+        :root {
+            --color-white: #ffffff;
+            --color-gray-50: #f8fafc;
+            --color-gray-100: #f0f2f5;
+            --color-gray-200: #e2e8f0;
+            --color-gray-300: #cbd5e1;
+            --color-gray-400: #94a3b8;
+            --color-gray-500: #64748b;
+            --color-gray-900: #0f172a;
+            --color-black: #111111;
+            --color-blue-500: #0055ff;
+            --color-green-500: #00cc66;
+            --color-orange-500: #ff4800;
+
+            --font-display: 'Inter', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            --chamfer-lg: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--color-gray-100);
+            color: var(--color-black);
+            line-height: 1.6;
+            padding: 40px;
+        }
+
+        .document {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--color-white);
+            border: 2px solid var(--color-black);
+            clip-path: var(--chamfer-lg);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .doc-header {
+            background: var(--color-black);
+            color: var(--color-white);
+            padding: 32px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-mark {
+            width: 56px;
+            height: 56px;
+            background: var(--color-white);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 28px;
+            clip-path: var(--chamfer-sm);
+        }
+
+        .brand-text h1 {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .brand-text h1 span { color: var(--color-gray-400); }
+
+        .brand-text p {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .doc-type {
+            text-align: right;
+        }
+
+        .doc-type h2 {
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .doc-type .doc-number {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--color-gray-400);
+            margin-top: 4px;
+        }
+
+        /* Title Section */
+        .contract-title {
+            text-align: center;
+            padding: 32px 40px;
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+
+        .contract-title h2 {
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+        }
+
+        .contract-title p {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--color-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Party Info */
+        .parties-section {
+            padding: 32px 40px;
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+
+        .party-block {
+            margin-bottom: 24px;
+        }
+
+        .party-block:last-child { margin-bottom: 0; }
+
+        .party-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-blue-500);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-blue-500);
+            display: inline-block;
+        }
+
+        .party-info {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 8px 16px;
+            font-size: 14px;
+        }
+
+        .party-info dt {
+            color: var(--color-gray-500);
+        }
+
+        .party-info dd {
+            font-weight: 600;
+        }
+
+        /* Content Section */
+        .contract-content {
+            padding: 32px 40px;
+        }
+
+        .article {
+            margin-bottom: 28px;
+        }
+
+        .article-title {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-black);
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            background: var(--color-gray-100);
+            border-left: 4px solid var(--color-black);
+        }
+
+        .article-content {
+            font-size: 14px;
+            padding-left: 16px;
+        }
+
+        .article-content p { margin-bottom: 8px; }
+
+        .article-content ul {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+
+        .article-content li { margin-bottom: 6px; }
+
+        /* Table in Contract */
+        .contract-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+        }
+
+        .contract-table th {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            padding: 10px 12px;
+            text-align: left;
+            background: var(--color-gray-100);
+            border-bottom: 2px solid var(--color-black);
+        }
+
+        .contract-table th:last-child { text-align: right; }
+
+        .contract-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .contract-table td:last-child {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        .contract-table .total-row td {
+            background: var(--color-black);
+            color: var(--color-white);
+            font-weight: 700;
+        }
+
+        .contract-table .total-row td:last-child {
+            color: var(--color-green-500);
+            font-size: 16px;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--color-gray-50);
+            border: 1px solid var(--color-gray-200);
+            padding: 16px;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .highlight-box strong {
+            color: var(--color-black);
+        }
+
+        /* Terms Grid */
+        .terms-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .term-item {
+            background: var(--color-gray-50);
+            padding: 12px;
+            border: 1px solid var(--color-gray-200);
+        }
+
+        .term-item label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .term-item span {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* Signature Section */
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            padding: 40px;
+            border-top: 2px solid var(--color-gray-200);
+            background: var(--color-gray-50);
+        }
+
+        .signature-box {
+            text-align: center;
+        }
+
+        .signature-box h4 {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 8px;
+        }
+
+        .signature-box .party-name {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .signature-box .rep-name {
+            font-size: 13px;
+            color: var(--color-gray-500);
+            margin-bottom: 60px;
+        }
+
+        .signature-line {
+            border-top: 2px solid var(--color-black);
+            padding-top: 8px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+        }
+
+        .stamp-area {
+            margin-top: 16px;
+            padding: 12px;
+            border: 2px dashed var(--color-gray-300);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        .doc-footer {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--color-gray-200);
+            font-size: 11px;
+            color: var(--color-gray-500);
+        }
+
+        .page-number {
+            font-family: var(--font-mono);
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .document { border: none; clip-path: none; }
+            .article { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        <!-- Header -->
+        <header class="doc-header">
+            <div class="brand">
+                <div class="brand-mark">L</div>
+                <div class="brand-text">
+                    <h1>The Clean<span>Lab</span></h1>
+                    <p>Professional Laundry Services</p>
+                </div>
+            </div>
+            <div class="doc-type">
+                <h2>Hợp Đồng</h2>
+                <div class="doc-number">HD-2025-0089</div>
+            </div>
+        </header>
+
+        <!-- Title -->
+        <section class="contract-title">
+            <h2>Hợp Đồng Cung Cấp Thiết Bị<br>& Dịch Vụ Lắp Đặt</h2>
+            <p>Ngày ký: 01/12/2025</p>
+        </section>
+
+        <!-- Parties -->
+        <section class="parties-section">
+            <div class="party-block">
+                <div class="party-label">Bên A — Bên Mua</div>
+                <dl class="party-info">
+                    <dt>Tên công ty:</dt>
+                    <dd>CÔNG TY TNHH XYZ LAUNDRY</dd>
+                    <dt>Địa chỉ:</dt>
+                    <dd>789 Lê Văn Sỹ, Q.Tân Bình, TP.HCM</dd>
+                    <dt>Mã số thuế:</dt>
+                    <dd>0312345678</dd>
+                    <dt>Đại diện:</dt>
+                    <dd>Ông Trần Văn B — Giám đốc Điều hành</dd>
+                    <dt>Điện thoại:</dt>
+                    <dd>0901 234 567</dd>
+                </dl>
+            </div>
+
+            <div class="party-block">
+                <div class="party-label">Bên B — Bên Bán</div>
+                <dl class="party-info">
+                    <dt>Tên công ty:</dt>
+                    <dd>CÔNG TY TNHH THE CLEAN LAB</dd>
+                    <dt>Địa chỉ:</dt>
+                    <dd>456 Nguyễn Thị Minh Khai, Quận 3, TP.HCM</dd>
+                    <dt>Mã số thuế:</dt>
+                    <dd>0309876543</dd>
+                    <dt>Đại diện:</dt>
+                    <dd>Ông Nguyễn Văn A — Giám đốc</dd>
+                    <dt>Điện thoại:</dt>
+                    <dd>1900 888 999</dd>
+                </dl>
+            </div>
+        </section>
+
+        <!-- Contract Content -->
+        <section class="contract-content">
+            <div class="article">
+                <div class="article-title">Điều 1: Nội Dung Hợp Đồng</div>
+                <div class="article-content">
+                    <p>Bên B đồng ý cung cấp cho Bên A các thiết bị và dịch vụ như sau:</p>
+
+                    <table class="contract-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px">#</th>
+                                <th>Mô Tả</th>
+                                <th style="width: 50px">SL</th>
+                                <th style="width: 120px">Thành Tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Máy Giặt Công Nghiệp TCL-W15 (15kg)</td>
+                                <td>02</td>
+                                <td>90.000.000đ</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Máy Sấy Công Nghiệp TCL-D15 (15kg)</td>
+                                <td>02</td>
+                                <td>76.000.000đ</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Kiosk Thanh Toán TCL-K01 + Phần mềm LaundryOS</td>
+                                <td>01</td>
+                                <td>44.000.000đ</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Dịch vụ lắp đặt & đào tạo vận hành</td>
+                                <td>01</td>
+                                <td>5.000.000đ</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="3">Tổng giá trị hợp đồng (đã bao gồm VAT 10%)</td>
+                                <td>236.500.000đ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="highlight-box">
+                        <strong>Bằng chữ:</strong> Hai trăm ba mươi sáu triệu năm trăm nghìn đồng chẵn.
+                    </div>
+                </div>
+            </div>
+
+            <div class="article">
+                <div class="article-title">Điều 2: Thời Gian & Địa Điểm Giao Hàng</div>
+                <div class="article-content">
+                    <div class="terms-grid">
+                        <div class="term-item">
+                            <label>Thời gian giao hàng</label>
+                            <span>15 ngày làm việc</span>
+                        </div>
+                        <div class="term-item">
+                            <label>Địa điểm giao hàng</label>
+                            <span>789 Lê Văn Sỹ, Q.Tân Bình</span>
+                        </div>
+                        <div class="term-item">
+                            <label>Thời gian lắp đặt</label>
+                            <span>3 ngày làm việc</span>
+                        </div>
+                        <div class="term-item">
+                            <label>Thời gian đào tạo</label>
+                            <span>2 buổi (4 tiếng/buổi)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article">
+                <div class="article-title">Điều 3: Phương Thức Thanh Toán</div>
+                <div class="article-content">
+                    <ul>
+                        <li><strong>Đợt 1 (50%):</strong> 118.250.000đ — Thanh toán khi ký hợp đồng</li>
+                        <li><strong>Đợt 2 (30%):</strong> 70.950.000đ — Thanh toán khi giao hàng</li>
+                        <li><strong>Đợt 3 (20%):</strong> 47.300.000đ — Thanh toán sau nghiệm thu</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <strong>Thông tin chuyển khoản:</strong><br>
+                        Ngân hàng: Vietcombank — Chi nhánh TP.HCM<br>
+                        Số TK: 0071 0012 3456 789<br>
+                        Chủ TK: CÔNG TY TNHH THE CLEAN LAB<br>
+                        Nội dung: HD-2025-0089 + Tên Bên A
+                    </div>
+                </div>
+            </div>
+
+            <div class="article">
+                <div class="article-title">Điều 4: Bảo Hành & Hỗ Trợ Kỹ Thuật</div>
+                <div class="article-content">
+                    <ul>
+                        <li>Thời gian bảo hành: <strong>24 tháng</strong> kể từ ngày nghiệm thu</li>
+                        <li>Hotline hỗ trợ kỹ thuật: <strong>1900 888 999</strong> (24/7)</li>
+                        <li>Thời gian phản hồi: Tối đa <strong>4 giờ</strong> trong giờ hành chính</li>
+                        <li>Bảo trì định kỳ: <strong>Miễn phí</strong> trong năm đầu tiên</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="article">
+                <div class="article-title">Điều 5: Điều Khoản Chung</div>
+                <div class="article-content">
+                    <p>5.1. Hợp đồng có hiệu lực từ ngày ký và kết thúc khi hai bên hoàn thành nghĩa vụ.</p>
+                    <p>5.2. Mọi sửa đổi, bổ sung phải được lập thành văn bản và có chữ ký của hai bên.</p>
+                    <p>5.3. Tranh chấp phát sinh sẽ được giải quyết thông qua thương lượng. Nếu không thành, sẽ đưa ra Tòa án nhân dân có thẩm quyền tại TP.HCM.</p>
+                    <p>5.4. Hợp đồng được lập thành 02 bản có giá trị pháp lý như nhau, mỗi bên giữ 01 bản.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signature Section -->
+        <section class="signature-section">
+            <div class="signature-box">
+                <h4>Đại Diện Bên A</h4>
+                <p class="party-name">CÔNG TY TNHH XYZ LAUNDRY</p>
+                <p class="rep-name">Ông Trần Văn B — Giám đốc</p>
+                <div class="signature-line">Ký, ghi rõ họ tên & đóng dấu</div>
+                <div class="stamp-area">Đóng dấu công ty</div>
+            </div>
+            <div class="signature-box">
+                <h4>Đại Diện Bên B</h4>
+                <p class="party-name">CÔNG TY TNHH THE CLEAN LAB</p>
+                <p class="rep-name">Ông Nguyễn Văn A — Giám đốc</p>
+                <div class="signature-line">Ký, ghi rõ họ tên & đóng dấu</div>
+                <div class="stamp-area">Đóng dấu công ty</div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="doc-footer">
+            <span>Hợp đồng HD-2025-0089 | Ngày ký: 01/12/2025</span>
+            <span class="page-number">Trang 1/1</span>
+        </footer>
+    </div>
+</body>
+</html>

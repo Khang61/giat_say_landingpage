@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanium Card Pay</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --font-display: 'Inter', sans-serif;
+            --font-tech: 'JetBrains Mono', monospace;
+            --color-dark: #111;
+            --color-accent: #0055ff;
+            --color-success: #00cc66;
+            --color-error: #ff3333;
+        }
+
+        body {
+            font-family: var(--font-display);
+            background-color: #f0f2f5;
+            color: var(--color-dark);
+        }
+
+        /* --- INDUSTRIAL SHAPES --- */
+        .chamfer-lg {
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+        .chamfer-sm {
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+
+        /* --- UTILS --- */
+        .font-tech { font-family: var(--font-tech); }
+        .btn-press { transition: transform 0.1s; }
+        .btn-press:active { transform: scale(0.95); }
+
+        /* --- ANIMATIONS --- */
+        @keyframes pulse-nfc {
+            0% { transform: scale(0.8); opacity: 0; box-shadow: 0 0 0 0 rgba(0, 85, 255, 0.7); }
+            50% { opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; box-shadow: 0 0 0 20px rgba(0, 85, 255, 0); }
+        }
+        .nfc-wave {
+            position: absolute;
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            border: 2px solid #0055ff;
+            animation: pulse-nfc 2s infinite;
+        }
+
+        @keyframes card-insert {
+            0% { transform: translateY(120%); }
+            40% { transform: translateY(-20%); }
+            100% { transform: translateY(-20%); }
+        }
+        .animate-card-in { animation: card-insert 1s ease-out forwards; }
+
+        @keyframes processing-bar {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        .process-anim { animation: processing-bar 2s linear forwards; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- ICONS ---
+        const Icon = ({ className, children }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter" className={className}>{children}</svg>
+        );
+        const ChevronLeft = () => (<Icon className="w-5 h-5"><polyline points="15 18 9 12 15 6"/></Icon>);
+        const WifiIcon = () => (<Icon className="w-10 h-10"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></Icon>);
+        const ChipIcon = () => (<Icon className="w-8 h-8 text-yellow-500"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M2 8h20M2 16h20M8 2v20M16 2v20"/></Icon>);
+        const CheckCircle = () => (<Icon className="w-16 h-16"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></Icon>);
+        const XCircle = () => (<Icon className="w-16 h-16"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></Icon>);
+
+        // --- COMPONENTS ---
+
+        const Header = () => (
+            <header className="flex justify-between items-center p-5 bg-white border-b-2 border-slate-200 sticky top-0 z-50">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[#111] text-white flex items-center justify-center font-black text-xl chamfer-sm border-2 border-[#111]">L</div>
+                    <div className="leading-none">
+                        <h1 className="font-black text-xl tracking-tighter text-[#111]">LAUNDRY<span className="text-slate-400">OS</span></h1>
+                    </div>
+                </div>
+                <div className="bg-slate-100 border border-slate-300 px-3 py-1 chamfer-sm">
+                    <span className="font-tech font-bold text-sm text-slate-700">POS_TERM</span>
+                </div>
+            </header>
+        );
+
+        const CardReader = ({ status, onSimulate }) => {
+            return (
+                <div className="flex-1 flex flex-col items-center justify-center relative min-h-[400px]">
+                    
+                    {/* THE READER DEVICE */}
+                    <div className="w-72 bg-[#1a1a1a] border-4 border-[#333] chamfer-lg shadow-2xl relative z-10 flex flex-col">
+                        
+                        {/* 1. LCD Screen */}
+                        <div className="h-24 bg-[#0a0a0a] border-b-4 border-[#333] p-4 flex flex-col justify-center items-center text-center relative overflow-hidden">
+                            {/* Glass Glare */}
+                            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-white/10 to-transparent pointer-events-none"></div>
+                            
+                            {status === 'idle' && (
+                                <>
+                                    <p className="font-tech text-xs text-[#0055ff] animate-pulse mb-1">READY TO SCAN</p>
+                                    <p className="font-tech text-lg text-white font-bold">45.000<span className="text-xs">đ</span></p>
+                                </>
+                            )}
+                            {status === 'processing' && (
+                                <div className="w-full">
+                                    <p className="font-tech text-xs text-yellow-400 mb-2">CONNECTING BANK...</p>
+                                    <div className="w-full h-1 bg-gray-700 rounded overflow-hidden">
+                                        <div className="h-full bg-yellow-400 process-anim"></div>
+                                    </div>
+                                </div>
+                            )}
+                            {status === 'success' && (
+                                <p className="font-tech text-lg text-[#00cc66] font-bold">APPROVED</p>
+                            )}
+                            {status === 'error' && (
+                                <p className="font-tech text-lg text-[#ff3333] font-bold">DECLINED</p>
+                            )}
+                        </div>
+
+                        {/* 2. Contactless Pad */}
+                        <div className="flex-1 bg-[#222] p-8 flex flex-col items-center justify-center relative border-b-4 border-[#333]">
+                            {/* Tap Target */}
+                            <div 
+                                onClick={() => onSimulate('tap')}
+                                className="w-32 h-32 border-2 border-dashed border-gray-600 rounded-xl flex items-center justify-center relative cursor-pointer group hover:border-[#0055ff] transition-colors"
+                            >
+                                {status === 'idle' && <div className="nfc-wave"></div>}
+                                <div className={`text-gray-500 group-hover:text-[#0055ff] transition-colors ${status === 'processing' ? 'animate-bounce' : ''}`}>
+                                    <WifiIcon />
+                                </div>
+                            </div>
+                            <p className="mt-4 font-tech text-[10px] text-gray-500 font-bold uppercase tracking-widest">Tap Card Here</p>
+                        </div>
+
+                        {/* 3. Chip Slot */}
+                        <div className="h-16 bg-[#111] relative flex justify-center items-end pb-0 overflow-visible">
+                            {/* The Slot */}
+                            <div 
+                                onClick={() => onSimulate('insert')}
+                                className="w-40 h-3 bg-black border border-gray-700 rounded-t-lg mb-4 relative cursor-pointer hover:bg-gray-900 group"
+                            >
+                                {/* Light Guide */}
+                                <div className="absolute -inset-1 bg-[#0055ff] blur opacity-20 group-hover:opacity-60 transition-opacity"></div>
+                            </div>
+                            
+                            {/* Insert Animation (Visual Only) */}
+                            {status === 'processing' && (
+                                <div className="absolute bottom-4 w-32 h-40 bg-white rounded-lg shadow-xl animate-card-in flex flex-col items-center justify-start pt-4 border-2 border-gray-200 z-0">
+                                    <div className="w-8 h-6 bg-yellow-300 rounded mb-2 border border-yellow-400"></div>
+                                    <div className="w-20 h-2 bg-gray-200 rounded"></div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Instruction Text */}
+                    <div className="mt-8 text-center">
+                        <p className="font-black text-xl uppercase text-[#111]">Chạm hoặc Cắm Thẻ</p>
+                        <div className="flex justify-center gap-2 mt-2 opacity-60">
+                            <span className="font-tech text-xs font-bold text-slate-500 bg-white px-2 py-1 border border-slate-300">VISA</span>
+                            <span className="font-tech text-xs font-bold text-slate-500 bg-white px-2 py-1 border border-slate-300">MASTER</span>
+                            <span className="font-tech text-xs font-bold text-slate-500 bg-white px-2 py-1 border border-slate-300">NAPAS</span>
+                        </div>
+                    </div>
+
+                </div>
+            );
+        };
+
+        const SuccessScreen = () => (
+            <div className="flex-1 flex flex-col items-center justify-center p-5 text-center animate-[fadeIn_0.5s_ease-out]">
+                <div className="w-32 h-32 bg-[#00cc66] text-white flex items-center justify-center rounded-full mb-8 shadow-2xl shadow-green-500/40">
+                    <CheckCircle />
+                </div>
+                <h2 className="font-black text-4xl uppercase text-[#111] mb-2 tracking-tight">Thanh Toán Xong</h2>
+                <p className="font-tech text-slate-500 font-bold mb-8">AUTH: 88293-XJ</p>
+                <button onClick={() => window.location.reload()} className="bg-[#111] text-white px-8 py-4 font-black uppercase chamfer-sm hover:bg-[#333] transition-colors w-full max-w-xs">
+                    Hoàn Tất
+                </button>
+            </div>
+        );
+
+        const ErrorScreen = ({ onRetry }) => (
+            <div className="flex-1 flex flex-col items-center justify-center p-5 text-center animate-[fadeIn_0.5s_ease-out]">
+                <div className="w-32 h-32 bg-[#ff3333] text-white flex items-center justify-center rounded-full mb-8 shadow-2xl shadow-red-500/40">
+                    <XCircle />
+                </div>
+                <h2 className="font-black text-3xl uppercase text-[#111] mb-2 tracking-tight">Lỗi Thẻ</h2>
+                <p className="font-tech text-slate-500 font-bold mb-8 text-sm">Vui lòng thử lại hoặc dùng thẻ khác.</p>
+                <button onClick={onRetry} className="bg-[#111] text-white px-8 py-4 font-black uppercase chamfer-sm hover:bg-[#333] transition-colors w-full max-w-xs">
+                    Thử Lại
+                </button>
+            </div>
+        );
+
+        const App = () => {
+            const [status, setStatus] = useState('idle'); // idle, processing, success, error
+
+            const handleSimulate = (type) => {
+                if (status !== 'idle') return;
+                
+                setStatus('processing');
+                
+                // Simulate network delay
+                setTimeout(() => {
+                    // Random success or fail for demo
+                    const isSuccess = Math.random() > 0.3; 
+                    setStatus(isSuccess ? 'success' : 'error');
+                }, 2500);
+            };
+
+            const retry = () => setStatus('idle');
+
+            return (
+                <div className="max-w-md mx-auto min-h-screen bg-[#f0f2f5] border-x border-slate-300 relative shadow-2xl flex flex-col font-display overflow-hidden">
+                    
+                    <Header />
+
+                    <main className="flex-1 p-5 flex flex-col relative z-10 overflow-y-auto">
+                        
+                        {status === 'idle' && (
+                            <button className="flex items-center gap-2 text-slate-500 hover:text-[#111] mb-2 font-bold text-xs uppercase w-fit transition-colors">
+                                <ChevronLeft /> Hủy Bỏ
+                            </button>
+                        )}
+
+                        {/* CONTENT SWITCHER */}
+                        {(status === 'idle' || status === 'processing') && (
+                            <CardReader status={status} onSimulate={handleSimulate} />
+                        )}
+                        {status === 'success' && <SuccessScreen />}
+                        {status === 'error' && <ErrorScreen onRetry={retry} />}
+
+                    </main>
+
+                    {/* SIMULATOR FOOTER */}
+                    {status === 'idle' && (
+                        <div className="bg-white border-t-2 border-slate-200 p-4">
+                            <p className="text-xs font-bold text-slate-400 uppercase mb-2 text-center">▼ Giả lập hành động ▼</p>
+                            <div className="grid grid-cols-2 gap-3">
+                                <button onClick={() => handleSimulate('tap')} className="bg-blue-50 text-blue-600 border border-blue-200 py-2 chamfer-sm font-bold text-xs hover:bg-blue-100">Simulate TAP</button>
+                                <button onClick={() => handleSimulate('insert')} className="bg-orange-50 text-orange-600 border border-orange-200 py-2 chamfer-sm font-bold text-xs hover:bg-orange-100">Simulate INSERT</button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

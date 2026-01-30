@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Tech Laundry</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --font-main: 'Inter', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --color-accent: #0284c7; /* Tech Blue */
+            --color-dark: #0f172a;
+            --bg-grid: #e2e8f0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .font-code { font-family: var(--font-code); }
+        
+        /* SHARP CORNERS & BORDERS */
+        .cut-corners {
+            clip-path: polygon(
+                10px 0, 100% 0, 
+                100% calc(100% - 10px), calc(100% - 10px) 100%, 
+                0 100%, 0 10px
+            );
+        }
+
+        /* GRID BACKGROUND */
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(148, 163, 184, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* MACHINE BAY (Light Version) */
+        .machine-bay {
+            background: radial-gradient(circle at 50% 40%, #ffffff 0%, #e2e8f0 70%);
+            border-bottom: 2px solid #cbd5e1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .machine-bay::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+        }
+
+        /* BUTTONS */
+        .btn-tech-light {
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+            color: #0f172a;
+            text-transform: uppercase;
+            font-weight: 800;
+            transition: all 0.1s;
+        }
+        
+        .btn-tech-light:active {
+            transform: translateY(2px);
+            border-color: #0284c7;
+            color: #0284c7;
+        }
+
+        .btn-primary-sharp {
+            background: #0f172a; /* Dark button on light bg for contrast */
+            color: #fff;
+            border: none;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary-sharp:hover {
+            background: #0284c7;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+        }
+        
+        .btn-primary-sharp:disabled {
+            background: #cbd5e1;
+            color: #94a3b8;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        /* SCAN ANIMATION */
+        @keyframes scan-horizontal {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .scan-beam {
+            width: 100%; height: 2px;
+            background: #0284c7;
+            box-shadow: 0 0 10px #0284c7;
+            position: absolute; top: 0;
+            animation: scan-horizontal 2s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- ICONS ---
+        const Icon = ({ size = 24, className = "", children, ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter" className={className} {...props}>{children}</svg>
+        );
+        const ChevronLeft = (props) => (<Icon {...props}><polyline points="15 18 9 12 15 6" /></Icon>);
+        const QrCode = (props) => (<Icon {...props}><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><path d="M14 14h7v7h-7z" /></Icon>);
+        const Zap = (props) => (<Icon {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></Icon>);
+        const Shield = (props) => (<Icon {...props}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></Icon>);
+        const AlertTriangle = (props) => (<Icon {...props}><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></Icon>);
+
+        // --- MOCK IMAGES ---
+        const IMG_WASHER = "https://cdn-icons-png.flaticon.com/512/9564/9564619.png"; 
+        const IMG_DRYER = "https://cdn-icons-png.flaticon.com/512/2642/2642289.png";
+
+        const Header = ({ step, reset }) => (
+            <header className="sticky top-0 z-50 bg-[#f1f5f9]/90 backdrop-blur-md border-b border-slate-300">
+                <div className="flex justify-between items-center px-4 py-4">
+                    <div onClick={reset} className="flex items-center gap-3 cursor-pointer group">
+                        <div className="w-10 h-10 bg-[#0f172a] text-white flex items-center justify-center font-black text-xl cut-corners group-hover:bg-[#0284c7] transition-colors">
+                            L
+                        </div>
+                        <div>
+                            <h1 className="text-[#0f172a] font-black text-xl tracking-tighter uppercase leading-none">
+                                LAUNDRO<span className="text-[#0284c7]">LAB</span>
+                            </h1>
+                            <div className="flex items-center gap-2 mt-1">
+                                <span className="w-1.5 h-1.5 bg-[#0284c7] animate-pulse rounded-full"></span>
+                                <span className="font-code text-[10px] text-slate-500 uppercase font-bold">System Online</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="text-right hidden sm:block">
+                        <span className="font-code text-slate-500 text-sm font-bold bg-white px-2 py-1 border border-slate-200 cut-corners">UNIT: 01</span>
+                    </div>
+                </div>
+                {/* Progress Bar - Sharp & Tech */}
+                <div className="w-full h-1 bg-slate-200 flex">
+                    <div className="h-full bg-[#0284c7]" style={{width: `${step * 25}%`}}></div>
+                </div>
+            </header>
+        );
+
+        const MachineSelection = ({ onSelect }) => {
+            const machines = [
+                { id: 1, name: "01", type: "wash", status: "available", kg: "10KG", img: IMG_WASHER },
+                { id: 2, name: "02", type: "wash", status: "busy", time: "12m", kg: "10KG", img: IMG_WASHER },
+                { id: 3, name: "03", type: "dry", status: "available", kg: "15KG", img: IMG_DRYER },
+                { id: 4, name: "04", type: "dry", status: "available", kg: "15KG", img: IMG_DRYER },
+                { id: 5, name: "05", type: "wash", status: "maint", kg: "10KG", img: IMG_WASHER },
+                { id: 6, name: "06", type: "wash", status: "available", kg: "10KG", img: IMG_WASHER },
+            ];
+
+            return (
+                <div className="p-4 pb-24">
+                    <div className="mb-6 flex justify-between items-end border-b-2 border-slate-300 pb-2">
+                        <div>
+                            <h2 className="text-[#0f172a] font-black text-2xl uppercase tracking-tight">Chọn Thiết Bị</h2>
+                            <p className="text-slate-500 text-xs font-bold font-code mt-1">// SELECT_UNIT</p>
+                        </div>
+                        <div className="text-right hidden xs:block">
+                            <span className="bg-[#dcfce7] text-[#166534] font-bold text-xs px-2 py-1 cut-corners">AVAIL: {machines.filter(m => m.status === 'available').length}</span>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        {machines.map(m => {
+                            const isAvail = m.status === 'available';
+                            const isBusy = m.status === 'busy';
+                            const isMaint = m.status === 'maint';
+                            
+                            return (
+                                <button 
+                                    key={m.id}
+                                    onClick={() => isAvail && onSelect(m)}
+                                    disabled={!isAvail}
+                                    className={`
+                                        relative group overflow-hidden transition-all duration-200 cut-corners text-left bg-white
+                                        ${isAvail ? 'hover:-translate-y-1 shadow-sm hover:shadow-md border-2 border-transparent hover:border-[#0284c7]' : ''}
+                                        ${isBusy ? 'opacity-70 border-2 border-slate-100' : ''}
+                                        ${isMaint ? 'opacity-50 grayscale border-2 border-slate-100' : ''}
+                                    `}
+                                >
+                                    {/* Status Badge */}
+                                    <div className="absolute top-0 right-0 z-20">
+                                        <div className={`
+                                            font-code text-[9px] font-bold px-2 py-1 
+                                            ${isAvail ? 'bg-[#0f172a] text-white' : isBusy ? 'bg-slate-200 text-slate-500' : 'bg-yellow-100 text-yellow-700'}
+                                        `}>
+                                            {isAvail ? 'READY' : isBusy ? 'BUSY' : 'MAINT'}
+                                        </div>
+                                    </div>
+
+                                    {/* Machine Bay (Image) */}
+                                    <div className="machine-bay h-32 flex items-center justify-center p-4 relative bg-slate-50">
+                                        {/* Grid pattern */}
+                                        <div className="absolute inset-0 grid-bg opacity-50"></div>
+                                        
+                                        <img 
+                                            src={m.img} 
+                                            alt={m.name} 
+                                            className={`
+                                                relative z-10 h-full w-full object-contain filter drop-shadow-lg
+                                                ${isAvail ? 'group-hover:scale-105 transition-transform duration-300' : ''}
+                                            `}
+                                        />
+                                        
+                                        {/* Overlay text for busy/maint */}
+                                        {isBusy && (
+                                            <div className="absolute inset-0 bg-white/60 flex items-center justify-center backdrop-blur-[1px] z-20">
+                                                <div className="text-center bg-white p-2 border border-slate-200 shadow-sm">
+                                                    <p className="text-slate-900 font-code font-bold text-xs">{m.time}</p>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {isMaint && (
+                                            <div className="absolute inset-0 bg-slate-100/80 flex items-center justify-center z-20">
+                                                <AlertTriangle className="text-slate-400" />
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Footer Info */}
+                                    <div className="p-3 border-x border-b border-slate-200 bg-white h-full">
+                                        <div className="flex justify-between items-end">
+                                            <div>
+                                                <div className="flex items-center gap-1 mb-1">
+                                                    <span className="w-1 h-3 bg-[#0284c7]"></span>
+                                                    <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider">{m.type === 'wash' ? 'WASHER' : 'DRYER'}</span>
+                                                </div>
+                                                <p className="text-[#0f172a] font-black text-2xl leading-none">{m.name}</p>
+                                            </div>
+                                            <div className="text-right">
+                                                 <p className="font-code text-xs font-bold text-slate-500">{m.kg}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        };
+
+        const ProgramSelection = ({ machine, onBack, onSelect }) => {
+            const [selected, setSelected] = useState(null);
+            const programs = [
+                { id: 'p1', name: "Giặt Nhanh", time: "35m", price: 25000, temp: "30°C" },
+                { id: 'p2', name: "Tiêu Chuẩn", time: "45m", price: 35000, temp: "40°C" },
+                { id: 'p3', name: "Giặt Mạnh", time: "60m", price: 45000, temp: "60°C" },
+                { id: 'p4', name: "Giặt Đồ Mỏng", time: "40m", price: 30000, temp: "Cold" },
+            ];
+
+            return (
+                <div className="h-full flex flex-col p-4 pt-2">
+                    <button onClick={onBack} className="text-slate-500 hover:text-[#0f172a] mb-4 flex items-center gap-1 font-bold text-xs uppercase tracking-widest w-fit transition-colors">
+                        <ChevronLeft size={16} /> Quay Lại
+                    </button>
+
+                    {/* Target Device Info */}
+                    <div className="flex gap-4 bg-white p-4 cut-corners border border-slate-200 mb-6 shadow-sm">
+                        <div className="w-16 h-16 bg-slate-100 flex items-center justify-center border border-slate-200">
+                             <img src={machine.img} className="w-12 h-12 object-contain mix-blend-multiply" />
+                        </div>
+                        <div>
+                            <p className="text-[#0284c7] font-code text-[10px] uppercase font-bold">Target Device</p>
+                            <h2 className="text-2xl font-black text-[#0f172a] leading-none uppercase">Máy {machine.name}</h2>
+                            <p className="text-slate-400 text-xs font-bold mt-1 bg-slate-50 inline-block px-1">{machine.type === 'wash' ? 'WASHER' : 'DRYER'} // {machine.kg}</p>
+                        </div>
+                    </div>
+
+                    <div className="space-y-3">
+                        {programs.map(p => (
+                            <div 
+                                key={p.id} 
+                                onClick={() => setSelected(p)}
+                                className={`
+                                    cursor-pointer p-4 border-l-4 transition-all duration-150 bg-white shadow-sm group
+                                    ${selected?.id === p.id 
+                                        ? 'border-[#0284c7] ring-1 ring-slate-200 bg-slate-50' 
+                                        : 'border-slate-200 hover:border-slate-300'}
+                                `}
+                            >
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <h3 className={`font-bold text-lg uppercase ${selected?.id === p.id ? 'text-[#0f172a]' : 'text-slate-700'}`}>{p.name}</h3>
+                                        <div className="flex gap-2 mt-1">
+                                            <span className="text-[10px] font-code font-bold text-slate-500 bg-slate-100 px-1 border border-slate-200">T: {p.time}</span>
+                                            <span className="text-[10px] font-code font-bold text-slate-500 bg-slate-100 px-1 border border-slate-200">TMP: {p.temp}</span>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className={`font-black text-xl font-code ${selected?.id === p.id ? 'text-[#0284c7]' : 'text-slate-400'}`}>
+                                            {p.price.toLocaleString()}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-auto pt-6">
+                        <button 
+                            disabled={!selected}
+                            onClick={() => onSelect(selected)}
+                            className="btn-primary-sharp w-full py-4 text-xl shadow-lg"
+                        >
+                            {selected ? "XÁC NHẬN" : "CHỌN CHƯƠNG TRÌNH"}
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        const Scanner = ({ onComplete }) => {
+            const [percent, setPercent] = useState(0);
+            
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setPercent(p => {
+                        if (p >= 100) {
+                            clearInterval(interval);
+                            setTimeout(onComplete, 1000);
+                            return 100;
+                        }
+                        return p + 1;
+                    });
+                }, 30);
+                return () => clearInterval(interval);
+            }, []);
+
+            return (
+                <div className="h-full flex flex-col justify-center items-center p-6 bg-[#0f172a]">
+                    <div className="relative w-full aspect-square border-4 border-white bg-black overflow-hidden mb-6 shadow-2xl">
+                         {/* Cam BG */}
+                         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1545173168-9f1947eebb8f?q=80&w=2071&auto=format&fit=crop')] bg-cover bg-center opacity-60"></div>
+                         
+                         {/* Overlay Lines */}
+                         <div className="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-white"></div>
+                         <div className="absolute top-4 right-4 w-8 h-8 border-t-4 border-r-4 border-white"></div>
+                         <div className="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-white"></div>
+                         <div className="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-white"></div>
+                         
+                         {/* Scan Beam */}
+                         <div className="absolute inset-0">
+                             <div className="scan-beam bg-white shadow-[0_0_15px_white]"></div>
+                         </div>
+
+                         {/* Center Status */}
+                         <div className="absolute inset-0 flex items-center justify-center">
+                             <div className="bg-black/70 px-4 py-2 border border-white text-white font-code font-bold text-xl backdrop-blur-sm">
+                                 SCANNING {percent}%
+                             </div>
+                         </div>
+                    </div>
+                    <p className="text-white font-code text-xs uppercase tracking-widest animate-pulse font-bold">Checking for objects...</p>
+                </div>
+            );
+        };
+
+        const Payment = ({ machine, program, onBack }) => {
+            const [success, setSuccess] = useState(false);
+            const handlePay = () => setTimeout(() => setSuccess(true), 1500);
+
+            if (success) {
+                return (
+                    <div className="h-full flex flex-col items-center justify-center p-6 text-center">
+                        <div className="w-24 h-24 bg-[#0f172a] text-white rounded-full flex items-center justify-center mb-6 shadow-xl">
+                            <Shield size={48} />
+                        </div>
+                        <h2 className="text-[#0f172a] font-black text-3xl uppercase mb-2">Thành Công</h2>
+                        <p className="text-slate-500 mb-8 font-medium">Máy {machine.name} đã được mở khóa.</p>
+                        <button onClick={() => window.location.reload()} className="text-[#0284c7] font-bold underline font-code hover:text-[#0f172a]">
+                            [ QUAY VỀ TRANG CHỦ ]
+                        </button>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="h-full flex flex-col p-4 pt-2">
+                    <button onClick={onBack} className="text-slate-500 hover:text-[#0f172a] mb-4 flex items-center gap-1 font-bold text-xs uppercase tracking-widest w-fit transition-colors">
+                        <ChevronLeft size={16} /> Hủy Bỏ
+                    </button>
+
+                    <h2 className="text-[#0f172a] font-black text-2xl uppercase mb-6 border-b-2 border-slate-200 pb-2">Thanh Toán</h2>
+
+                    <div className="bg-white p-6 border border-slate-200 mb-6 cut-corners shadow-sm">
+                        <div className="flex justify-between items-center mb-1">
+                            <span className="font-code text-slate-400 text-xs font-bold">TOTAL AMOUNT</span>
+                            <Zap className="text-[#0284c7]" size={16} />
+                        </div>
+                        <div className="font-code text-4xl font-bold text-[#0f172a] tracking-wider">
+                            {program.price.toLocaleString()} <span className="text-lg text-slate-400">VND</span>
+                        </div>
+                    </div>
+
+                    <div 
+                        onClick={handlePay}
+                        className="group bg-white border-2 border-[#0f172a] hover:bg-[#0f172a] transition-all p-4 cursor-pointer flex items-center gap-4 cut-corners shadow-md hover:shadow-xl hover:-translate-y-1"
+                    >
+                        <div className="bg-[#0f172a] p-3 text-white group-hover:bg-white group-hover:text-[#0f172a] transition-colors">
+                            <QrCode size={32} />
+                        </div>
+                        <div className="flex-1">
+                            <h3 className="font-black text-[#0f172a] text-lg uppercase group-hover:text-white">Quét Mã QR</h3>
+                            <p className="text-slate-500 text-xs font-bold group-hover:text-slate-300">Momo / VietQR / Bank</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [step, setStep] = useState(1);
+            const [data, setData] = useState({ machine: null, program: null });
+
+            return (
+                <div className="max-w-md mx-auto min-h-screen bg-[#f1f5f9] border-x border-slate-200 relative shadow-2xl flex flex-col font-main">
+                    {/* Grid Background */}
+                    <div className="fixed inset-0 grid-bg opacity-40 pointer-events-none z-0"></div>
+                    
+                    <div className="relative z-10 flex flex-col flex-1">
+                        {step !== 3 && <Header step={step} reset={() => setStep(1)} />}
+                        <main className="flex-1">
+                            {step === 1 && <MachineSelection onSelect={(m) => { setData({...data, machine: m}); setStep(2); }} />}
+                            {step === 2 && <ProgramSelection machine={data.machine} onBack={() => setStep(1)} onSelect={(p) => { setData({...data, program: p}); setStep(3); }} />}
+                            {step === 3 && <Scanner onComplete={() => setStep(4)} />}
+                            {step === 4 && <Payment machine={data.machine} program={data.program} onBack={() => setStep(2)} />}
+                        </main>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biên Bản Bàn Giao - The Clean Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           THE CLEAN LAB - HANDOVER REPORT TEMPLATE
+           Biên Bản Bàn Giao Thiết Bị / Công Việc
+           Brand: "Titanium Command"
+           ============================================ */
+
+        :root {
+            --color-white: #ffffff;
+            --color-gray-50: #f8fafc;
+            --color-gray-100: #f0f2f5;
+            --color-gray-200: #e2e8f0;
+            --color-gray-300: #cbd5e1;
+            --color-gray-400: #94a3b8;
+            --color-gray-500: #64748b;
+            --color-gray-900: #0f172a;
+            --color-black: #111111;
+            --color-blue-500: #0055ff;
+            --color-green-500: #00cc66;
+            --color-orange-500: #ff4800;
+
+            --font-display: 'Inter', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            --chamfer-lg: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--color-gray-100);
+            color: var(--color-black);
+            line-height: 1.5;
+            padding: 40px;
+        }
+
+        .document {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--color-white);
+            border: 2px solid var(--color-black);
+            clip-path: var(--chamfer-lg);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .doc-header {
+            background: var(--color-black);
+            color: var(--color-white);
+            padding: 32px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-mark {
+            width: 56px;
+            height: 56px;
+            background: var(--color-white);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 28px;
+            clip-path: var(--chamfer-sm);
+        }
+
+        .brand-text h1 {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .brand-text h1 span { color: var(--color-gray-400); }
+
+        .brand-text p {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .doc-type {
+            text-align: right;
+        }
+
+        .doc-type h2 {
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .doc-type .doc-number {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--color-gray-400);
+            margin-top: 4px;
+        }
+
+        /* Stamp */
+        .stamp {
+            position: absolute;
+            top: 20px;
+            right: 200px;
+            transform: rotate(-12deg);
+            border: 4px solid var(--color-blue-500);
+            color: var(--color-blue-500);
+            padding: 8px 20px;
+            font-family: var(--font-mono);
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+        }
+
+        /* Info Section */
+        .doc-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            padding: 32px 40px;
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+
+        .info-block h3 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .info-block p { font-size: 14px; margin-bottom: 4px; }
+        .info-block .name { font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .meta-item {
+            background: var(--color-gray-50);
+            padding: 12px;
+            border: 1px solid var(--color-gray-200);
+        }
+
+        .meta-item label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .meta-item span {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* Content Section */
+        .doc-content {
+            padding: 32px 40px;
+        }
+
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-black);
+        }
+
+        /* Table */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+
+        thead { background: var(--color-gray-100); }
+
+        th {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid var(--color-black);
+        }
+
+        th:last-child { text-align: center; }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--color-gray-200);
+            font-size: 14px;
+        }
+
+        td:last-child { text-align: center; }
+
+        .item-name { font-weight: 600; }
+        .item-code {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-500);
+            margin-top: 2px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            clip-path: var(--chamfer-sm);
+        }
+
+        .status-good {
+            background: rgba(0, 204, 102, 0.15);
+            color: var(--color-green-500);
+        }
+
+        .status-warning {
+            background: rgba(255, 72, 0, 0.15);
+            color: var(--color-orange-500);
+        }
+
+        /* Notes */
+        .notes-section {
+            background: var(--color-gray-50);
+            border: 1px solid var(--color-gray-200);
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+
+        .notes-section h4 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            margin-bottom: 12px;
+        }
+
+        .notes-section p {
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* Signature Section */
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 32px 40px;
+            border-top: 2px solid var(--color-gray-200);
+            background: var(--color-gray-50);
+        }
+
+        .signature-box {
+            text-align: center;
+        }
+
+        .signature-box h4 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 8px;
+        }
+
+        .signature-box .name {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .signature-box .title {
+            font-size: 12px;
+            color: var(--color-gray-500);
+            margin-bottom: 40px;
+        }
+
+        .signature-line {
+            border-top: 2px solid var(--color-black);
+            padding-top: 8px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        .doc-footer {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--color-gray-200);
+        }
+
+        .contact-info {
+            font-size: 12px;
+            color: var(--color-gray-500);
+        }
+
+        .contact-info span { margin-right: 24px; }
+
+        .ref-code {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .document { border: none; clip-path: none; }
+            .stamp { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        <!-- Header -->
+        <header class="doc-header">
+            <div class="brand">
+                <div class="brand-mark">L</div>
+                <div class="brand-text">
+                    <h1>The Clean<span>Lab</span></h1>
+                    <p>Professional Laundry Services</p>
+                </div>
+            </div>
+            <div class="stamp">Bàn Giao</div>
+            <div class="doc-type">
+                <h2>Biên Bản<br>Bàn Giao</h2>
+                <div class="doc-number">HO-2025-0034</div>
+            </div>
+        </header>
+
+        <!-- Info Section -->
+        <section class="doc-info">
+            <div class="info-block">
+                <h3>Bên Giao</h3>
+                <p class="name">CÔNG TY TNHH THE CLEAN LAB</p>
+                <p>Địa chỉ: 456 Nguyễn Thị Minh Khai, Q.3, TP.HCM</p>
+                <p>Đại diện: <strong>Nguyễn Văn A</strong></p>
+                <p>Chức vụ: Giám đốc Kỹ thuật</p>
+            </div>
+            <div class="info-block">
+                <h3>Bên Nhận</h3>
+                <p class="name">CÔNG TY TNHH XYZ LAUNDRY</p>
+                <p>Địa chỉ: 789 Lê Văn Sỹ, Q.Tân Bình, TP.HCM</p>
+                <p>Đại diện: <strong>Trần Văn B</strong></p>
+                <p>Chức vụ: Giám đốc Điều hành</p>
+            </div>
+        </section>
+
+        <!-- Meta Info -->
+        <section style="padding: 24px 40px; border-bottom: 2px solid var(--color-gray-200);">
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <label>Ngày Bàn Giao</label>
+                    <span>12/12/2025</span>
+                </div>
+                <div class="meta-item">
+                    <label>Địa Điểm</label>
+                    <span>789 Lê Văn Sỹ, Q.Tân Bình</span>
+                </div>
+                <div class="meta-item">
+                    <label>Hợp Đồng Số</label>
+                    <span>HD-2025-0089</span>
+                </div>
+                <div class="meta-item">
+                    <label>Đơn Hàng</label>
+                    <span>ORD-2025-0142</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content -->
+        <section class="doc-content">
+            <h3 class="section-title">Danh Sách Thiết Bị / Hạng Mục Bàn Giao</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50px">#</th>
+                        <th>Thiết Bị / Hạng Mục</th>
+                        <th style="width: 60px">SL</th>
+                        <th style="width: 100px">Đơn Vị</th>
+                        <th style="width: 120px">Tình Trạng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01</td>
+                        <td>
+                            <div class="item-name">Máy Giặt Công Nghiệp 15KG</div>
+                            <div class="item-code">TCL-W15 | S/N: W15-2025-0891</div>
+                        </td>
+                        <td>02</td>
+                        <td>Máy</td>
+                        <td><span class="status-badge status-good">Tốt</span></td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>
+                            <div class="item-name">Máy Sấy Công Nghiệp 15KG</div>
+                            <div class="item-code">TCL-D15 | S/N: D15-2025-0445</div>
+                        </td>
+                        <td>02</td>
+                        <td>Máy</td>
+                        <td><span class="status-badge status-good">Tốt</span></td>
+                    </tr>
+                    <tr>
+                        <td>03</td>
+                        <td>
+                            <div class="item-name">Kiosk Thanh Toán Tự Động</div>
+                            <div class="item-code">TCL-K01 | S/N: K01-2025-0112</div>
+                        </td>
+                        <td>01</td>
+                        <td>Bộ</td>
+                        <td><span class="status-badge status-good">Tốt</span></td>
+                    </tr>
+                    <tr>
+                        <td>04</td>
+                        <td>
+                            <div class="item-name">Bộ Cáp Kết Nối & Phụ Kiện</div>
+                            <div class="item-code">Cable kit + mounting hardware</div>
+                        </td>
+                        <td>01</td>
+                        <td>Bộ</td>
+                        <td><span class="status-badge status-good">Đầy đủ</span></td>
+                    </tr>
+                    <tr>
+                        <td>05</td>
+                        <td>
+                            <div class="item-name">Tài Liệu Hướng Dẫn Sử Dụng</div>
+                            <div class="item-code">User manual + Quick start guide</div>
+                        </td>
+                        <td>01</td>
+                        <td>Bộ</td>
+                        <td><span class="status-badge status-good">Đầy đủ</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Notes -->
+            <div class="notes-section">
+                <h4>Ghi Chú / Lưu Ý</h4>
+                <p>
+                    • Tất cả thiết bị đã được kiểm tra hoạt động tốt trước khi bàn giao.<br>
+                    • Bên nhận đã được hướng dẫn vận hành cơ bản và xử lý sự cố thông thường.<br>
+                    • Thời gian bảo hành: 24 tháng kể từ ngày bàn giao.<br>
+                    • Hotline hỗ trợ kỹ thuật: 1900 888 999 (24/7).
+                </p>
+            </div>
+        </section>
+
+        <!-- Signature Section -->
+        <section class="signature-section">
+            <div class="signature-box">
+                <h4>Bên Giao</h4>
+                <p class="name">Nguyễn Văn A</p>
+                <p class="title">Giám đốc Kỹ thuật</p>
+                <div class="signature-line">Ký & Ghi rõ họ tên</div>
+            </div>
+            <div class="signature-box">
+                <h4>Bên Nhận</h4>
+                <p class="name">Trần Văn B</p>
+                <p class="title">Giám đốc Điều hành</p>
+                <div class="signature-line">Ký & Ghi rõ họ tên</div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="doc-footer">
+            <div class="contact-info">
+                <span>📞 1900 888 999</span>
+                <span>✉ support@thecleanlab.vn</span>
+                <span>🌐 thecleanlab.vn</span>
+            </div>
+            <div class="ref-code">
+                REF: TCL-HO-20251212-034K
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

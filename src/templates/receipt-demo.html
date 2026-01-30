@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biên Lai / Receipt - The Clean Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           THE CLEAN LAB - RECEIPT TEMPLATES
+           Brand: "Titanium Command"
+           Thermal Printer 80mm & Digital Receipt
+           ============================================ */
+
+        :root {
+            --color-white: #ffffff;
+            --color-gray-50: #f8fafc;
+            --color-gray-100: #f0f2f5;
+            --color-gray-200: #e2e8f0;
+            --color-gray-400: #94a3b8;
+            --color-gray-500: #64748b;
+            --color-black: #111111;
+            --color-blue-500: #0055ff;
+            --color-green-500: #00cc66;
+            --color-orange-500: #ff4800;
+
+            --font-display: 'Inter', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--color-gray-200);
+            color: var(--color-black);
+            line-height: 1.5;
+            padding: 40px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-size: 32px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: var(--color-gray-500);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .receipts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        .receipt-wrapper {
+            background: var(--color-gray-100);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .receipt-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .receipt-type {
+            background: var(--color-black);
+            color: white;
+            padding: 4px 8px;
+            font-size: 9px;
+        }
+
+        /* ====== THERMAL RECEIPT (80mm) ====== */
+        .thermal-receipt {
+            width: 280px;
+            background: var(--color-white);
+            padding: 16px;
+            margin: 0 auto;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .thermal-receipt .header {
+            text-align: center;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed var(--color-black);
+        }
+
+        .thermal-receipt .logo-text {
+            font-size: 18px;
+            font-weight: 900;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .thermal-receipt .logo-text span {
+            color: var(--color-gray-400);
+        }
+
+        .thermal-receipt .branch {
+            font-size: 10px;
+            color: var(--color-gray-500);
+            margin-top: 4px;
+        }
+
+        .thermal-receipt .receipt-title {
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .thermal-receipt .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            font-size: 11px;
+        }
+
+        .thermal-receipt .divider {
+            border-top: 1px dashed var(--color-black);
+            margin: 8px 0;
+        }
+
+        .thermal-receipt .item-row {
+            padding: 4px 0;
+        }
+
+        .thermal-receipt .item-name {
+            font-weight: 600;
+        }
+
+        .thermal-receipt .item-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--color-gray-500);
+            padding-left: 8px;
+        }
+
+        .thermal-receipt .total-section {
+            background: var(--color-gray-100);
+            margin: 8px -16px;
+            padding: 12px 16px;
+        }
+
+        .thermal-receipt .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+        }
+
+        .thermal-receipt .grand-total {
+            font-size: 16px;
+            font-weight: 700;
+            padding-top: 8px;
+            margin-top: 8px;
+            border-top: 2px solid var(--color-black);
+        }
+
+        .thermal-receipt .qr-section {
+            text-align: center;
+            padding: 12px 0;
+        }
+
+        .thermal-receipt .qr-code {
+            width: 80px;
+            height: 80px;
+            background: var(--color-black);
+            margin: 8px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 8px;
+        }
+
+        .thermal-receipt .qr-label {
+            font-size: 9px;
+            color: var(--color-gray-500);
+        }
+
+        .thermal-receipt .footer {
+            text-align: center;
+            padding-top: 12px;
+            border-top: 1px dashed var(--color-black);
+            font-size: 10px;
+            color: var(--color-gray-500);
+        }
+
+        .thermal-receipt .footer .thanks {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--color-black);
+            margin-bottom: 4px;
+        }
+
+        /* Tear Effect */
+        .tear-edge {
+            height: 10px;
+            background-image: radial-gradient(circle at 10px 0, transparent 8px, var(--color-white) 9px);
+            background-size: 20px 10px;
+            background-repeat: repeat-x;
+            margin-top: -1px;
+        }
+
+        /* ====== DIGITAL RECEIPT ====== */
+        .digital-receipt {
+            width: 360px;
+            background: var(--color-white);
+            margin: 0 auto;
+            border: 2px solid var(--color-black);
+            clip-path: var(--chamfer-sm);
+            overflow: hidden;
+        }
+
+        .digital-receipt .header {
+            background: var(--color-black);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .digital-receipt .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .digital-receipt .brand-mark {
+            width: 36px;
+            height: 36px;
+            background: var(--color-white);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+        }
+
+        .digital-receipt .brand-text {
+            font-size: 16px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .digital-receipt .brand-text span {
+            color: var(--color-gray-400);
+        }
+
+        .digital-receipt .status {
+            background: var(--color-green-500);
+            padding: 6px 12px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .digital-receipt .body {
+            padding: 20px;
+        }
+
+        .digital-receipt .receipt-number {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        .digital-receipt .receipt-title {
+            font-size: 20px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .digital-receipt .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .digital-receipt .meta-item {
+            background: var(--color-gray-50);
+            padding: 10px;
+            border: 1px solid var(--color-gray-200);
+        }
+
+        .digital-receipt .meta-item label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .digital-receipt .meta-item span {
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .digital-receipt .items-list {
+            border-top: 2px solid var(--color-black);
+            padding-top: 12px;
+        }
+
+        .digital-receipt .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .digital-receipt .item-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .digital-receipt .item-info p {
+            font-size: 11px;
+            color: var(--color-gray-500);
+            font-family: var(--font-mono);
+        }
+
+        .digital-receipt .item-price {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .digital-receipt .totals {
+            background: var(--color-gray-50);
+            margin: 16px -20px;
+            padding: 16px 20px;
+        }
+
+        .digital-receipt .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 13px;
+        }
+
+        .digital-receipt .total-row.grand {
+            padding-top: 12px;
+            margin-top: 8px;
+            border-top: 2px solid var(--color-black);
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .digital-receipt .total-row.grand .value {
+            color: var(--color-green-500);
+            font-family: var(--font-mono);
+        }
+
+        .digital-receipt .footer {
+            display: flex;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--color-gray-200);
+        }
+
+        .digital-receipt .qr-code {
+            width: 64px;
+            height: 64px;
+            background: var(--color-black);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 8px;
+            font-family: var(--font-mono);
+        }
+
+        .digital-receipt .footer-info {
+            font-size: 11px;
+            color: var(--color-gray-500);
+        }
+
+        .digital-receipt .footer-info p {
+            margin-bottom: 4px;
+        }
+
+        /* ====== KIOSK RECEIPT PREVIEW ====== */
+        .kiosk-receipt {
+            width: 360px;
+            background: var(--color-black);
+            color: white;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .kiosk-receipt .success-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--color-green-500);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .kiosk-receipt .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .kiosk-receipt .subtitle {
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--color-gray-400);
+            margin-bottom: 24px;
+        }
+
+        .kiosk-receipt .receipt-card {
+            background: var(--color-white);
+            color: var(--color-black);
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .kiosk-receipt .receipt-card .label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            margin-bottom: 4px;
+        }
+
+        .kiosk-receipt .receipt-card .value {
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .kiosk-receipt .receipt-card .value.highlight {
+            color: var(--color-blue-500);
+            font-family: var(--font-mono);
+        }
+
+        .kiosk-receipt .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .kiosk-receipt .info-item {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+        }
+
+        .kiosk-receipt .info-item label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            text-transform: uppercase;
+            color: var(--color-gray-400);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .kiosk-receipt .info-item span {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .kiosk-receipt .action-hint {
+            text-align: center;
+            padding: 16px;
+            background: rgba(0, 85, 255, 0.2);
+            border: 2px solid var(--color-blue-500);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .kiosk-receipt .countdown {
+            text-align: center;
+            margin-top: 16px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--color-gray-400);
+        }
+
+        .kiosk-receipt .countdown span {
+            color: white;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-title">
+        <h1>Receipt Templates</h1>
+        <p>The Clean Lab • Brand Identity System</p>
+    </div>
+
+    <div class="receipts-grid">
+        <!-- ====== THERMAL RECEIPT ====== -->
+        <div class="receipt-wrapper">
+            <div class="receipt-label">
+                <span>Thermal Receipt (80mm)</span>
+                <span class="receipt-type">Print</span>
+            </div>
+            <div class="thermal-receipt">
+                <div class="header">
+                    <div class="logo-text">The Clean<span>Lab</span></div>
+                    <div class="branch">Chi nhánh Quận 7 • 123 Nguyễn Văn Linh</div>
+                </div>
+
+                <div class="receipt-title">Biên Lai Thanh Toán</div>
+
+                <div class="info-row">
+                    <span>Số BL:</span>
+                    <span>TCL-241212-0042</span>
+                </div>
+                <div class="info-row">
+                    <span>Ngày:</span>
+                    <span>12/12/2025 14:35</span>
+                </div>
+                <div class="info-row">
+                    <span>Thu ngân:</span>
+                    <span>Kiosk #01</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="item-row">
+                    <div class="item-name">Giặt Tiêu Chuẩn</div>
+                    <div class="item-details">
+                        <span>Máy 01 • 45 phút</span>
+                        <span>35.000đ</span>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="item-name">Sấy Tự Động</div>
+                    <div class="item-details">
+                        <span>Máy Sấy 02 • 30 phút</span>
+                        <span>25.000đ</span>
+                    </div>
+                </div>
+
+                <div class="total-section">
+                    <div class="total-row">
+                        <span>Tạm tính:</span>
+                        <span>60.000đ</span>
+                    </div>
+                    <div class="total-row">
+                        <span>VAT (10%):</span>
+                        <span>6.000đ</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>TỔNG CỘNG:</span>
+                        <span>66.000đ</span>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <span>Thanh toán:</span>
+                    <span>VNPay QR</span>
+                </div>
+                <div class="info-row">
+                    <span>Mã GD:</span>
+                    <span>VNP-8293847</span>
+                </div>
+
+                <div class="qr-section">
+                    <div class="qr-code">QR CODE</div>
+                    <div class="qr-label">Quét để xem hóa đơn điện tử</div>
+                </div>
+
+                <div class="footer">
+                    <div class="thanks">Cảm ơn quý khách!</div>
+                    <div>Hotline: 1900 888 999</div>
+                    <div>www.thecleanlab.vn</div>
+                </div>
+            </div>
+            <div class="tear-edge"></div>
+        </div>
+
+        <!-- ====== DIGITAL RECEIPT ====== -->
+        <div class="receipt-wrapper">
+            <div class="receipt-label">
+                <span>Digital Receipt</span>
+                <span class="receipt-type">Email/App</span>
+            </div>
+            <div class="digital-receipt">
+                <div class="header">
+                    <div class="brand">
+                        <div class="brand-mark">L</div>
+                        <div class="brand-text">The Clean<span>Lab</span></div>
+                    </div>
+                    <div class="status">✓ Đã Thanh Toán</div>
+                </div>
+
+                <div class="body">
+                    <div class="receipt-number">Receipt #TCL-241212-0042</div>
+                    <div class="receipt-title">Biên Lai Dịch Vụ</div>
+
+                    <div class="meta-grid">
+                        <div class="meta-item">
+                            <label>Ngày Giao Dịch</label>
+                            <span>12/12/2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <label>Thời Gian</label>
+                            <span>14:35</span>
+                        </div>
+                        <div class="meta-item">
+                            <label>Chi Nhánh</label>
+                            <span>Quận 7</span>
+                        </div>
+                        <div class="meta-item">
+                            <label>PT Thanh Toán</label>
+                            <span>VNPay QR</span>
+                        </div>
+                    </div>
+
+                    <div class="items-list">
+                        <div class="item">
+                            <div class="item-info">
+                                <h4>Giặt Tiêu Chuẩn</h4>
+                                <p>Máy 01 • 45 phút • 40°C</p>
+                            </div>
+                            <div class="item-price">35.000đ</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-info">
+                                <h4>Sấy Tự Động</h4>
+                                <p>Máy Sấy 02 • 30 phút</p>
+                            </div>
+                            <div class="item-price">25.000đ</div>
+                        </div>
+                    </div>
+
+                    <div class="totals">
+                        <div class="total-row">
+                            <span>Tạm tính</span>
+                            <span>60.000đ</span>
+                        </div>
+                        <div class="total-row">
+                            <span>VAT (10%)</span>
+                            <span>6.000đ</span>
+                        </div>
+                        <div class="total-row grand">
+                            <span>Tổng Cộng</span>
+                            <span class="value">66.000đ</span>
+                        </div>
+                    </div>
+
+                    <div class="footer">
+                        <div class="qr-code">QR CODE</div>
+                        <div class="footer-info">
+                            <p><strong>Mã giao dịch:</strong> VNP-8293847</p>
+                            <p>Biên lai này có giá trị như hóa đơn.</p>
+                            <p>Hotline: 1900 888 999</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== KIOSK RECEIPT PREVIEW ====== -->
+        <div class="receipt-wrapper">
+            <div class="receipt-label">
+                <span>Kiosk Success Screen</span>
+                <span class="receipt-type">HMI</span>
+            </div>
+            <div class="kiosk-receipt">
+                <div class="success-icon">✓</div>
+                <div class="title">Thanh Toán Thành Công</div>
+                <div class="subtitle">Transaction Complete</div>
+
+                <div class="receipt-card">
+                    <div class="label">Mã Kích Hoạt</div>
+                    <div class="value highlight">TCL-0042</div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Thiết Bị</label>
+                        <span>Máy Giặt #01</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Chương Trình</label>
+                        <span>Tiêu Chuẩn</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Thời Gian</label>
+                        <span>45 Phút</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Thanh Toán</label>
+                        <span>66.000đ</span>
+                    </div>
+                </div>
+
+                <div class="action-hint">
+                    👉 Nhấn START trên máy để bắt đầu
+                </div>
+
+                <div class="countdown">
+                    Tự động về màn hình chính sau <span>10s</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

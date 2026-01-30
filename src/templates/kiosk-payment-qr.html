@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanium QR Pay</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --font-display: 'Inter', sans-serif;
+            --font-tech: 'JetBrains Mono', monospace;
+            --color-dark: #111;
+            --color-accent: #0055ff;
+            --color-success: #00cc66;
+        }
+
+        body {
+            font-family: var(--font-display);
+            background-color: #f0f2f5;
+            color: var(--color-dark);
+        }
+
+        /* --- INDUSTRIAL SHAPES --- */
+        .chamfer-lg {
+            clip-path: polygon(
+                20px 0, 100% 0, 
+                100% calc(100% - 20px), calc(100% - 20px) 100%, 
+                0 100%, 0 20px
+            );
+        }
+        .chamfer-sm {
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+
+        /* --- UTILS --- */
+        .font-tech { font-family: var(--font-tech); }
+        
+        /* --- ANIMATIONS --- */
+        @keyframes scan-vertical {
+            0% { top: 0%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .scan-laser {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #0055ff;
+            box-shadow: 0 0 20px #0055ff;
+            animation: scan-vertical 2s linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes pulse-border {
+            0% { border-color: #cbd5e1; }
+            50% { border-color: #0055ff; }
+            100% { border-color: #cbd5e1; }
+        }
+        .border-pulse {
+            animation: pulse-border 2s infinite;
+        }
+
+        /* Loading Spinner */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0055ff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- ICONS ---
+        const Icon = ({ className, children }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter" className={className}>{children}</svg>
+        );
+        const ChevronLeft = () => (<Icon className="w-5 h-5"><polyline points="15 18 9 12 15 6"/></Icon>);
+        const AlertCircle = () => (<Icon className="w-6 h-6"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></Icon>);
+        const CheckCircle = () => (<Icon className="w-16 h-16"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></Icon>);
+        const RefreshCw = () => (<Icon className="w-5 h-5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></Icon>);
+
+        // --- COMPONENTS ---
+
+        const Header = () => (
+            <header className="flex justify-between items-center p-5 bg-white border-b-2 border-slate-200 sticky top-0 z-50">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[#111] text-white flex items-center justify-center font-black text-xl chamfer-sm border-2 border-[#111]">L</div>
+                    <div className="leading-none">
+                        <h1 className="font-black text-xl tracking-tighter text-[#111]">LAUNDRY<span className="text-slate-400">OS</span></h1>
+                    </div>
+                </div>
+                <div className="bg-slate-100 border border-slate-300 px-3 py-1 chamfer-sm">
+                    <span className="font-tech font-bold text-sm text-slate-700">QR_GATEWAY</span>
+                </div>
+            </header>
+        );
+
+        const QRScreen = () => {
+            const [timeLeft, setTimeLeft] = useState(300); // 5 minutes
+            const [status, setStatus] = useState('waiting'); // waiting, checking, success
+            
+            // Format timer MM:SS
+            const formatTime = (seconds) => {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            };
+
+            useEffect(() => {
+                if (status !== 'waiting') return;
+                const timer = setInterval(() => {
+                    setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+                }, 1000);
+                return () => clearInterval(timer);
+            }, [status]);
+
+            // Simulate Payment Success on click
+            const simulateSuccess = () => {
+                setStatus('checking');
+                setTimeout(() => {
+                    setStatus('success');
+                }, 2000);
+            };
+
+            if (status === 'success') {
+                return (
+                    <div className="flex-1 flex flex-col items-center justify-center p-5 text-center animate-[fadeIn_0.5s_ease-out]">
+                        <div className="w-32 h-32 bg-[#00cc66] text-white flex items-center justify-center rounded-full mb-8 shadow-2xl shadow-green-500/40">
+                            <CheckCircle />
+                        </div>
+                        <h2 className="font-black text-4xl uppercase text-[#111] mb-2 tracking-tight">Thanh Toán Xong</h2>
+                        <p className="font-tech text-slate-500 font-bold mb-8">TXID: #9983-SUCCESS</p>
+                        
+                        <div className="w-full max-w-xs bg-white border-2 border-[#111] p-5 chamfer-sm mb-8 text-left">
+                            <div className="flex justify-between border-b border-slate-200 pb-2 mb-2">
+                                <span className="font-bold text-slate-500 text-xs uppercase">Máy</span>
+                                <span className="font-black text-[#111]">MÁY GIẶT 01</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="font-bold text-slate-500 text-xs uppercase">Bắt đầu</span>
+                                <span className="font-black text-[#0055ff]">NGAY LẬP TỨC</span>
+                            </div>
+                        </div>
+
+                        <button onClick={() => window.location.reload()} className="bg-[#111] text-white px-8 py-4 font-black uppercase chamfer-sm hover:bg-[#333] transition-colors w-full max-w-xs">
+                            Xong
+                        </button>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="flex-1 flex flex-col p-5 max-w-md mx-auto w-full h-full overflow-hidden">
+                    
+                    {/* Top Bar */}
+                    <div className="flex justify-between items-center mb-6">
+                        <button className="flex items-center gap-2 text-slate-500 hover:text-[#111] font-bold text-xs uppercase transition-colors">
+                            <ChevronLeft /> Quay Lại
+                        </button>
+                        <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                            <span className="font-tech text-xs font-bold text-red-500">LIVE TRANSACTION</span>
+                        </div>
+                    </div>
+
+                    {/* Main QR Card */}
+                    <div className="bg-white border-2 border-[#111] chamfer-lg p-6 shadow-xl relative overflow-hidden flex-1 flex flex-col items-center justify-center min-h-[400px]">
+                        
+                        {/* Transaction Info Overlay */}
+                        <div className="w-full flex justify-between items-end border-b-2 border-slate-100 pb-4 mb-6">
+                            <div>
+                                <p className="font-tech text-[10px] text-slate-400 font-bold uppercase">Total Payment</p>
+                                <p className="font-black text-3xl text-[#111]">45.000<span className="text-sm align-top text-slate-400 ml-1">đ</span></p>
+                            </div>
+                            <div className="text-right">
+                                <p className="font-tech text-[10px] text-slate-400 font-bold uppercase">Time Remaining</p>
+                                <p className={`font-tech text-2xl font-bold ${timeLeft < 60 ? 'text-red-500 animate-pulse' : 'text-[#0055ff]'}`}>
+                                    {formatTime(timeLeft)}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* QR Code Container */}
+                        <div 
+                            className="relative w-64 h-64 bg-slate-900 p-3 chamfer-sm cursor-pointer group"
+                            onClick={simulateSuccess} /* Click to simulate scan */
+                        >
+                            {/* Corner Markers */}
+                            <div className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-[#0055ff] -translate-x-1 -translate-y-1"></div>
+                            <div className="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-[#0055ff] translate-x-1 -translate-y-1"></div>
+                            <div className="absolute bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-[#0055ff] -translate-x-1 translate-y-1"></div>
+                            <div className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-[#0055ff] translate-x-1 translate-y-1"></div>
+
+                            {/* The QR Image */}
+                            <div className="w-full h-full bg-white flex items-center justify-center p-2">
+                                {/* Using a generic QR code image */}
+                                <img 
+                                    src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=SimulatePayment" 
+                                    alt="QR Code" 
+                                    className="w-full h-full object-contain"
+                                />
+                            </div>
+
+                            {/* Scanning Laser Effect */}
+                            {status === 'waiting' && <div className="scan-laser"></div>}
+                            
+                            {/* Processing Overlay */}
+                            {status === 'checking' && (
+                                <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-20 backdrop-blur-sm">
+                                    <div className="loader mb-4"></div>
+                                    <p className="text-white font-tech text-xs font-bold animate-pulse">VERIFYING...</p>
+                                </div>
+                            )}
+                            
+                            {/* Hover Instruction */}
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none">
+                                <span className="opacity-0 group-hover:opacity-100 bg-black text-white text-[10px] px-2 py-1 font-bold font-tech">CLICK TO SIMULATE</span>
+                            </div>
+                        </div>
+
+                        {/* App Logos */}
+                        <div className="flex gap-4 mt-8 opacity-60 grayscale hover:grayscale-0 transition-all">
+                            <img src="https://img.mservice.io/momo_app_v2/img/MoMo_Logo.png" className="h-6 object-contain" />
+                            <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay-Square.png" className="h-6 object-contain" />
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" className="h-6 object-contain hidden" /> {/* Placeholder for Bank App */}
+                            <div className="h-6 px-2 bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500 rounded">BANKING APP</div>
+                        </div>
+
+                    </div>
+
+                    {/* Footer Warning */}
+                    <div className="mt-6 flex items-start gap-3 bg-blue-50 border border-blue-200 p-4 chamfer-sm">
+                        <div className="text-[#0055ff] mt-0.5"><AlertCircle /></div>
+                        <div>
+                            <p className="font-bold text-[#111] text-sm uppercase">Lưu ý</p>
+                            <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                                Không đóng trình duyệt hoặc tắt màn hình trong quá trình quét. Giao dịch sẽ tự động hủy sau khi hết giờ.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            );
+        };
+
+        const App = () => {
+            return (
+                <div className="max-w-md mx-auto min-h-screen bg-[#f0f2f5] border-x border-slate-300 relative shadow-2xl flex flex-col font-display">
+                    <Header />
+                    <QRScreen />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

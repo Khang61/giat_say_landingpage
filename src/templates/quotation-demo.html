@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Giá - The Clean Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           THE CLEAN LAB - QUOTATION TEMPLATE
+           Brand: "Titanium Command"
+           ============================================ */
+
+        :root {
+            /* Foundation Colors */
+            --color-white: #ffffff;
+            --color-gray-50: #f8fafc;
+            --color-gray-100: #f0f2f5;
+            --color-gray-200: #e2e8f0;
+            --color-gray-300: #cbd5e1;
+            --color-gray-400: #94a3b8;
+            --color-gray-500: #64748b;
+            --color-gray-900: #0f172a;
+            --color-black: #111111;
+
+            /* Brand Colors */
+            --color-blue-500: #0055ff;
+            --color-blue-600: #0044cc;
+            --color-orange-500: #ff4800;
+
+            /* Fonts */
+            --font-display: 'Inter', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Chamfer */
+            --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            --chamfer-lg: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--color-gray-100);
+            color: var(--color-black);
+            line-height: 1.5;
+            padding: 40px;
+        }
+
+        /* Document Container */
+        .document {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--color-white);
+            border: 2px solid var(--color-black);
+            clip-path: var(--chamfer-lg);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .doc-header {
+            background: var(--color-black);
+            color: var(--color-white);
+            padding: 32px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-mark {
+            width: 56px;
+            height: 56px;
+            background: var(--color-white);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 28px;
+            clip-path: var(--chamfer-sm);
+        }
+
+        .brand-text h1 {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .brand-text h1 span {
+            color: var(--color-gray-400);
+        }
+
+        .brand-text p {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .doc-type {
+            text-align: right;
+        }
+
+        .doc-type h2 {
+            font-size: 32px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--color-blue-500);
+        }
+
+        .doc-type .doc-number {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--color-gray-400);
+            margin-top: 4px;
+        }
+
+        /* Info Section */
+        .doc-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            padding: 32px 40px;
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+
+        .info-block h3 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .info-block p {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .info-block .company-name {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .info-dates {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .date-item label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .date-item span {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Table */
+        .doc-table {
+            padding: 0 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--color-gray-100);
+        }
+
+        th {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid var(--color-black);
+        }
+
+        th:last-child,
+        td:last-child {
+            text-align: right;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--color-gray-200);
+            font-size: 14px;
+        }
+
+        .item-name {
+            font-weight: 600;
+        }
+
+        .item-desc {
+            font-size: 12px;
+            color: var(--color-gray-500);
+            margin-top: 4px;
+        }
+
+        .item-price {
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        /* Totals */
+        .doc-totals {
+            padding: 24px 40px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .totals-box {
+            width: 280px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .total-row.subtotal {
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .total-row.grand-total {
+            background: var(--color-black);
+            color: var(--color-white);
+            padding: 16px;
+            margin-top: 8px;
+            clip-path: var(--chamfer-sm);
+        }
+
+        .total-row.grand-total .label {
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .total-row.grand-total .value {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-blue-500);
+        }
+
+        /* Terms */
+        .doc-terms {
+            padding: 24px 40px;
+            background: var(--color-gray-50);
+            border-top: 2px solid var(--color-gray-200);
+        }
+
+        .doc-terms h4 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 12px;
+        }
+
+        .doc-terms ul {
+            list-style: none;
+            font-size: 12px;
+            color: var(--color-gray-500);
+        }
+
+        .doc-terms li {
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .doc-terms li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--color-blue-500);
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .doc-footer {
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid var(--color-gray-200);
+        }
+
+        .contact-info {
+            font-size: 12px;
+            color: var(--color-gray-500);
+        }
+
+        .contact-info span {
+            margin-right: 24px;
+        }
+
+        .validity-badge {
+            background: var(--color-blue-500);
+            color: var(--color-white);
+            padding: 8px 16px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            clip-path: var(--chamfer-sm);
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .document {
+                border: none;
+                clip-path: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        <!-- Header -->
+        <header class="doc-header">
+            <div class="brand">
+                <div class="brand-mark">L</div>
+                <div class="brand-text">
+                    <h1>The Clean<span>Lab</span></h1>
+                    <p>Professional Laundry Services</p>
+                </div>
+            </div>
+            <div class="doc-type">
+                <h2>Báo Giá</h2>
+                <div class="doc-number">QUO-2025-0142</div>
+            </div>
+        </header>
+
+        <!-- Info Section -->
+        <section class="doc-info">
+            <div class="info-block">
+                <h3>Thông Tin Khách Hàng</h3>
+                <p class="company-name">Công ty TNHH ABC</p>
+                <p>123 Đường Nguyễn Văn Linh</p>
+                <p>Quận 7, TP. Hồ Chí Minh</p>
+                <p>MST: 0123456789</p>
+            </div>
+            <div class="info-block">
+                <h3>Thông Tin Liên Hệ</h3>
+                <p class="company-name">Nguyễn Văn A</p>
+                <p>Điện thoại: 0909 123 456</p>
+                <p>Email: contact@abc.com</p>
+
+                <div class="info-dates">
+                    <div class="date-item">
+                        <label>Ngày Lập</label>
+                        <span>12/12/2025</span>
+                    </div>
+                    <div class="date-item">
+                        <label>Hiệu Lực</label>
+                        <span>30 Ngày</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Table -->
+        <section class="doc-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50px">#</th>
+                        <th>Dịch Vụ / Thiết Bị</th>
+                        <th style="width: 80px">Số Lượng</th>
+                        <th style="width: 120px">Đơn Giá</th>
+                        <th style="width: 130px">Thành Tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01</td>
+                        <td>
+                            <div class="item-name">Máy Giặt Công Nghiệp 15KG</div>
+                            <div class="item-desc">Model TCL-W15 • Inverter • IoT Ready</div>
+                        </td>
+                        <td>02</td>
+                        <td class="item-price">45.000.000đ</td>
+                        <td class="item-price">90.000.000đ</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>
+                            <div class="item-name">Máy Sấy Công Nghiệp 15KG</div>
+                            <div class="item-desc">Model TCL-D15 • Auto Temp • Heat Pump</div>
+                        </td>
+                        <td>02</td>
+                        <td class="item-price">38.000.000đ</td>
+                        <td class="item-price">76.000.000đ</td>
+                    </tr>
+                    <tr>
+                        <td>03</td>
+                        <td>
+                            <div class="item-name">Kiosk Thanh Toán Tự Động</div>
+                            <div class="item-desc">21.5" Touch • NFC/Card/Cash • Printer</div>
+                        </td>
+                        <td>01</td>
+                        <td class="item-price">32.000.000đ</td>
+                        <td class="item-price">32.000.000đ</td>
+                    </tr>
+                    <tr>
+                        <td>04</td>
+                        <td>
+                            <div class="item-name">Phần Mềm Quản Lý LaundryOS</div>
+                            <div class="item-desc">Bản quyền 1 năm • Cloud Dashboard • Mobile App</div>
+                        </td>
+                        <td>01</td>
+                        <td class="item-price">12.000.000đ</td>
+                        <td class="item-price">12.000.000đ</td>
+                    </tr>
+                    <tr>
+                        <td>05</td>
+                        <td>
+                            <div class="item-name">Lắp Đặt & Đào Tạo</div>
+                            <div class="item-desc">Thi công, kết nối hệ thống, hướng dẫn vận hành</div>
+                        </td>
+                        <td>01</td>
+                        <td class="item-price">5.000.000đ</td>
+                        <td class="item-price">5.000.000đ</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Totals -->
+        <section class="doc-totals">
+            <div class="totals-box">
+                <div class="total-row subtotal">
+                    <span class="label">Tạm Tính</span>
+                    <span class="value">215.000.000đ</span>
+                </div>
+                <div class="total-row">
+                    <span class="label">VAT (10%)</span>
+                    <span class="value">21.500.000đ</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span class="label">Tổng Cộng</span>
+                    <span class="value">236.500.000đ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terms -->
+        <section class="doc-terms">
+            <h4>Điều Khoản & Điều Kiện</h4>
+            <ul>
+                <li>Báo giá có hiệu lực trong 30 ngày kể từ ngày lập</li>
+                <li>Thanh toán: 50% đặt cọc, 50% sau khi lắp đặt hoàn tất</li>
+                <li>Bảo hành thiết bị: 24 tháng, phần mềm: 12 tháng</li>
+                <li>Thời gian giao hàng: 7-10 ngày làm việc sau khi đặt cọc</li>
+                <li>Giá chưa bao gồm chi phí vận chuyển ngoài TP.HCM</li>
+            </ul>
+        </section>
+
+        <!-- Footer -->
+        <footer class="doc-footer">
+            <div class="contact-info">
+                <span>📞 1900 888 999</span>
+                <span>✉ sales@thecleanlab.vn</span>
+                <span>🌐 thecleanlab.vn</span>
+            </div>
+            <div class="validity-badge">
+                Valid Until: 11/01/2026
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanium Payment Select</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --font-display: 'Inter', sans-serif;
+            --font-tech: 'JetBrains Mono', monospace;
+            --color-dark: #111;
+            --color-accent: #0055ff;
+        }
+
+        body {
+            font-family: var(--font-display);
+            background-color: #f0f2f5;
+            color: var(--color-dark);
+        }
+
+        /* --- INDUSTRIAL SHAPES --- */
+        .chamfer-lg {
+            clip-path: polygon(
+                20px 0, 100% 0, 
+                100% calc(100% - 20px), calc(100% - 20px) 100%, 
+                0 100%, 0 20px
+            );
+        }
+        .chamfer-sm {
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+
+        /* --- UTILS --- */
+        .font-tech { font-family: var(--font-tech); }
+        .btn-press { transition: transform 0.1s, border-color 0.2s; }
+        .btn-press:active { transform: scale(0.98); }
+
+        /* Grid Texture */
+        .tech-grid {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // --- ICONS ---
+        const Icon = ({ className, children }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter" className={className}>{children}</svg>
+        );
+        const ChevronLeft = () => (<Icon className="w-5 h-5"><polyline points="15 18 9 12 15 6"/></Icon>);
+        const QrCodeIcon = () => (<Icon className="w-8 h-8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></Icon>);
+        const CardIcon = () => (<Icon className="w-8 h-8"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></Icon>);
+        const CashIcon = () => (<Icon className="w-8 h-8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></Icon>);
+        const CheckCircle = () => (<Icon className="w-6 h-6"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></Icon>);
+
+        // --- COMPONENTS ---
+
+        const Header = () => (
+            <header className="flex justify-between items-center p-5 bg-white border-b-2 border-slate-200 sticky top-0 z-50">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[#111] text-white flex items-center justify-center font-black text-xl chamfer-sm border-2 border-[#111]">L</div>
+                    <div className="leading-none">
+                        <h1 className="font-black text-xl tracking-tighter text-[#111]">LAUNDRY<span className="text-slate-400">OS</span></h1>
+                    </div>
+                </div>
+                <div className="bg-slate-100 border border-slate-300 px-3 py-1 chamfer-sm">
+                    <span className="font-tech font-bold text-sm text-slate-700">PAY_MOD</span>
+                </div>
+            </header>
+        );
+
+        const PaymentMethod = ({ title, sub, icon, recommended, selected, onClick, type }) => (
+            <button 
+                onClick={onClick}
+                className={`
+                    w-full relative group btn-press overflow-hidden transition-all p-5 flex items-center gap-5 chamfer-sm border-2
+                    ${selected 
+                        ? 'bg-[#111] border-[#111] text-white shadow-xl scale-[1.02] z-10' 
+                        : 'bg-white border-slate-300 text-[#111] hover:border-[#111] hover:bg-slate-50'}
+                `}
+            >
+                {/* Visual Indicator Line */}
+                <div className={`absolute left-0 top-0 bottom-0 w-2 ${selected ? 'bg-[#0055ff]' : 'bg-slate-200 group-hover:bg-slate-400'}`}></div>
+
+                {/* Icon Box */}
+                <div className={`
+                    w-16 h-16 flex items-center justify-center chamfer-sm border-2 transition-colors
+                    ${selected 
+                        ? 'bg-[#0055ff] border-[#0055ff] text-white' 
+                        : 'bg-slate-100 border-slate-200 text-slate-500 group-hover:text-[#111] group-hover:border-[#111]'}
+                `}>
+                    {icon}
+                </div>
+
+                {/* Text Info */}
+                <div className="flex-1 text-left">
+                    <div className="flex items-center gap-2 mb-0.5">
+                        <h3 className="font-black text-xl uppercase tracking-tight">{title}</h3>
+                        {recommended && (
+                            <span className="bg-[#0055ff] text-white text-[9px] font-bold px-1.5 py-0.5 font-tech chamfer-sm">RECOMMENDED</span>
+                        )}
+                    </div>
+                    <p className={`font-tech text-xs font-bold ${selected ? 'text-slate-400' : 'text-slate-400'}`}>{sub}</p>
+                </div>
+
+                {/* Selection Check */}
+                <div className={`
+                    w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all
+                    ${selected ? 'border-[#0055ff] text-[#0055ff] bg-white' : 'border-slate-300 text-transparent'}
+                `}>
+                    <CheckCircle />
+                </div>
+            </button>
+        );
+
+        const SummaryPanel = ({ amount }) => (
+            <div className="bg-[#111] p-6 chamfer-lg border-2 border-[#111] mb-6 relative overflow-hidden shadow-lg">
+                <div className="absolute right-0 top-0 p-4 opacity-10">
+                    <svg className="w-32 h-32 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39h-2.01c-.06-1.06-.97-1.69-2.6-1.69-1.53 0-2.26.79-2.26 1.54 0 .72.39 1.48 2.5 1.99 2.71.66 4.35 1.63 4.35 3.79 0 1.91-1.59 3.03-3.23 3.32z"/></svg>
+                </div>
+                <div className="relative z-10 text-center">
+                    <p className="font-tech text-xs text-[#0055ff] font-bold mb-1 uppercase tracking-widest">Total Payment</p>
+                    <div className="font-tech text-5xl font-black text-white tracking-tighter">
+                        {amount.toLocaleString()}<span className="text-xl text-gray-500 ml-1">đ</span>
+                    </div>
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-800 flex justify-between text-xs font-tech text-gray-400">
+                    <span>UNIT: #WASH_01</span>
+                    <span>PROG: STANDARD</span>
+                </div>
+            </div>
+        );
+
+        const App = () => {
+            const [selected, setSelected] = useState('qr'); // Default to QR
+            const AMOUNT = 45000;
+
+            const handleConfirm = () => {
+                alert(`Processing payment via: ${selected.toUpperCase()}`);
+            };
+
+            return (
+                <div className="max-w-md mx-auto min-h-screen bg-[#f0f2f5] border-x border-slate-300 relative shadow-2xl flex flex-col font-display overflow-hidden">
+                    <div className="fixed inset-0 tech-grid opacity-30 pointer-events-none"></div>
+                    
+                    <Header />
+
+                    <main className="flex-1 p-5 flex flex-col relative z-10 overflow-y-auto">
+                        
+                        <button className="flex items-center gap-2 text-slate-500 hover:text-[#111] mb-6 font-bold text-xs uppercase w-fit transition-colors group">
+                            <ChevronLeft /> <span className="group-hover:underline">Cancel Transaction</span>
+                        </button>
+
+                        <SummaryPanel amount={AMOUNT} />
+
+                        <div className="mb-4 flex items-end justify-between border-b-2 border-slate-200 pb-1">
+                            <span className="font-black text-[#111] text-lg uppercase">Phương Thức</span>
+                            <span className="font-tech text-xs font-bold text-slate-400">SELECT_TYPE</span>
+                        </div>
+
+                        <div className="flex flex-col gap-3 mb-8">
+                            <PaymentMethod 
+                                type="qr"
+                                title="Quét Mã QR" 
+                                sub="VietQR / Momo / ZaloPay" 
+                                icon={<QrCodeIcon />} 
+                                recommended={true}
+                                selected={selected === 'qr'}
+                                onClick={() => setSelected('qr')}
+                            />
+                            
+                            <PaymentMethod 
+                                type="card"
+                                title="Thẻ Ngân Hàng" 
+                                sub="Visa / Master / Napas" 
+                                icon={<CardIcon />} 
+                                selected={selected === 'card'}
+                                onClick={() => setSelected('card')}
+                            />
+
+                            <PaymentMethod 
+                                type="cash"
+                                title="Tiền Mặt" 
+                                sub="10k / 20k / 50k Notes" 
+                                icon={<CashIcon />} 
+                                selected={selected === 'cash'}
+                                onClick={() => setSelected('cash')}
+                            />
+                        </div>
+
+                        <div className="mt-auto">
+                            <button 
+                                onClick={handleConfirm}
+                                className="w-full h-16 bg-[#0055ff] hover:bg-[#0044cc] text-white chamfer-sm btn-press font-black text-xl uppercase tracking-wide border-2 border-[#0055ff] shadow-lg shadow-blue-500/20 flex items-center justify-center gap-3"
+                            >
+                                <span>Thanh Toán Ngay</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </button>
+                            <p className="text-center font-tech text-[10px] text-slate-400 mt-3 font-bold">SECURE TRANSACTION ENCRYPTED</p>
+                        </div>
+
+                    </main>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE CLEAN LAB | Giặt Ủi Công Nghệ Cao - Laundry OS™</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="THE CLEAN LAB - Hệ thống giặt ủi tự động công nghệ cao. Thanh toán không tiền mặt, theo dõi real-time, QR code scan. Trải nghiệm giặt ủi thông minh tại Việt Nam.">
+    <meta name="keywords" content="giặt ủi tự động, laundromat việt nam, giặt sấy công nghệ, thanh toán QR, máy giặt tự phục vụ, the clean lab">
+    <meta name="author" content="The Clean Lab">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://thecleanlab.vn/">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="THE CLEAN LAB - Giặt Ủi Công Nghệ Cao">
+    <meta property="og:description" content="Hệ thống giặt ủi tự động hiện đại nhất Việt Nam. Thanh toán QR, theo dõi real-time, công nghệ Laundry OS™.">
+    <meta property="og:image" content="https://thecleanlab.vn/images/og-image.jpg">
+    <meta property="og:url" content="https://thecleanlab.vn/">
+    <meta property="og:site_name" content="THE CLEAN LAB">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="THE CLEAN LAB - Giặt Ủi Công Nghệ Cao">
+    <meta name="twitter:description" content="Trải nghiệm giặt ủi thông minh với công nghệ Laundry OS™">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* ============================================
+           THE CLEAN LAB - TITANIUM COMMAND DESIGN
+           NO ROUNDED CORNERS - CHAMFERED ONLY
+        ============================================ */
+
+        :root {
+            /* Brand Colors */
+            --color-primary: #0055ff;
+            --color-primary-hover: #0044cc;
+            --color-secondary: #ff4800;
+            --color-dark: #111111;
+            --color-light: #f0f2f5;
+            --color-white: #ffffff;
+            --color-success: #00cc66;
+            --color-warning: #ffaa00;
+            --color-error: #ff3333;
+
+            /* Grays */
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --gray-950: #020617;
+
+            /* Chamfered Shapes */
+            --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            --chamfer-md: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            --chamfer-lg: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            --chamfer-xl: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+
+            /* Typography */
+            --font-display: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-display);
+            background-color: var(--color-light);
+            color: var(--color-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--gray-200);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            clip-path: var(--chamfer-sm);
+        }
+
+        /* ============================================
+           NAVIGATION
+        ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--color-dark);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-logo-mark {
+            width: 44px;
+            height: 44px;
+            background: var(--color-dark);
+            color: white;
+            clip-path: var(--chamfer-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .nav-brand {
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.02em;
+            color: var(--color-dark);
+        }
+
+        .nav-brand span {
+            color: var(--gray-400);
+        }
+
+        .nav-module {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--color-primary);
+        }
+
+        .nav-cta {
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 24px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 2px solid var(--color-dark);
+            clip-path: var(--chamfer-sm);
+            text-decoration: none;
+            transition: all 0.15s;
+            box-shadow: 4px 4px 0 var(--color-dark);
+        }
+
+        .nav-cta:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--color-dark);
+        }
+
+        .nav-mobile-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-dark);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .nav-mobile-btn { display: block; }
+        }
+
+        /* ============================================
+           HERO SECTION
+        ============================================ */
+        .hero {
+            position: relative;
+            padding: 160px 24px 100px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--color-light) 0%, var(--gray-100) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 85, 255, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-glow-secondary {
+            position: absolute;
+            bottom: -200px;
+            left: -200px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 72, 0, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 20px;
+            background: white;
+            border: 2px solid var(--color-dark);
+            clip-path: var(--chamfer-sm);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-primary);
+            margin-bottom: 32px;
+        }
+
+        .hero-badge-dot {
+            position: relative;
+            width: 8px;
+            height: 8px;
+        }
+
+        .hero-badge-dot::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--color-success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .hero-badge-dot::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--color-success);
+            border-radius: 50%;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(2); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 10vw, 96px);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            color: var(--color-dark);
+        }
+
+        .hero-title-gradient {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #00aaff 50%, var(--color-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-500);
+            margin-bottom: 16px;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-subtitle span {
+            color: var(--color-primary);
+        }
+
+        .hero-description {
+            font-size: 20px;
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto 48px;
+            line-height: 1.8;
+        }
+
+        .hero-description strong {
+            color: var(--color-dark);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 80px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--color-primary);
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 2px solid var(--color-dark);
+            clip-path: var(--chamfer-md);
+            text-decoration: none;
+            transition: all 0.15s;
+            box-shadow: 6px 6px 0 var(--color-dark);
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0 var(--color-dark);
+        }
+
+        .btn-primary:active {
+            transform: translate(6px, 6px);
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: white;
+            color: var(--color-dark);
+            font-weight: 700;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 2px solid var(--color-dark);
+            clip-path: var(--chamfer-md);
+            text-decoration: none;
+            transition: all 0.15s;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-100);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-device {
+            position: relative;
+            background: white;
+            border: 3px solid var(--color-dark);
+            clip-path: var(--chamfer-xl);
+            padding: 24px;
+            box-shadow: 12px 12px 0 var(--color-dark);
+        }
+
+        .hero-device-screen {
+            aspect-ratio: 21/9;
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--color-dark) 100%);
+            clip-path: var(--chamfer-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-device-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .hero-device-brand {
+            font-size: 48px;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-device-module {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-top: 8px;
+        }
+
+        /* Hotspots */
+        .hotspot {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+        }
+
+        .hotspot-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--color-primary);
+            border-radius: 50%;
+            background: rgba(0, 85, 255, 0.2);
+            animation: hotspot-pulse 2s infinite;
+        }
+
+        .hotspot-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .hotspot-secondary .hotspot-pulse {
+            border-color: var(--color-secondary);
+            background: rgba(255, 72, 0, 0.2);
+        }
+
+        .hotspot-secondary .hotspot-dot {
+            background: var(--color-secondary);
+        }
+
+        .hotspot-success .hotspot-pulse {
+            border-color: var(--color-success);
+            background: rgba(0, 204, 102, 0.2);
+        }
+
+        .hotspot-success .hotspot-dot {
+            background: var(--color-success);
+        }
+
+        @keyframes hotspot-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .hotspot-tooltip {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 200px;
+            background: var(--color-dark);
+            border: 2px solid var(--gray-700);
+            clip-path: var(--chamfer-sm);
+            padding: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+            z-index: 20;
+        }
+
+        .hotspot:hover .hotspot-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hotspot-tooltip-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .hotspot-tooltip-text {
+            font-size: 12px;
+            color: var(--gray-300);
+            line-height: 1.5;
+        }
+
+        .hotspot-1 { top: 25%; left: 20%; }
+        .hotspot-2 { bottom: 30%; right: 25%; }
+        .hotspot-3 { top: 35%; right: 35%; }
+
+        /* ============================================
+           FEATURES SECTION
+        ============================================ */
+        .features {
+            padding: 120px 24px;
+            background: white;
+            border-top: 3px solid var(--color-dark);
+            border-bottom: 3px solid var(--color-dark);
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top, rgba(0, 85, 255, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .section-title span {
+            color: var(--color-primary);
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--gray-500);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--color-light);
+            border: 2px solid var(--color-dark);
+            clip-path: var(--chamfer-lg);
+            padding: 32px;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 8px 8px 0 var(--color-dark);
+        }
+
+        .feature-card-blue:hover {
+            border-color: var(--color-primary);
+        }
+
+        .feature-card-orange:hover {
+            border-color: var(--color-secondary);
+        }
+
+        .feature-card-green:hover {
+            border-color: var(--color-success);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--color-dark);
+            clip-path: var(--chamfer-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .feature-card-blue .feature-icon {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #0044cc 100%);
+        }
+
+        .feature-card-orange .feature-icon {
+            background: linear-gradient(135deg, var(--color-secondary) 0%, #cc3a00 100%);
+        }
+
+        .feature-card-green .feature-icon {
+            background: linear-gradient(135deg, var(--color-success) 0%, #00aa55 100%);
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: var(--color-dark);
+        }
+
+        .feature-text {
+            font-size: 16px;
+            color: var(--gray-600);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--gray-700);
+            padding: 8px 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .feature-list li:first-child {
+            border-top: none;
+        }
+
+        .feature-list-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--color-primary);
+        }
+
+        .feature-card-orange .feature-list-icon {
+            color: var(--color-secondary);
+        }
+
+        .feature-card-green .feature-list-icon {
+            color: var(--color-success);
+        }
+
+        /* ============================================
+           HOW IT WORKS SECTION
+        ============================================ */
+        .how-it-works {
+            padding: 120px 24px;
+            background: var(--color-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .how-it-works::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .how-it-works .section-title {
+            color: white;
+        }
+
+        .how-it-works .section-description {
+            color: var(--gray-400);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .step-card {
+            background: var(--gray-900);
+            border: 2px solid var(--gray-800);
+            clip-path: var(--chamfer-md);
+            padding: 32px;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .step-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-4px);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -16px;
+            left: 24px;
+            font-family: var(--font-mono);
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--color-primary);
+            opacity: 0.3;
+        }
+
+        .step-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .step-text {
+            font-size: 14px;
+            color: var(--gray-400);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           PRICING SECTION
+        ============================================ */
+        .pricing {
+            padding: 120px 24px;
+            background: var(--color-light);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid var(--color-dark);
+            clip-path: var(--chamfer-lg);
+            padding: 40px;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .pricing-card-featured {
+            background: var(--color-dark);
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 12px 12px 0 var(--color-primary);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: var(--color-primary);
+            color: white;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 6px 12px;
+            clip-path: var(--chamfer-sm);
+        }
+
+        .pricing-type {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .pricing-card-featured .pricing-type {
+            color: var(--gray-400);
+        }
+
+        .pricing-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .pricing-price {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .pricing-amount {
+            font-family: var(--font-mono);
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+
+        .pricing-card-featured .pricing-amount {
+            color: white;
+        }
+
+        .pricing-unit {
+            font-size: 16px;
+            color: var(--gray-500);
+        }
+
+        .pricing-card-featured .pricing-unit {
+            color: var(--gray-400);
+        }
+
+        .pricing-description {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .pricing-card-featured .pricing-description {
+            color: var(--gray-400);
+            border-bottom-color: var(--gray-700);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            padding: 10px 0;
+        }
+
+        .pricing-features li svg {
+            width: 18px;
+            height: 18px;
+            color: var(--color-success);
+            flex-shrink: 0;
+        }
+
+        .pricing-cta {
+            width: 100%;
+            padding: 16px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 2px solid var(--color-dark);
+            clip-path: var(--chamfer-sm);
+            cursor: pointer;
+            transition: all 0.15s;
+            background: var(--color-light);
+            color: var(--color-dark);
+        }
+
+        .pricing-cta:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .pricing-card-featured .pricing-cta {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .pricing-card-featured .pricing-cta:hover {
+            background: var(--color-primary-hover);
+        }
+
+        /* ============================================
+           GALLERY SECTION
+        ============================================ */
+        .gallery {
+            padding: 120px 24px;
+            background: white;
+            border-top: 3px solid var(--color-dark);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 250px);
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(4, 200px);
+            }
+        }
+
+        .gallery-item {
+            position: relative;
+            background: var(--gray-200);
+            clip-path: var(--chamfer-md);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item:first-child {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 24px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+            color: white;
+        }
+
+        .gallery-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+
+        .gallery-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* ============================================
+           CTA SECTION
+        ============================================ */
+        .cta {
+            padding: 120px 24px;
+            background: linear-gradient(135deg, var(--color-dark) 0%, var(--gray-900) 100%);
+            border-top: 3px solid var(--color-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .cta-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 900;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .cta-description {
+            font-size: 18px;
+            color: var(--gray-400);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-form {
+            background: var(--gray-800);
+            border: 2px solid var(--gray-700);
+            clip-path: var(--chamfer-lg);
+            padding: 40px;
+        }
+
+        .cta-form-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 24px;
+        }
+
+        .cta-form-title svg {
+            color: var(--color-primary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            background: var(--gray-900);
+            border: 2px solid var(--gray-700);
+            clip-path: var(--chamfer-sm);
+            color: white;
+            font-size: 14px;
+            font-family: var(--font-display);
+            transition: border-color 0.15s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .form-input::placeholder {
+            color: var(--gray-500);
+        }
+
+        .form-select {
+            grid-column: span 2;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 48px;
+        }
+
+        .form-textarea {
+            grid-column: span 2;
+            resize: none;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            grid-column: span 2;
+            padding: 16px 32px;
+            background: var(--color-primary);
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 2px solid var(--color-primary);
+            clip-path: var(--chamfer-sm);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .form-submit:hover {
+            background: var(--color-primary-hover);
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        .footer {
+            padding: 80px 24px 40px;
+            background: black;
+            border-top: 3px solid var(--color-dark);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .footer-logo {
+            width: 48px;
+            height: 48px;
+            background: white;
+            clip-path: var(--chamfer-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--color-dark);
+        }
+
+        .footer-brand-name {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-description {
+            font-size: 14px;
+            color: var(--gray-500);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            max-width: 400px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-800);
+            border: 1px solid var(--gray-700);
+            clip-path: var(--chamfer-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-400);
+            transition: all 0.15s;
+        }
+
+        .footer-social-link:hover {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+
+        .footer-heading {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-link {
+            font-size: 14px;
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-link:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 16px;
+        }
+
+        .footer-contact-item svg {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid var(--gray-800);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-legal a {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-legal a:hover {
+            color: white;
+        }
+
+        /* ============================================
+           UTILITIES
+        ============================================ */
+        .text-primary { color: var(--color-primary); }
+        .text-secondary { color: var(--color-secondary); }
+        .text-success { color: var(--color-success); }
+        .text-muted { color: var(--gray-500); }
+
+        .bg-primary { background-color: var(--color-primary); }
+        .bg-dark { background-color: var(--color-dark); }
+
+        .font-mono { font-family: var(--font-mono); }
+
+        @media (max-width: 640px) {
+            .form-select,
+            .form-textarea,
+            .form-submit {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="nav-logo-mark">CL</div>
+                <div>
+                    <div class="nav-brand">THE CLEAN<span>LAB</span></div>
+                    <div class="nav-module">Laundry OS™</div>
+                </div>
+            </a>
+
+            <ul class="nav-menu">
+                <li><a href="#features" class="nav-link">Tính năng</a></li>
+                <li><a href="#how-it-works" class="nav-link">Cách hoạt động</a></li>
+                <li><a href="#pricing" class="nav-link">Bảng giá</a></li>
+                <li><a href="#gallery" class="nav-link">Hình ảnh</a></li>
+                <li><a href="#contact" class="nav-cta">Liên hệ ngay</a></li>
+            </ul>
+
+            <button class="nav-mobile-btn" id="mobile-menu-btn">
+                <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-glow-secondary"></div>
+
+        <div class="hero-container">
+            <div class="hero-badge">
+                <div class="hero-badge-dot"></div>
+                Đang hoạt động 24/7
+            </div>
+
+            <h1 class="hero-title">
+                Giặt Ủi <span class="hero-title-gradient">Công Nghệ Cao</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                <span>THE</span> CLEAN <span>LAB</span> // <span>LAUNDRY</span> OS™
+            </p>
+
+            <p class="hero-description">
+                Hệ thống giặt ủi tự động hiện đại nhất Việt Nam với công nghệ
+                <strong>thanh toán QR Code</strong>, <strong>theo dõi real-time</strong>,
+                và <strong>quản lý thông minh</strong>.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#contact" class="btn-primary">
+                    <i data-lucide="map-pin" style="width: 20px; height: 20px;"></i>
+                    Tìm cửa hàng
+                </a>
+                <a href="#how-it-works" class="btn-secondary">
+                    <i data-lucide="play-circle" style="width: 20px; height: 20px;"></i>
+                    Xem cách hoạt động
+                </a>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-device">
+                    <div class="hero-device-screen">
+                        <div class="hero-device-brand">THE CLEAN LAB</div>
+                        <div class="hero-device-module">Self-Service Laundry System</div>
+
+                        <!-- Hotspots -->
+                        <div class="hotspot hotspot-1">
+                            <div class="hotspot-pulse"></div>
+                            <div class="hotspot-dot"></div>
+                            <div class="hotspot-tooltip">
+                                <div class="hotspot-tooltip-title">QR Payment</div>
+                                <div class="hotspot-tooltip-text">Thanh toán nhanh bằng mã QR. Hỗ trợ tất cả ngân hàng.</div>
+                            </div>
+                        </div>
+
+                        <div class="hotspot hotspot-secondary hotspot-2">
+                            <div class="hotspot-pulse"></div>
+                            <div class="hotspot-dot"></div>
+                            <div class="hotspot-tooltip" style="right: 0; left: auto;">
+                                <div class="hotspot-tooltip-title">Machine Status</div>
+                                <div class="hotspot-tooltip-text">Theo dõi trạng thái máy real-time. Biết khi nào xong.</div>
+                            </div>
+                        </div>
+
+                        <div class="hotspot hotspot-success hotspot-3">
+                            <div class="hotspot-pulse"></div>
+                            <div class="hotspot-dot"></div>
+                            <div class="hotspot-tooltip">
+                                <div class="hotspot-tooltip-title">Smart Notification</div>
+                                <div class="hotspot-tooltip-text">Nhận thông báo khi hoàn thành qua app.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="features">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Công nghệ <span>hiện đại</span></h2>
+                <p class="section-description">
+                    Hệ thống giặt ủi thông minh với công nghệ tiên tiến nhất, mang lại trải nghiệm tuyệt vời.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card feature-card-blue">
+                    <div class="feature-icon">
+                        <i data-lucide="qr-code" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <h3 class="feature-title">Thanh toán QR Code</h3>
+                    <p class="feature-text">
+                        Không cần tiền mặt, thanh toán nhanh chóng bằng mã QR. Hỗ trợ tất cả ngân hàng và ví điện tử.
+                    </p>
+                    <ul class="feature-list">
+                        <li>
+                            <i data-lucide="check-circle" class="feature-list-icon"></i>
+                            <span>MoMo, ZaloPay, VNPay</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check-circle" class="feature-list-icon"></i>
+                            <span>Tất cả ngân hàng nội địa</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card feature-card-orange">
+                    <div class="feature-icon">
+                        <i data-lucide="activity" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <h3 class="feature-title">Theo dõi Real-time</h3>
+                    <p class="feature-text">
+                        Biết chính xác máy đang ở giai đoạn nào và còn bao lâu nữa là xong.
+                    </p>
+                    <ul class="feature-list">
+                        <li>
+                            <i data-lucide="check-circle" class="feature-list-icon"></i>
+                            <span>Hiển thị trạng thái máy</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check-circle" class="feature-list-icon"></i>
+                            <span>Thông báo khi hoàn thành</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card feature-card-green">
+                    <div class="feature-icon">
+                        <i data-lucide="shield-check" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <h3 class="feature-title">An toàn & Sạch sẽ</h3>
+                    <p class="feature-text">
+                        Máy giặt chất lượng cao, vệ sinh định kỳ, đảm bảo quần áo luôn sạch và an toàn.
+                    </p>
+                    <ul class="feature-list">
+                        <li>
+                            <i data-lucide="check-circle" class="feature-list-icon"></i>
+                            <span>Vệ sinh máy hàng ngày</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check-circle" class="feature-list-icon"></i>
+                            <span>Camera giám sát 24/7</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Cách <span>hoạt động</span></h2>
+                <p class="section-description">
+                    Chỉ với 4 bước đơn giản, bạn có thể hoàn thành việc giặt ủi.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <!-- Step 1 -->
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <i data-lucide="log-in" class="step-icon"></i>
+                    <h3 class="step-title">Chọn máy giặt</h3>
+                    <p class="step-text">Chọn máy giặt trống phù hợp với lượng đồ của bạn.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <i data-lucide="scan" class="step-icon"></i>
+                    <h3 class="step-title">Quét QR thanh toán</h3>
+                    <p class="step-text">Mở app ngân hàng, quét mã QR và xác nhận thanh toán.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <i data-lucide="shirt" class="step-icon"></i>
+                    <h3 class="step-title">Cho đồ vào máy</h3>
+                    <p class="step-text">Đưa quần áo vào máy, thêm nước giặt và nhấn bắt đầu.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <i data-lucide="bell" class="step-icon"></i>
+                    <h3 class="step-title">Nhận thông báo</h3>
+                    <p class="step-text">Nhận thông báo khi máy hoàn thành, đến lấy đồ.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section id="pricing" class="pricing">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Bảng <span>giá</span></h2>
+                <p class="section-description">
+                    Giá cả minh bạch, không phụ phí. Chọn dịch vụ phù hợp với bạn.
+                </p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Wash -->
+                <div class="pricing-card">
+                    <div class="pricing-type">Giặt</div>
+                    <h3 class="pricing-title">Máy Giặt</h3>
+                    <div class="pricing-price">
+                        <span class="pricing-amount">35K</span>
+                        <span class="pricing-unit">/ lần</span>
+                    </div>
+                    <p class="pricing-description">Máy giặt 9kg, phù hợp cho 1-2 người</p>
+                    <ul class="pricing-features">
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Máy giặt công suất 9kg</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Thời gian: 35-45 phút</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Nước giặt cao cấp miễn phí</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Nước xả vải miễn phí</span>
+                        </li>
+                    </ul>
+                    <button class="pricing-cta">Chọn dịch vụ</button>
+                </div>
+
+                <!-- Wash + Dry -->
+                <div class="pricing-card pricing-card-featured">
+                    <div class="pricing-badge">Phổ biến</div>
+                    <div class="pricing-type">Combo</div>
+                    <h3 class="pricing-title">Giặt + Sấy</h3>
+                    <div class="pricing-price">
+                        <span class="pricing-amount">60K</span>
+                        <span class="pricing-unit">/ lần</span>
+                    </div>
+                    <p class="pricing-description">Tiết kiệm 10K khi chọn combo</p>
+                    <ul class="pricing-features">
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Máy giặt + máy sấy 9kg</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Tổng thời gian: 70-90 phút</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Nước giặt + xả miễn phí</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Đồ khô ráo, thơm tho</span>
+                        </li>
+                    </ul>
+                    <button class="pricing-cta">Chọn dịch vụ</button>
+                </div>
+
+                <!-- Dry -->
+                <div class="pricing-card">
+                    <div class="pricing-type">Sấy</div>
+                    <h3 class="pricing-title">Máy Sấy</h3>
+                    <div class="pricing-price">
+                        <span class="pricing-amount">30K</span>
+                        <span class="pricing-unit">/ lần</span>
+                    </div>
+                    <p class="pricing-description">Máy sấy 9kg, sấy khô nhanh</p>
+                    <ul class="pricing-features">
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Máy sấy công suất 9kg</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Thời gian: 30-40 phút</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Nhiệt độ điều chỉnh tự động</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check"></i>
+                            <span>Bảo vệ vải an toàn</span>
+                        </li>
+                    </ul>
+                    <button class="pricing-cta">Chọn dịch vụ</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section id="gallery" class="gallery">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Không gian <span>hiện đại</span></h2>
+                <p class="section-description">
+                    Cửa hàng sạch sẽ, thoáng mát với thiết bị hiện đại.
+                </p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?w=800&q=80" alt="Cửa hàng THE CLEAN LAB" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-label">Cửa hàng</div>
+                        <div class="gallery-title">Không gian giặt ủi hiện đại</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=400&q=80" alt="Máy giặt" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-title">Máy giặt cao cấp</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?w=400&q=80" alt="Máy sấy" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-title">Máy sấy công nghiệp</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1521656693899-f9c121290037?w=600&q=80" alt="Khu vực ngồi chờ" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-label">Tiện ích</div>
+                        <div class="gallery-title">Khu vực ngồi chờ thoải mái</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section id="contact" class="cta">
+        <div class="cta-container">
+            <h2 class="cta-title">Sẵn sàng trải nghiệm?</h2>
+            <p class="cta-description">
+                Liên hệ với chúng tôi để được tư vấn hoặc tìm cửa hàng gần nhất.
+            </p>
+
+            <div class="cta-form">
+                <h3 class="cta-form-title">
+                    <i data-lucide="mail"></i>
+                    Liên hệ tư vấn
+                </h3>
+                <form class="form-grid">
+                    <input type="text" placeholder="Họ và tên" class="form-input">
+                    <input type="tel" placeholder="Số điện thoại" class="form-input">
+                    <select class="form-input form-select">
+                        <option>Chọn nhu cầu của bạn</option>
+                        <option>Tìm cửa hàng gần nhất</option>
+                        <option>Hợp tác nhượng quyền</option>
+                        <option>Góp ý / Phản hồi</option>
+                        <option>Khác</option>
+                    </select>
+                    <textarea placeholder="Nội dung tin nhắn..." class="form-input form-textarea"></textarea>
+                    <button type="submit" class="form-submit">Gửi tin nhắn</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">
+                        <div class="footer-logo">CL</div>
+                        <div class="footer-brand-name">THE CLEAN LAB</div>
+                    </div>
+                    <p class="footer-description">
+                        Hệ thống giặt ủi tự động công nghệ cao hàng đầu Việt Nam.
+                        Thanh toán không tiền mặt, theo dõi real-time, trải nghiệm giặt ủi thông minh.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="footer-social-link">
+                            <i data-lucide="facebook" style="width: 18px; height: 18px;"></i>
+                        </a>
+                        <a href="#" class="footer-social-link">
+                            <i data-lucide="instagram" style="width: 18px; height: 18px;"></i>
+                        </a>
+                        <a href="#" class="footer-social-link">
+                            <i data-lucide="youtube" style="width: 18px; height: 18px;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Dịch vụ</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">Giặt tự phục vụ</a></li>
+                        <li><a href="#" class="footer-link">Sấy khô</a></li>
+                        <li><a href="#" class="footer-link">Combo giặt sấy</a></li>
+                        <li><a href="#" class="footer-link">Giặt hộ gia đình</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Hỗ trợ</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">Hướng dẫn sử dụng</a></li>
+                        <li><a href="#" class="footer-link">Câu hỏi thường gặp</a></li>
+                        <li><a href="#" class="footer-link">Chính sách bảo mật</a></li>
+                        <li><a href="#" class="footer-link">Điều khoản sử dụng</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Liên hệ</h4>
+                    <div class="footer-contact-item">
+                        <i data-lucide="mail" style="color: var(--color-primary);"></i>
+                        <span>support@thecleanlab.vn</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i data-lucide="phone" style="color: var(--color-success);"></i>
+                        <span>1900 xxxx xx</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i data-lucide="map-pin" style="color: var(--color-secondary);"></i>
+                        <span>Hồ Chí Minh City, Việt Nam</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © 2025 THE CLEAN LAB. All rights reserved. Powered by Laundry OS™
+                </p>
+                <div class="footer-legal">
+                    <a href="#">Chính sách bảo mật</a>
+                    <a href="#">Điều khoản sử dụng</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "THE CLEAN LAB",
+        "description": "Hệ thống giặt ủi tự động công nghệ cao với thanh toán QR Code và theo dõi real-time.",
+        "url": "https://thecleanlab.vn",
+        "telephone": "1900-xxxx-xx",
+        "email": "support@thecleanlab.vn",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Ho Chi Minh City",
+            "addressCountry": "VN"
+        },
+        "priceRange": "35,000đ - 60,000đ",
+        "openingHours": "Mo-Su 00:00-24:00",
+        "image": "https://thecleanlab.vn/images/og-image.jpg",
+        "sameAs": [
+            "https://facebook.com/thecleanlab",
+            "https://instagram.com/thecleanlab"
+        ]
+    }
+    </script>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        // Add mobile menu functionality if needed
+    </script>
+</body>
+</html>

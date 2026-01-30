@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biên Bản Nghiệm Thu - The Clean Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           THE CLEAN LAB - ACCEPTANCE REPORT TEMPLATE
+           Biên Bản Nghiệm Thu Công Trình / Thiết Bị
+           Brand: "Titanium Command"
+           ============================================ */
+
+        :root {
+            --color-white: #ffffff;
+            --color-gray-50: #f8fafc;
+            --color-gray-100: #f0f2f5;
+            --color-gray-200: #e2e8f0;
+            --color-gray-300: #cbd5e1;
+            --color-gray-400: #94a3b8;
+            --color-gray-500: #64748b;
+            --color-gray-900: #0f172a;
+            --color-black: #111111;
+            --color-blue-500: #0055ff;
+            --color-green-500: #00cc66;
+            --color-orange-500: #ff4800;
+
+            --font-display: 'Inter', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            --chamfer-lg: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--color-gray-100);
+            color: var(--color-black);
+            line-height: 1.5;
+            padding: 40px;
+        }
+
+        .document {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--color-white);
+            border: 2px solid var(--color-black);
+            clip-path: var(--chamfer-lg);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .doc-header {
+            background: var(--color-black);
+            color: var(--color-white);
+            padding: 32px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-mark {
+            width: 56px;
+            height: 56px;
+            background: var(--color-white);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 28px;
+            clip-path: var(--chamfer-sm);
+        }
+
+        .brand-text h1 {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .brand-text h1 span { color: var(--color-gray-400); }
+
+        .brand-text p {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .doc-type {
+            text-align: right;
+        }
+
+        .doc-type h2 {
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .doc-type .doc-number {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--color-gray-400);
+            margin-top: 4px;
+        }
+
+        /* Stamp */
+        .stamp {
+            position: absolute;
+            top: 20px;
+            right: 200px;
+            transform: rotate(-12deg);
+            border: 4px solid var(--color-green-500);
+            color: var(--color-green-500);
+            padding: 8px 20px;
+            font-family: var(--font-mono);
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+        }
+
+        /* Info Section */
+        .doc-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            padding: 32px 40px;
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+
+        .info-block h3 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .info-block p { font-size: 14px; margin-bottom: 4px; }
+        .info-block .name { font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .meta-item {
+            background: var(--color-gray-50);
+            padding: 12px;
+            border: 1px solid var(--color-gray-200);
+        }
+
+        .meta-item label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .meta-item span {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* Content Section */
+        .doc-content {
+            padding: 32px 40px;
+        }
+
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-black);
+        }
+
+        /* Checklist Table */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+
+        thead { background: var(--color-gray-100); }
+
+        th {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid var(--color-black);
+        }
+
+        th:nth-child(3), th:nth-child(4), td:nth-child(3), td:nth-child(4) {
+            text-align: center;
+            width: 80px;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--color-gray-200);
+            font-size: 14px;
+        }
+
+        .item-name { font-weight: 600; }
+        .item-spec {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-500);
+            margin-top: 2px;
+        }
+
+        .check-pass {
+            color: var(--color-green-500);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .check-fail {
+            color: var(--color-orange-500);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* Result Box */
+        .result-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+            background: rgba(0, 204, 102, 0.1);
+            border: 2px solid var(--color-green-500);
+            clip-path: var(--chamfer-sm);
+            margin-bottom: 24px;
+        }
+
+        .result-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--color-green-500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .result-text h4 {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-green-500);
+            margin-bottom: 4px;
+        }
+
+        .result-text p {
+            font-size: 13px;
+            color: var(--color-gray-500);
+        }
+
+        /* Notes */
+        .notes-section {
+            background: var(--color-gray-50);
+            border: 1px solid var(--color-gray-200);
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+
+        .notes-section h4 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            margin-bottom: 12px;
+        }
+
+        .notes-section p {
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* Signature Section */
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+            padding: 32px 40px;
+            border-top: 2px solid var(--color-gray-200);
+            background: var(--color-gray-50);
+        }
+
+        .signature-box {
+            text-align: center;
+        }
+
+        .signature-box h4 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gray-500);
+            margin-bottom: 8px;
+        }
+
+        .signature-box .name {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .signature-box .title {
+            font-size: 11px;
+            color: var(--color-gray-500);
+            margin-bottom: 36px;
+        }
+
+        .signature-line {
+            border-top: 2px solid var(--color-black);
+            padding-top: 8px;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        .doc-footer {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--color-gray-200);
+        }
+
+        .contact-info {
+            font-size: 12px;
+            color: var(--color-gray-500);
+        }
+
+        .contact-info span { margin-right: 24px; }
+
+        .ref-code {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .document { border: none; clip-path: none; }
+            .stamp, .result-box { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        <!-- Header -->
+        <header class="doc-header">
+            <div class="brand">
+                <div class="brand-mark">L</div>
+                <div class="brand-text">
+                    <h1>The Clean<span>Lab</span></h1>
+                    <p>Professional Laundry Services</p>
+                </div>
+            </div>
+            <div class="stamp">✓ Đạt Yêu Cầu</div>
+            <div class="doc-type">
+                <h2>Biên Bản<br>Nghiệm Thu</h2>
+                <div class="doc-number">AC-2025-0028</div>
+            </div>
+        </header>
+
+        <!-- Info Section -->
+        <section class="doc-info">
+            <div class="info-block">
+                <h3>Bên A (Chủ Đầu Tư)</h3>
+                <p class="name">CÔNG TY TNHH XYZ LAUNDRY</p>
+                <p>Địa chỉ: 789 Lê Văn Sỹ, Q.Tân Bình, TP.HCM</p>
+                <p>Đại diện: <strong>Trần Văn B</strong></p>
+                <p>Chức vụ: Giám đốc Điều hành</p>
+            </div>
+            <div class="info-block">
+                <h3>Bên B (Nhà Thầu)</h3>
+                <p class="name">CÔNG TY TNHH THE CLEAN LAB</p>
+                <p>Địa chỉ: 456 Nguyễn Thị Minh Khai, Q.3, TP.HCM</p>
+                <p>Đại diện: <strong>Nguyễn Văn A</strong></p>
+                <p>Chức vụ: Giám đốc Kỹ thuật</p>
+            </div>
+        </section>
+
+        <!-- Meta Info -->
+        <section style="padding: 24px 40px; border-bottom: 2px solid var(--color-gray-200);">
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <label>Ngày Nghiệm Thu</label>
+                    <span>15/12/2025</span>
+                </div>
+                <div class="meta-item">
+                    <label>Địa Điểm</label>
+                    <span>789 Lê Văn Sỹ, Q.Tân Bình</span>
+                </div>
+                <div class="meta-item">
+                    <label>Hợp Đồng Số</label>
+                    <span>HD-2025-0089</span>
+                </div>
+                <div class="meta-item">
+                    <label>Công Trình</label>
+                    <span>Lắp đặt hệ thống giặt sấy</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content -->
+        <section class="doc-content">
+            <h3 class="section-title">Nội Dung Nghiệm Thu</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50px">#</th>
+                        <th>Hạng Mục Kiểm Tra</th>
+                        <th>Đạt</th>
+                        <th>Không</th>
+                        <th style="width: 180px">Ghi Chú</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01</td>
+                        <td>
+                            <div class="item-name">Lắp đặt máy giặt công nghiệp</div>
+                            <div class="item-spec">2x TCL-W15 (15kg)</div>
+                        </td>
+                        <td><span class="check-pass">✓</span></td>
+                        <td></td>
+                        <td>Đúng vị trí, cân bằng</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>
+                            <div class="item-name">Lắp đặt máy sấy công nghiệp</div>
+                            <div class="item-spec">2x TCL-D15 (15kg)</div>
+                        </td>
+                        <td><span class="check-pass">✓</span></td>
+                        <td></td>
+                        <td>Thông gió đạt chuẩn</td>
+                    </tr>
+                    <tr>
+                        <td>03</td>
+                        <td>
+                            <div class="item-name">Hệ thống cấp thoát nước</div>
+                            <div class="item-spec">Ống cấp + ống xả + van</div>
+                        </td>
+                        <td><span class="check-pass">✓</span></td>
+                        <td></td>
+                        <td>Không rò rỉ</td>
+                    </tr>
+                    <tr>
+                        <td>04</td>
+                        <td>
+                            <div class="item-name">Hệ thống điện</div>
+                            <div class="item-spec">3 pha 380V, CB, dây dẫn</div>
+                        </td>
+                        <td><span class="check-pass">✓</span></td>
+                        <td></td>
+                        <td>Đúng tải, tiếp địa OK</td>
+                    </tr>
+                    <tr>
+                        <td>05</td>
+                        <td>
+                            <div class="item-name">Kiosk thanh toán</div>
+                            <div class="item-spec">TCL-K01 + phần mềm</div>
+                        </td>
+                        <td><span class="check-pass">✓</span></td>
+                        <td></td>
+                        <td>Kết nối ổn định</td>
+                    </tr>
+                    <tr>
+                        <td>06</td>
+                        <td>
+                            <div class="item-name">Vận hành thử nghiệm</div>
+                            <div class="item-spec">Test full cycle giặt + sấy</div>
+                        </td>
+                        <td><span class="check-pass">✓</span></td>
+                        <td></td>
+                        <td>Hoạt động bình thường</td>
+                    </tr>
+                    <tr>
+                        <td>07</td>
+                        <td>
+                            <div class="item-name">Đào tạo vận hành</div>
+                            <div class="item-spec">2 buổi × 3 nhân viên</div>
+                        </td>
+                        <td><span class="check-pass">✓</span></td>
+                        <td></td>
+                        <td>Đã cấp chứng nhận</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Result -->
+            <div class="result-box">
+                <div class="result-icon">✓</div>
+                <div class="result-text">
+                    <h4>Kết Quả: Đạt Yêu Cầu Nghiệm Thu</h4>
+                    <p>Tất cả hạng mục đều đạt tiêu chuẩn kỹ thuật và yêu cầu hợp đồng. Công trình đủ điều kiện đưa vào sử dụng.</p>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="notes-section">
+                <h4>Ý Kiến & Kiến Nghị</h4>
+                <p>
+                    • Bên A xác nhận công trình hoàn thành đúng tiến độ và chất lượng theo hợp đồng.<br>
+                    • Bên B cam kết bảo hành 24 tháng và hỗ trợ kỹ thuật 24/7.<br>
+                    • Hai bên thống nhất thanh lý hợp đồng sau khi hoàn tất nghiệm thu.
+                </p>
+            </div>
+        </section>
+
+        <!-- Signature Section -->
+        <section class="signature-section">
+            <div class="signature-box">
+                <h4>Đại Diện Bên A</h4>
+                <p class="name">Trần Văn B</p>
+                <p class="title">Giám đốc Điều hành</p>
+                <div class="signature-line">Ký & Ghi rõ họ tên</div>
+            </div>
+            <div class="signature-box">
+                <h4>Đại Diện Bên B</h4>
+                <p class="name">Nguyễn Văn A</p>
+                <p class="title">Giám đốc Kỹ thuật</p>
+                <div class="signature-line">Ký & Ghi rõ họ tên</div>
+            </div>
+            <div class="signature-box">
+                <h4>Giám Sát</h4>
+                <p class="name">Lê Văn C</p>
+                <p class="title">Kỹ sư QC</p>
+                <div class="signature-line">Ký & Ghi rõ họ tên</div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="doc-footer">
+            <div class="contact-info">
+                <span>📞 1900 888 999</span>
+                <span>✉ support@thecleanlab.vn</span>
+                <span>🌐 thecleanlab.vn</span>
+            </div>
+            <div class="ref-code">
+                REF: TCL-AC-20251215-028K
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

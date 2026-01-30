@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Templates - The Clean Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           THE CLEAN LAB - EMAIL TEMPLATES SHOWCASE
+           Brand: "Titanium Command"
+           ============================================ */
+
+        :root {
+            --color-white: #ffffff;
+            --color-gray-50: #f8fafc;
+            --color-gray-100: #f0f2f5;
+            --color-gray-200: #e2e8f0;
+            --color-gray-400: #94a3b8;
+            --color-gray-500: #64748b;
+            --color-black: #111111;
+            --color-blue-500: #0055ff;
+            --color-green-500: #00cc66;
+            --color-orange-500: #ff4800;
+            --color-red-500: #ff3333;
+
+            --font-display: 'Inter', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--color-gray-200);
+            color: var(--color-black);
+            line-height: 1.6;
+            padding: 40px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-size: 32px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: var(--color-gray-500);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .template-wrapper {
+            background: var(--color-gray-100);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .template-label {
+            background: var(--color-black);
+            color: var(--color-white);
+            padding: 12px 16px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .template-type {
+            padding: 4px 8px;
+            background: var(--color-blue-500);
+            font-size: 9px;
+        }
+
+        /* ====== EMAIL CONTAINER ====== */
+        .email {
+            max-width: 600px;
+            margin: 20px auto;
+            background: var(--color-white);
+            font-family: var(--font-display);
+        }
+
+        /* Email Header */
+        .email-header {
+            background: var(--color-black);
+            padding: 24px 32px;
+            text-align: center;
+        }
+
+        .email-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .email-logo-mark {
+            width: 40px;
+            height: 40px;
+            background: var(--color-white);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 20px;
+        }
+
+        .email-logo-text {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--color-white);
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .email-logo-text span { color: var(--color-gray-400); }
+
+        /* Email Body */
+        .email-body {
+            padding: 32px;
+        }
+
+        .email-body h2 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .email-body p {
+            font-size: 14px;
+            color: var(--color-gray-500);
+            margin-bottom: 16px;
+        }
+
+        /* Email Button */
+        .email-btn {
+            display: inline-block;
+            background: var(--color-blue-500);
+            color: var(--color-white);
+            padding: 14px 28px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 16px 0;
+        }
+
+        .email-btn.btn-green { background: var(--color-green-500); }
+        .email-btn.btn-orange { background: var(--color-orange-500); }
+
+        /* Info Box */
+        .email-info-box {
+            background: var(--color-gray-50);
+            border-left: 4px solid var(--color-blue-500);
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+
+        .email-info-box.box-green { border-color: var(--color-green-500); }
+        .email-info-box.box-orange { border-color: var(--color-orange-500); }
+
+        .email-info-box h4 {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            margin-bottom: 8px;
+        }
+
+        .email-info-box p {
+            font-size: 14px;
+            color: var(--color-black);
+            margin: 4px 0;
+        }
+
+        .email-info-box .highlight {
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--color-blue-500);
+        }
+
+        .email-info-box .highlight.green { color: var(--color-green-500); }
+        .email-info-box .highlight.orange { color: var(--color-orange-500); }
+
+        /* Order Summary Table */
+        .email-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .email-table th {
+            background: var(--color-gray-100);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 2px solid var(--color-black);
+        }
+
+        .email-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--color-gray-200);
+            font-size: 13px;
+        }
+
+        .email-table td:last-child,
+        .email-table th:last-child {
+            text-align: right;
+        }
+
+        .email-table .total-row {
+            background: var(--color-black);
+            color: var(--color-white);
+        }
+
+        .email-table .total-row td {
+            font-weight: 700;
+            border: none;
+        }
+
+        .email-table .total-row .amount {
+            font-family: var(--font-mono);
+            font-size: 16px;
+            color: var(--color-green-500);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-badge.success {
+            background: rgba(0, 204, 102, 0.1);
+            color: var(--color-green-500);
+            border: 1px solid var(--color-green-500);
+        }
+
+        .status-badge.pending {
+            background: rgba(255, 170, 0, 0.1);
+            color: #ffaa00;
+            border: 1px solid #ffaa00;
+        }
+
+        .status-badge.processing {
+            background: rgba(0, 85, 255, 0.1);
+            color: var(--color-blue-500);
+            border: 1px solid var(--color-blue-500);
+        }
+
+        /* Email Footer */
+        .email-footer {
+            background: var(--color-gray-50);
+            padding: 24px 32px;
+            border-top: 2px solid var(--color-gray-200);
+            text-align: center;
+        }
+
+        .email-footer p {
+            font-size: 12px;
+            color: var(--color-gray-500);
+            margin: 4px 0;
+        }
+
+        .email-social {
+            margin: 16px 0;
+        }
+
+        .email-social a {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: var(--color-black);
+            color: var(--color-white);
+            margin: 0 4px;
+            line-height: 32px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .email-footer .unsubscribe {
+            font-size: 10px;
+            color: var(--color-gray-400);
+            margin-top: 16px;
+        }
+
+        .email-footer .unsubscribe a {
+            color: var(--color-gray-400);
+        }
+
+        /* Code/OTP Box */
+        .otp-box {
+            background: var(--color-black);
+            padding: 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .otp-code {
+            font-family: var(--font-mono);
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--color-blue-500);
+            letter-spacing: 0.2em;
+        }
+
+        .otp-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 8px;
+        }
+
+        /* Machine Status */
+        .machine-status {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--color-gray-50);
+            margin: 16px 0;
+        }
+
+        .machine-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .machine-info h4 {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .machine-info p {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--color-gray-500);
+            margin: 0;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: var(--color-gray-200);
+            height: 8px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--color-green-500);
+            width: 75%;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-title">
+        <h1>Email Templates</h1>
+        <p>The Clean Lab • Brand Identity System</p>
+    </div>
+
+    <div class="templates-grid">
+        <!-- ====== WELCOME EMAIL ====== -->
+        <div class="template-wrapper">
+            <div class="template-label">
+                <span>Welcome Email</span>
+                <span class="template-type">Transactional</span>
+            </div>
+            <div class="email">
+                <div class="email-header">
+                    <div class="email-logo">
+                        <div class="email-logo-mark">L</div>
+                        <div class="email-logo-text">The Clean<span>Lab</span></div>
+                    </div>
+                </div>
+                <div class="email-body">
+                    <h2>Chào Mừng Đến Với<br>The Clean Lab! 🎉</h2>
+                    <p>Xin chào <strong>Nguyễn Văn A</strong>,</p>
+                    <p>Cảm ơn bạn đã đăng ký tài khoản tại The Clean Lab. Chúng tôi rất vui được đồng hành cùng bạn trong việc chăm sóc quần áo một cách chuyên nghiệp.</p>
+
+                    <div class="email-info-box">
+                        <h4>Tài Khoản Của Bạn</h4>
+                        <p><strong>Email:</strong> nguyenvana@email.com</p>
+                        <p><strong>Member ID:</strong> <span class="highlight">TCL-2025-0042</span></p>
+                    </div>
+
+                    <p>Để bắt đầu sử dụng dịch vụ, hãy xác nhận email của bạn:</p>
+
+                    <a href="#" class="email-btn">Xác Nhận Email</a>
+
+                    <p style="font-size: 12px; color: var(--color-gray-400);">Link xác nhận có hiệu lực trong 24 giờ.</p>
+                </div>
+                <div class="email-footer">
+                    <div class="email-social">
+                        <a href="#">f</a>
+                        <a href="#">in</a>
+                        <a href="#">📷</a>
+                    </div>
+                    <p>📞 1900 888 999 • ✉ support@thecleanlab.vn</p>
+                    <p class="unsubscribe">
+                        Bạn nhận được email này vì đã đăng ký tại thecleanlab.vn<br>
+                        <a href="#">Hủy đăng ký</a> | <a href="#">Cài đặt thông báo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== ORDER CONFIRMATION ====== -->
+        <div class="template-wrapper">
+            <div class="template-label">
+                <span>Order Confirmation</span>
+                <span class="template-type">Transactional</span>
+            </div>
+            <div class="email">
+                <div class="email-header">
+                    <div class="email-logo">
+                        <div class="email-logo-mark">L</div>
+                        <div class="email-logo-text">The Clean<span>Lab</span></div>
+                    </div>
+                </div>
+                <div class="email-body">
+                    <span class="status-badge success">✓ Thanh Toán Thành Công</span>
+                    <h2 style="margin-top: 16px;">Đơn Hàng Đã Được Xác Nhận</h2>
+                    <p>Cảm ơn bạn! Đơn hàng của bạn đã được thanh toán và đang được xử lý.</p>
+
+                    <div class="email-info-box box-green">
+                        <h4>Chi Tiết Đơn Hàng</h4>
+                        <p><strong>Mã đơn:</strong> <span class="highlight green">#ORD-2025-1234</span></p>
+                        <p><strong>Ngày:</strong> 12/12/2025 - 14:30</p>
+                        <p><strong>Chi nhánh:</strong> The Clean Lab - Quận 7</p>
+                    </div>
+
+                    <table class="email-table">
+                        <thead>
+                            <tr>
+                                <th>Dịch Vụ</th>
+                                <th>Thành Tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Giặt Tiêu Chuẩn - Máy 01 (45 phút)</td>
+                                <td>35.000đ</td>
+                            </tr>
+                            <tr>
+                                <td>Sấy Tự Động - Máy Sấy 02 (30 phút)</td>
+                                <td>25.000đ</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Tổng Cộng</td>
+                                <td class="amount">60.000đ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <a href="#" class="email-btn btn-green">Xem Chi Tiết Đơn Hàng</a>
+                </div>
+                <div class="email-footer">
+                    <p>📞 1900 888 999 • ✉ support@thecleanlab.vn</p>
+                    <p class="unsubscribe">
+                        <a href="#">Xem lịch sử đơn hàng</a> | <a href="#">Liên hệ hỗ trợ</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== MACHINE READY NOTIFICATION ====== -->
+        <div class="template-wrapper">
+            <div class="template-label">
+                <span>Machine Ready Notification</span>
+                <span class="template-type">Alert</span>
+            </div>
+            <div class="email">
+                <div class="email-header">
+                    <div class="email-logo">
+                        <div class="email-logo-mark">L</div>
+                        <div class="email-logo-text">The Clean<span>Lab</span></div>
+                    </div>
+                </div>
+                <div class="email-body">
+                    <span class="status-badge success">✓ Hoàn Tất</span>
+                    <h2 style="margin-top: 16px;">Quần Áo Đã Sẵn Sàng!</h2>
+                    <p>Chu kỳ giặt/sấy của bạn đã hoàn tất. Vui lòng đến lấy đồ trong vòng 30 phút.</p>
+
+                    <div class="machine-status">
+                        <div class="machine-icon">🧺</div>
+                        <div class="machine-info">
+                            <h4>Máy Giặt #01</h4>
+                            <p>Hoàn tất lúc 15:45 • Chi nhánh Quận 7</p>
+                        </div>
+                    </div>
+
+                    <div class="email-info-box box-orange">
+                        <h4>⚠️ Lưu Ý</h4>
+                        <p>Vui lòng lấy đồ trong <span class="highlight orange">30 phút</span> để tránh phí lưu kho.</p>
+                        <p>Phí lưu kho: 5.000đ/15 phút sau thời gian miễn phí.</p>
+                    </div>
+
+                    <a href="#" class="email-btn btn-orange">Xem Vị Trí Chi Nhánh</a>
+                </div>
+                <div class="email-footer">
+                    <p>📞 1900 888 999 • ✉ support@thecleanlab.vn</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== PASSWORD RESET ====== -->
+        <div class="template-wrapper">
+            <div class="template-label">
+                <span>Password Reset</span>
+                <span class="template-type">Security</span>
+            </div>
+            <div class="email">
+                <div class="email-header">
+                    <div class="email-logo">
+                        <div class="email-logo-mark">L</div>
+                        <div class="email-logo-text">The Clean<span>Lab</span></div>
+                    </div>
+                </div>
+                <div class="email-body">
+                    <h2>Đặt Lại Mật Khẩu</h2>
+                    <p>Chúng tôi nhận được yêu cầu đặt lại mật khẩu cho tài khoản của bạn. Sử dụng mã OTP dưới đây:</p>
+
+                    <div class="otp-box">
+                        <div class="otp-code">847291</div>
+                        <div class="otp-label">Mã xác nhận • Hết hạn sau 10 phút</div>
+                    </div>
+
+                    <p>Hoặc nhấn vào nút bên dưới để đặt lại mật khẩu:</p>
+
+                    <a href="#" class="email-btn">Đặt Lại Mật Khẩu</a>
+
+                    <div class="email-info-box">
+                        <h4>🔒 Bảo Mật</h4>
+                        <p>Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này hoặc liên hệ hỗ trợ ngay.</p>
+                    </div>
+                </div>
+                <div class="email-footer">
+                    <p>📞 1900 888 999 • ✉ security@thecleanlab.vn</p>
+                    <p class="unsubscribe">
+                        Email này được gửi tự động. Vui lòng không trả lời trực tiếp.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== PROMOTIONAL EMAIL ====== -->
+        <div class="template-wrapper">
+            <div class="template-label">
+                <span>Promotional Email</span>
+                <span class="template-type">Marketing</span>
+            </div>
+            <div class="email">
+                <div class="email-header" style="background: linear-gradient(135deg, #0055ff 0%, #0044cc 100%); padding: 40px 32px;">
+                    <div class="email-logo">
+                        <div class="email-logo-mark">L</div>
+                        <div class="email-logo-text">The Clean<span>Lab</span></div>
+                    </div>
+                    <div style="margin-top: 24px; text-align: center;">
+                        <div style="font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.2em;">Khuyến Mãi Đặc Biệt</div>
+                        <div style="font-size: 48px; font-weight: 900; color: white; margin: 8px 0;">GIẢM 30%</div>
+                        <div style="font-size: 16px; color: rgba(255,255,255,0.9);">Cho lần sử dụng đầu tiên</div>
+                    </div>
+                </div>
+                <div class="email-body">
+                    <h2>Ưu Đãi Dành Riêng Cho Bạn!</h2>
+                    <p>Chào mừng bạn đến với The Clean Lab! Sử dụng mã khuyến mãi dưới đây để được giảm 30% cho đơn hàng đầu tiên.</p>
+
+                    <div class="otp-box">
+                        <div class="otp-code" style="color: var(--color-orange-500);">WELCOME30</div>
+                        <div class="otp-label">Mã Khuyến Mãi • HSD: 31/12/2025</div>
+                    </div>
+
+                    <p><strong>Điều kiện áp dụng:</strong></p>
+                    <ul style="font-size: 14px; color: var(--color-gray-500); padding-left: 20px; margin-bottom: 16px;">
+                        <li>Áp dụng cho khách hàng mới</li>
+                        <li>Giảm tối đa 50.000đ</li>
+                        <li>Không áp dụng cùng khuyến mãi khác</li>
+                    </ul>
+
+                    <a href="#" class="email-btn btn-orange">Sử Dụng Ngay</a>
+                </div>
+                <div class="email-footer">
+                    <div class="email-social">
+                        <a href="#">f</a>
+                        <a href="#">in</a>
+                        <a href="#">📷</a>
+                    </div>
+                    <p>📞 1900 888 999 • ✉ support@thecleanlab.vn</p>
+                    <p class="unsubscribe">
+                        <a href="#">Hủy nhận thông tin khuyến mãi</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== CYCLE IN PROGRESS ====== -->
+        <div class="template-wrapper">
+            <div class="template-label">
+                <span>Cycle In Progress</span>
+                <span class="template-type">Status Update</span>
+            </div>
+            <div class="email">
+                <div class="email-header">
+                    <div class="email-logo">
+                        <div class="email-logo-mark">L</div>
+                        <div class="email-logo-text">The Clean<span>Lab</span></div>
+                    </div>
+                </div>
+                <div class="email-body">
+                    <span class="status-badge processing">⟳ Đang Xử Lý</span>
+                    <h2 style="margin-top: 16px;">Chu Kỳ Giặt Đang Chạy</h2>
+                    <p>Máy giặt đang hoạt động. Chúng tôi sẽ thông báo khi hoàn tất.</p>
+
+                    <div class="machine-status">
+                        <div class="machine-icon">🔄</div>
+                        <div class="machine-info">
+                            <h4>Máy Giặt #03 - Giặt Tiêu Chuẩn</h4>
+                            <p>Bắt đầu: 14:30 • Dự kiến hoàn tất: 15:15</p>
+                        </div>
+                    </div>
+
+                    <div style="margin: 20px 0;">
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px;">
+                            <span style="font-family: var(--font-mono); color: var(--color-gray-500);">TIẾN ĐỘ</span>
+                            <span style="font-weight: 700; color: var(--color-blue-500);">75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="background: var(--color-blue-500);"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-gray-400); margin-top: 8px;">
+                            <span>Giặt</span>
+                            <span>Xả</span>
+                            <span>Vắt</span>
+                            <span>Hoàn tất</span>
+                        </div>
+                    </div>
+
+                    <div class="email-info-box">
+                        <h4>Thời Gian Còn Lại</h4>
+                        <p style="font-size: 24px; font-weight: 900; color: var(--color-black); margin: 8px 0;">~12 phút</p>
+                    </div>
+
+                    <a href="#" class="email-btn">Theo Dõi Realtime</a>
+                </div>
+                <div class="email-footer">
+                    <p>📞 1900 888 999 • ✉ support@thecleanlab.vn</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

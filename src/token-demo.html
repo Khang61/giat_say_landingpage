@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Tokens Demo - The Clean Lab</title>
+  <link rel="stylesheet" href="./styles/base.css">
+  <style>
+    /* Demo-specific styles */
+    .demo-section {
+      margin-bottom: var(--space-12);
+      padding: var(--space-6);
+      background: var(--bg-secondary);
+      border: var(--border-width-md) solid var(--border-default);
+    }
+
+    .demo-section.chamfered {
+      clip-path: var(--shape-chamfer-lg);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .color-swatch {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+      font: var(--tech-label);
+      clip-path: var(--shape-chamfer-sm);
+      border: var(--border-width-sm) solid var(--border-default);
+    }
+
+    .button-demo {
+      display: inline-block;
+      padding: var(--space-3) var(--space-6);
+      font: var(--button-base);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      transition: all 0.2s ease;
+    }
+
+    .button-primary {
+      background: var(--accent-primary);
+      color: var(--text-inverse);
+      border: var(--border-width-md) solid var(--accent-primary);
+    }
+
+    .button-primary:hover {
+      background: var(--accent-primary-hover);
+      box-shadow: var(--glow-blue);
+    }
+
+    .button-secondary {
+      background: var(--accent-dry);
+      color: var(--text-inverse);
+      border: var(--border-width-md) solid var(--accent-dry);
+    }
+
+    .button-secondary:hover {
+      background: var(--accent-dry-hover);
+      box-shadow: var(--glow-orange);
+    }
+
+    .card-demo {
+      padding: var(--space-6);
+      background: var(--bg-elevated);
+      border: var(--border-width-md) solid var(--border-default);
+      clip-path: var(--shape-chamfer-md);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: var(--space-2) var(--space-4);
+      font: var(--caps-sm);
+      text-transform: uppercase;
+      clip-path: var(--shape-chamfer-sm);
+    }
+  </style>
+</head>
+<body>
+  <div class="container" style="padding-top: var(--space-12); padding-bottom: var(--space-12);">
+
+    <!-- Header -->
+    <header style="margin-bottom: var(--space-12);">
+      <h1 style="color: var(--text-primary); margin-bottom: var(--space-4);">
+        The Clean Lab
+      </h1>
+      <p style="font: var(--body-lg); color: var(--text-secondary);">
+        "Titanium Command" Design System - Token Validation Demo
+      </p>
+    </header>
+
+    <!-- Color Palette -->
+    <section class="demo-section chamfered">
+      <h2 style="margin-bottom: var(--space-6);">Color Palette</h2>
+
+      <h3 style="font: var(--heading-4); margin-bottom: var(--space-4);">Brand Colors</h3>
+      <div class="demo-grid" style="margin-bottom: var(--space-8);">
+        <div class="color-swatch" style="background: var(--accent-wash); color: var(--text-inverse);">
+          TECH BLUE<br>#0055FF
+        </div>
+        <div class="color-swatch" style="background: var(--accent-dry); color: var(--text-inverse);">
+          DRY ORANGE<br>#FF4800
+        </div>
+      </div>
+
+      <h3 style="font: var(--heading-4); margin-bottom: var(--space-4);">Status Colors</h3>
+      <div class="demo-grid" style="margin-bottom: var(--space-8);">
+        <div class="color-swatch" style="background: var(--status-success); color: var(--text-inverse);">
+          SUCCESS<br>#00CC66
+        </div>
+        <div class="color-swatch" style="background: var(--status-error); color: var(--text-inverse);">
+          ERROR<br>#FF3333
+        </div>
+        <div class="color-swatch" style="background: var(--status-warning); color: var(--text-primary);">
+          WARNING<br>#FFAA00
+        </div>
+      </div>
+
+      <h3 style="font: var(--heading-4); margin-bottom: var(--space-4);">Neutrals</h3>
+      <div class="demo-grid">
+        <div class="color-swatch" style="background: var(--bg-primary); color: var(--text-primary);">
+          BG PRIMARY<br>#F0F2F5
+        </div>
+        <div class="color-swatch" style="background: var(--bg-secondary); color: var(--text-primary); border: var(--border-width-md) solid var(--border-default);">
+          BG SECONDARY<br>#FFFFFF
+        </div>
+        <div class="color-swatch" style="background: var(--bg-inverse); color: var(--text-inverse);">
+          BG INVERSE<br>#111111
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section class="demo-section chamfered">
+      <h2 style="margin-bottom: var(--space-6);">Typography</h2>
+
+      <div style="margin-bottom: var(--space-6);">
+        <h1>Heading 1 - Inter Black 36px</h1>
+        <h2>Heading 2 - Inter Black 30px</h2>
+        <h3>Heading 3 - Inter Bold 24px</h3>
+        <h4 style="font: var(--heading-4);">Heading 4 - Inter Bold 20px</h4>
+      </div>
+
+      <div style="margin-bottom: var(--space-6);">
+        <p style="font: var(--body-lg);">Body Large - Inter Regular 18px/1.5</p>
+        <p style="font: var(--body-base);">Body Base - Inter Regular 16px/1.5</p>
+        <p style="font: var(--body-sm);">Body Small - Inter Regular 14px/1.5</p>
+      </div>
+
+      <div style="margin-bottom: var(--space-6);">
+        <div style="font: var(--tech-price); color: var(--accent-primary);">50.000₫</div>
+        <div style="font: var(--tech-label); color: var(--text-code);">DURATION: 45 MIN</div>
+        <div style="font: var(--tech-code); color: var(--text-muted);">ID: TCL-2024-001</div>
+      </div>
+
+      <div>
+        <p style="font: var(--body-base);">
+          Vietnamese support: Máy giặt thông minh, Chế độ sấy khô, Tiệm giặt là tự động
+        </p>
+      </div>
+    </section>
+
+    <!-- Chamfer Shapes -->
+    <section class="demo-section chamfered">
+      <h2 style="margin-bottom: var(--space-6);">Chamfer Shapes</h2>
+
+      <div class="demo-grid">
+        <div class="chamfer-sm" style="background: var(--accent-primary); color: var(--text-inverse); padding: var(--space-6); text-align: center;">
+          <div style="font: var(--label-base);">SMALL CHAMFER</div>
+          <div style="font: var(--tech-label); margin-top: var(--space-2);">8px</div>
+        </div>
+        <div class="chamfer-md" style="background: var(--accent-dry); color: var(--text-inverse); padding: var(--space-6); text-align: center;">
+          <div style="font: var(--label-base);">MEDIUM CHAMFER</div>
+          <div style="font: var(--tech-label); margin-top: var(--space-2);">12px</div>
+        </div>
+        <div class="chamfer-lg" style="background: var(--status-success); color: var(--text-inverse); padding: var(--space-6); text-align: center;">
+          <div style="font: var(--label-base);">LARGE CHAMFER</div>
+          <div style="font: var(--tech-label); margin-top: var(--space-2);">20px</div>
+        </div>
+        <div class="chamfer-xl" style="background: var(--bg-inverse); color: var(--text-inverse); padding: var(--space-6); text-align: center;">
+          <div style="font: var(--label-base);">EXTRA LARGE</div>
+          <div style="font: var(--tech-label); margin-top: var(--space-2);">30px</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Buttons -->
+    <section class="demo-section chamfered">
+      <h2 style="margin-bottom: var(--space-6);">Buttons</h2>
+
+      <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+        <button class="button-demo button-primary chamfer-sm">
+          Activate Wash
+        </button>
+        <button class="button-demo button-secondary chamfer-sm">
+          Activate Dry
+        </button>
+        <button class="button-demo chamfer-sm" style="background: var(--status-success); color: var(--text-inverse); border: var(--border-width-md) solid var(--status-success);">
+          Confirm
+        </button>
+        <button class="button-demo chamfer-sm" style="background: transparent; color: var(--text-primary); border: var(--border-width-md) solid var(--border-strong);">
+          Cancel
+        </button>
+      </div>
+    </section>
+
+    <!-- Cards -->
+    <section class="demo-section chamfered">
+      <h2 style="margin-bottom: var(--space-6);">Cards</h2>
+
+      <div class="demo-grid">
+        <div class="card-demo tech-grid">
+          <h3 style="margin-bottom: var(--space-3);">DELICATE WASH</h3>
+          <p style="font: var(--body-base); color: var(--text-secondary); margin-bottom: var(--space-4);">
+            Gentle cycle for sensitive fabrics
+          </p>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font: var(--tech-price); color: var(--accent-wash);">25.000₫</div>
+            <div class="status-badge" style="background: var(--status-success); color: var(--text-inverse);">
+              Available
+            </div>
+          </div>
+        </div>
+
+        <div class="card-demo">
+          <h3 style="margin-bottom: var(--space-3);">QUICK DRY</h3>
+          <p style="font: var(--body-base); color: var(--text-secondary); margin-bottom: var(--space-4);">
+            Fast drying in 30 minutes
+          </p>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font: var(--tech-price); color: var(--accent-dry);">15.000₫</div>
+            <div class="status-badge" style="background: var(--status-warning); color: var(--text-primary);">
+              In Use
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tactical Effects -->
+    <section class="demo-section chamfered">
+      <h2 style="margin-bottom: var(--space-6);">Tactical Effects</h2>
+
+      <div class="demo-grid">
+        <div class="tech-grid chamfer-md" style="padding: var(--space-6); background: var(--bg-secondary);">
+          <div style="font: var(--label-base);">TECH GRID</div>
+          <div style="font: var(--tech-label); color: var(--text-muted);">20px × 20px</div>
+        </div>
+
+        <div class="scan-lines chamfer-md" style="padding: var(--space-6); background: var(--bg-inverse); color: var(--text-inverse);">
+          <div style="font: var(--label-base);">SCAN LINES</div>
+          <div style="font: var(--tech-label); color: var(--text-inverse);">Retro overlay</div>
+        </div>
+
+        <div class="glow-blue chamfer-md" style="padding: var(--space-6); background: var(--accent-primary); color: var(--text-inverse);">
+          <div style="font: var(--label-base);">BLUE GLOW</div>
+          <div style="font: var(--tech-label);">Hover effect</div>
+        </div>
+
+        <div class="glow-orange chamfer-md" style="padding: var(--space-6); background: var(--accent-dry); color: var(--text-inverse);">
+          <div style="font: var(--label-base);">ORANGE GLOW</div>
+          <div style="font: var(--tech-label);">Active state</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spacing Scale -->
+    <section class="demo-section chamfered">
+      <h2 style="margin-bottom: var(--space-6);">Spacing Scale (4px base)</h2>
+
+      <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+        <div style="display: flex; align-items: center; gap: var(--space-4);">
+          <div style="font: var(--tech-label); width: 100px;">space-1</div>
+          <div style="background: var(--accent-primary); height: 20px; width: var(--space-1);"></div>
+          <span style="font: var(--body-sm); color: var(--text-muted);">4px</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-4);">
+          <div style="font: var(--tech-label); width: 100px;">space-2</div>
+          <div style="background: var(--accent-primary); height: 20px; width: var(--space-2);"></div>
+          <span style="font: var(--body-sm); color: var(--text-muted);">8px</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-4);">
+          <div style="font: var(--tech-label); width: 100px;">space-4</div>
+          <div style="background: var(--accent-primary); height: 20px; width: var(--space-4);"></div>
+          <span style="font: var(--body-sm); color: var(--text-muted);">16px</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-4);">
+          <div style="font: var(--tech-label); width: 100px;">space-6</div>
+          <div style="background: var(--accent-primary); height: 20px; width: var(--space-6);"></div>
+          <span style="font: var(--body-sm); color: var(--text-muted);">24px</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-4);">
+          <div style="font: var(--tech-label); width: 100px;">space-12</div>
+          <div style="background: var(--accent-primary); height: 20px; width: var(--space-12);"></div>
+          <span style="font: var(--body-sm); color: var(--text-muted);">48px</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="margin-top: var(--space-12); text-align: center; padding: var(--space-6); border-top: var(--border-width-md) solid var(--border-default);">
+      <p style="font: var(--tech-label); color: var(--text-muted);">
+        The Clean Lab Design System v1.0.0 | "Titanium Command" Concept
+      </p>
+    </footer>
+
+  </div>
+</body>
+</html>
