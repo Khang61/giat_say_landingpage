@@ -3729,54 +3729,119 @@
             // Send email via EmailJS
             emailjs.sendForm('service_3rzsjwo', 'template_xly1sze', form)
                 .then(() => {
+                    // Create overlay
+                    const overlay = document.createElement('div');
+                    overlay.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.5);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 9999;
+                        animation: fadeIn 0.3s ease-out;
+                    `;
+
                     // Create success message
                     const successMsg = document.createElement('div');
                     successMsg.style.cssText = `
-                        background: var(--color-success);
-                        color: white;
-                        padding: 16px 24px;
-                        clip-path: var(--chamfer-sm);
+                        background: white;
+                        padding: 40px 50px;
+                        border-radius: 16px;
                         text-align: center;
-                        font-weight: 600;
-                        margin-top: 16px;
-                        animation: fadeInUp 0.4s ease-out;
+                        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                        animation: scaleIn 0.3s ease-out;
+                        max-width: 90%;
                     `;
-                    successMsg.textContent = '✓ Cảm ơn bạn! Chúng tôi sẽ liên hệ lại sớm nhất.';
+                    successMsg.innerHTML = `
+                        <div style="width: 80px; height: 80px; background: var(--color-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--color-dark); margin-bottom: 12px;">Gửi thành công!</h3>
+                        <p style="font-size: 16px; color: var(--gray-600); margin: 0;">Cảm ơn bạn! Chúng tôi sẽ liên hệ lại sớm nhất.</p>
+                    `;
+
+                    overlay.appendChild(successMsg);
+                    document.body.appendChild(overlay);
+
+                    // Close on click overlay
+                    overlay.addEventListener('click', (e) => {
+                        if (e.target === overlay) {
+                            overlay.remove();
+                        }
+                    });
 
                     form.reset();
-                    form.appendChild(successMsg);
                     submitBtn.innerHTML = '<i data-lucide="send" style="width: 18px; height: 18px; display: inline; vertical-align: middle; margin-right: 8px;"></i>Gửi yêu cầu';
                     submitBtn.disabled = false;
                     lucide.createIcons();
 
-                    // Remove success message after 5 seconds
+                    // Remove overlay after 5 seconds
                     setTimeout(() => {
-                        successMsg.remove();
+                        overlay.remove();
                     }, 5000);
                 })
                 .catch((error) => {
+                    // Create overlay
+                    const overlay = document.createElement('div');
+                    overlay.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.5);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 9999;
+                        animation: fadeIn 0.3s ease-out;
+                    `;
+
                     // Create error message
                     const errorMsg = document.createElement('div');
                     errorMsg.style.cssText = `
-                        background: var(--color-error);
-                        color: white;
-                        padding: 16px 24px;
-                        clip-path: var(--chamfer-sm);
+                        background: white;
+                        padding: 40px 50px;
+                        border-radius: 16px;
                         text-align: center;
-                        font-weight: 600;
-                        margin-top: 16px;
-                        animation: fadeInUp 0.4s ease-out;
+                        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                        animation: scaleIn 0.3s ease-out;
+                        max-width: 90%;
                     `;
-                    errorMsg.textContent = '✗ Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ trực tiếp qua Zalo.';
+                    errorMsg.innerHTML = `
+                        <div style="width: 80px; height: 80px; background: var(--color-error); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--color-dark); margin-bottom: 12px;">Có lỗi xảy ra!</h3>
+                        <p style="font-size: 16px; color: var(--gray-600); margin: 0;">Vui lòng thử lại hoặc liên hệ trực tiếp qua Zalo.</p>
+                    `;
 
-                    form.appendChild(errorMsg);
+                    overlay.appendChild(errorMsg);
+                    document.body.appendChild(overlay);
+
+                    // Close on click overlay
+                    overlay.addEventListener('click', (e) => {
+                        if (e.target === overlay) {
+                            overlay.remove();
+                        }
+                    });
+
                     submitBtn.innerHTML = '<i data-lucide="send" style="width: 18px; height: 18px; display: inline; vertical-align: middle; margin-right: 8px;"></i>Gửi yêu cầu';
                     submitBtn.disabled = false;
                     lucide.createIcons();
 
-                    // Remove error message after 5 seconds
+                    // Remove overlay after 5 seconds
                     setTimeout(() => {
-                        errorMsg.remove();
+                        overlay.remove();
                     }, 5000);
 
                     console.error('EmailJS Error:', error);
