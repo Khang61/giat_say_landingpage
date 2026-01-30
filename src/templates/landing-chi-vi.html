@@ -116,9 +116,10 @@
             left: 0;
             right: 0;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
-            border-bottom: 2px solid var(--color-dark);
+            border-bottom: 2px solid var(--gray-200);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         .nav-container {
@@ -128,7 +129,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 72px;
+            height: 96px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                height: 76px;
+            }
         }
 
         .nav-logo {
@@ -152,21 +159,70 @@
             font-size: 16px;
         }
 
-        .nav-brand {
-            font-weight: 800;
-            font-size: 18px;
-            letter-spacing: -0.02em;
-            color: var(--color-dark);
-            line-height: 1.2;
+        .nav-logo-img {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
         }
 
-        .nav-brand span {
-            display: block;
-            font-size: 10px;
-            font-weight: 600;
+        @media (max-width: 768px) {
+            .nav-logo-img {
+                height: 60px;
+            }
+        }
+
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .nav-brand-line1 {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--color-dark);
+            letter-spacing: -0.01em;
+        }
+
+        .nav-brand-line2 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--color-primary);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-brand-line3 {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--gray-600);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .nav-brand-line4 {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            font-size: 9px;
             color: var(--gray-500);
             letter-spacing: 0.05em;
-            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .nav-brand-line1 {
+                font-size: 16px;
+            }
+            .nav-brand-line2 {
+                font-size: 11px;
+            }
+            .nav-brand-line3 {
+                font-size: 10px;
+            }
+            .nav-brand-line4 {
+                font-size: 8px;
+            }
         }
 
         .nav-menu {
@@ -198,16 +254,17 @@
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            border: 2px solid var(--color-dark);
+            border: none;
             clip-path: var(--chamfer-sm);
             text-decoration: none;
             transition: all var(--duration-fast);
-            box-shadow: 4px 4px 0 var(--color-dark);
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3);
         }
 
         .nav-cta:hover {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0 var(--color-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 85, 255, 0.4);
+            background: var(--color-primary-hover);
         }
 
         .nav-mobile-btn {
@@ -221,7 +278,7 @@
         @media (max-width: 1024px) {
             .nav-menu {
                 position: fixed;
-                top: 72px;
+                top: 76px;
                 left: 0;
                 right: 0;
                 background: rgba(255, 255, 255, 0.98);
@@ -229,7 +286,7 @@
                 flex-direction: column;
                 padding: 24px;
                 gap: 16px;
-                border-bottom: 2px solid var(--color-dark);
+                border-bottom: 2px solid var(--gray-200);
                 transform: translateY(-150%);
                 opacity: 0;
                 transition: transform 0.3s ease, opacity 0.3s ease;
@@ -814,10 +871,34 @@
             border: 2px solid var(--color-dark);
             clip-path: var(--chamfer-lg);
             overflow: hidden;
-            transition: all var(--duration-normal);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             height: 590px; /* Fixed height for all cards */
+            position: relative;
+        }
+
+        /* Shine effect overlay */
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: left 0.6s ease;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .product-card:hover::before {
+            left: 100%;
         }
 
         /* Tablet card adjustments */
@@ -836,14 +917,15 @@
         }
 
         .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 8px 8px 0 var(--color-dark);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 85, 255, 0.15), 8px 8px 0 var(--color-dark);
+            border-color: var(--color-primary);
         }
 
         @media (max-width: 768px) {
             .product-card:hover {
-                transform: translateY(-4px);
-                box-shadow: 4px 4px 0 var(--color-dark);
+                transform: translateY(-5px) scale(1.01);
+                box-shadow: 0 10px 20px rgba(0, 85, 255, 0.1), 4px 4px 0 var(--color-dark);
             }
         }
 
@@ -876,11 +958,12 @@
             width: auto;
             height: auto;
             object-fit: contain;
-            transition: transform var(--duration-normal) var(--ease-out);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
         }
 
         .product-card:hover .product-card-image img {
-            transform: scale(1.05);
+            transform: scale(1.1) rotate(2deg);
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
         }
 
         /* Larger product images */
@@ -1021,10 +1104,21 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             clip-path: var(--chamfer-sm);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+            z-index: 5;
+        }
+
+        .product-card:hover .product-card-badge {
+            transform: scale(1.1) rotate(-3deg);
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.4);
         }
 
         .product-card-badge.orange {
             background: var(--color-secondary);
+        }
+
+        .product-card:hover .product-card-badge.orange {
+            box-shadow: 0 4px 12px rgba(255, 72, 0, 0.4);
         }
 
         .product-card-content {
@@ -1082,6 +1176,12 @@
             font-weight: 800;
             color: var(--color-primary);
             margin-bottom: 16px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .product-card:hover .product-card-price {
+            transform: scale(1.05);
+            color: var(--color-secondary);
         }
 
         @media (max-width: 1024px) {
@@ -1161,12 +1261,31 @@
             border: 2px solid var(--color-dark);
             clip-path: var(--chamfer-sm);
             cursor: pointer;
-            transition: all var(--duration-fast);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .product-card-cta:hover::before {
+            left: 100%;
         }
 
         .product-card-cta:hover {
             background: var(--color-primary);
             border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3);
         }
 
         .product-card-detail {
@@ -1180,10 +1299,16 @@
             border: 2px solid var(--color-dark);
             clip-path: var(--chamfer-sm);
             cursor: pointer;
-            transition: all var(--duration-fast);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             gap: 6px;
+        }
+
+        .product-card-detail:hover {
+            background: var(--gray-100);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .product-card-detail:hover {
@@ -1827,7 +1952,7 @@
         .footer {
             padding: 80px 24px 40px;
             background: var(--color-dark);
-            border-top: 3px solid var(--color-dark);
+            border-top: none;
         }
 
         .footer-container {
@@ -1870,10 +1995,49 @@
             color: white;
         }
 
-        .footer-brand-name {
-            font-size: 20px;
+        .footer-logo-img {
+            height: 125px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .footer-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .footer-brand-line1 {
+            font-family: var(--font-primary);
             font-weight: 800;
+            font-size: 33px;
             color: white;
+            letter-spacing: -0.01em;
+        }
+
+        .footer-brand-line2 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 23px;
+            color: var(--color-primary);
+            letter-spacing: 0.02em;
+        }
+
+        .footer-brand-line3 {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--gray-400);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .footer-brand-line4 {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--gray-500);
+            letter-spacing: 0.05em;
         }
 
         .footer-description {
@@ -1913,7 +2077,7 @@
 
         .footer-bottom {
             padding-top: 32px;
-            border-top: 1px solid var(--gray-800);
+            border-top: 1px solid var(--gray-700);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1951,16 +2115,191 @@
         }
 
         /* ============================================
+           FLOATING BUTTON
+        ============================================ */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(0, 104, 255, 0.3);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 4px 30px rgba(0, 104, 255, 0.6), 0 0 20px rgba(0, 104, 255, 0.4);
+                transform: scale(1.03);
+            }
+        }
+
+        @keyframes ring {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px 8px 8px;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0, 104, 255, 0.3);
+            cursor: pointer;
+            text-decoration: none;
+            z-index: 1000;
+            border: 2px solid #0068ff;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .floating-btn::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid #0068ff;
+            border-radius: 50px;
+            animation: ring 1.5s ease-out infinite;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(0, 104, 255, 0.5);
+            animation: none;
+        }
+
+        .floating-btn:hover::before {
+            animation: none;
+            opacity: 0;
+        }
+
+        .floating-btn-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-btn-logo img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .floating-btn-zalo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #0068ff;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .floating-btn:hover .floating-btn-zalo {
+            background: #0054cc;
+        }
+
+        .floating-btn-zalo svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .floating-btn {
+                bottom: 16px;
+                right: 16px;
+                padding: 6px 12px 6px 6px;
+                gap: 6px;
+            }
+            .floating-btn-logo {
+                width: 40px;
+                height: 40px;
+            }
+            .floating-btn-logo img {
+                width: 40px;
+                height: 40px;
+            }
+            .floating-btn-zalo {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .floating-btn-zalo svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        /* ============================================
            ANIMATIONS
         ============================================ */
+
+        /* Keyframes */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
             }
         }
 
@@ -1969,8 +2308,255 @@
             50% { opacity: 0.5; }
         }
 
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 85, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 85, 255, 0.6); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: rotate(-10deg) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0) scale(1);
+            }
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll Reveal Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Staggered Animation Delays */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
+        .delay-600 { transition-delay: 600ms; }
+
+        /* Animation Classes */
         .animate-fade-in {
-            animation: fadeInUp var(--duration-slow) var(--ease-out);
+            animation: fadeInUp 0.6s var(--ease-out) forwards;
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .animate-bounce {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .animate-shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s linear infinite;
+        }
+
+        /* Hero Specific Animations */
+        .hero-title {
+            animation: fadeInUp 0.8s var(--ease-out) forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .hero-subtitle {
+            animation: fadeInUp 0.8s var(--ease-out) forwards;
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .hero-cta-group {
+            animation: fadeInUp 0.8s var(--ease-out) forwards;
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        .hero-stats {
+            animation: fadeInUp 0.8s var(--ease-out) forwards;
+            animation-delay: 0.8s;
+            opacity: 0;
+        }
+
+        /* Button Hover Effects */
+        .btn-animate {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-animate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-animate:hover::before {
+            left: 100%;
+        }
+
+        /* Card Hover Lift Effect */
+        .card-lift {
+            transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+        }
+
+        .card-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Icon Rotate on Hover */
+        .icon-rotate {
+            transition: transform 0.3s var(--ease-spring);
+        }
+
+        .icon-rotate:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        /* Text Gradient Animation */
+        .text-gradient-animate {
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-primary));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Underline Animation */
+        .underline-animate {
+            position: relative;
+        }
+
+        .underline-animate::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: width 0.3s var(--ease-out);
+        }
+
+        .underline-animate:hover::after {
+            width: 100%;
+        }
+
+        /* Badge Pulse */
+        .badge-pulse {
+            position: relative;
+        }
+
+        .badge-pulse::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px solid currentColor;
+            clip-path: inherit;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Counter Animation */
+        .counter {
+            display: inline-block;
+        }
+
+        /* Parallax Scroll Effect */
+        .parallax {
+            transform: translateY(var(--parallax-offset, 0));
+            transition: transform 0.1s linear;
         }
 
         /* Reduced Motion */
@@ -1978,6 +2564,11 @@
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 transition-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+            .reveal, .reveal-left, .reveal-right, .reveal-scale {
+                opacity: 1;
+                transform: none;
             }
         }
     </style>
@@ -1987,12 +2578,12 @@
     <nav class="nav">
         <div class="nav-container">
             <a href="#" class="nav-logo">
-                <div class="nav-logo-mark">CV</div>
-                <div>
-                    <div class="nav-brand">
-                        CHÍ VĨ
-                        <span>Công nghệ tự động hóa</span>
-                    </div>
+                <img src="../../pictures/logo.png" alt="Chí Vĩ Logo" class="nav-logo-img">
+                <div class="nav-brand">
+                    <span class="nav-brand-line1">Chí Vĩ</span>
+                    <span class="nav-brand-line2">Self Service</span>
+                    <span class="nav-brand-line3">ECO SYSTEM</span>
+                    <span class="nav-brand-line4">powered by VHITEK</span>
                 </div>
             </a>
 
@@ -2015,7 +2606,7 @@
 
         <div class="hero-container">
             <div class="hero-content">
-                <div class="hero-badge">
+                <div class="hero-badge animate-float">
                     <i data-lucide="award" class="hero-badge-icon"></i>
                     10 Năm Chuyên Sâu
                 </div>
@@ -2105,7 +2696,7 @@
     <!-- PRODUCTS SECTION -->
     <section id="products" class="products">
         <div class="section-container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <p class="section-label">Catalog Sản Phẩm</p>
                 <h2 class="section-title">Thiết bị <span>chính hãng</span></h2>
                 <p class="section-description">
@@ -2113,7 +2704,7 @@
                 </p>
             </div>
 
-            <div class="product-tabs" role="tablist" aria-label="Danh mục sản phẩm">
+            <div class="product-tabs reveal delay-200" role="tablist" aria-label="Danh mục sản phẩm">
                 <button class="product-tab active" data-tab="all" role="tab" aria-selected="true" aria-controls="products-grid">Tất cả</button>
                 <button class="product-tab" data-tab="skyworth" role="tab" aria-selected="false" aria-controls="products-grid">Skyworth</button>
                 <button class="product-tab" data-tab="lg-giant" role="tab" aria-selected="false" aria-controls="products-grid">LG Giant Max</button>
@@ -2404,7 +2995,7 @@
     <!-- FEATURES SECTION -->
     <section id="features" class="features">
         <div class="section-container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <p class="section-label">Ưu điểm nổi bật</p>
                 <h2 class="section-title">Tại sao chọn <span>Chí Vĩ</span>?</h2>
                 <p class="section-description">
@@ -2413,48 +3004,48 @@
             </div>
 
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card reveal delay-100">
+                    <div class="feature-icon icon-rotate">
                         <i data-lucide="wifi" style="width: 28px; height: 28px;"></i>
                     </div>
                     <h3 class="feature-title">Kết nối thông minh</h3>
                     <p class="feature-text">Kết nối 4G/Wifi, quản lý từ xa qua ứng dụng Laundry Lounge. Theo dõi trạng thái máy real-time.</p>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card reveal delay-200">
+                    <div class="feature-icon icon-rotate">
                         <i data-lucide="zap" style="width: 28px; height: 28px;"></i>
                     </div>
                     <h3 class="feature-title">Tiết kiệm năng lượng</h3>
                     <p class="feature-text">Động cơ biến tần Inverter, cấp năng lượng 1. Tiết kiệm điện và nước lên đến 50%.</p>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card reveal delay-300">
+                    <div class="feature-icon icon-rotate">
                         <i data-lucide="shield-check" style="width: 28px; height: 28px;"></i>
                     </div>
                     <h3 class="feature-title">Bảo hành 3 năm</h3>
                     <p class="feature-text">Bảo hành toàn quốc 3 năm. Đội ngũ kỹ thuật hỗ trợ 24/7, phản hồi nhanh chóng.</p>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card reveal delay-100">
+                    <div class="feature-icon icon-rotate">
                         <i data-lucide="sparkles" style="width: 28px; height: 28px;"></i>
                     </div>
                     <h3 class="feature-title">Khử trùng AG+</h3>
                     <p class="feature-text">Công nghệ khử trùng AG+ nhiệt độ cao, tỷ lệ diệt khuẩn 99.9%. An toàn cho mọi loại vải.</p>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card reveal delay-200">
+                    <div class="feature-icon icon-rotate">
                         <i data-lucide="cpu" style="width: 28px; height: 28px;"></i>
                     </div>
                     <h3 class="feature-title">Cảm biến thông minh</h3>
                     <p class="feature-text">Cảm biến nhiệt độ, độ ẩm, lưu lượng gió. Tự động tối ưu chu trình giặt/sấy.</p>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card reveal delay-300">
+                    <div class="feature-icon icon-rotate">
                         <i data-lucide="qr-code" style="width: 28px; height: 28px;"></i>
                     </div>
                     <h3 class="feature-title">Thanh toán đa dạng</h3>
@@ -2466,8 +3057,8 @@
 
     <!-- WARRANTY SECTION -->
     <section class="warranty">
-        <div class="warranty-container">
-            <div class="warranty-icon">
+        <div class="warranty-container reveal-scale">
+            <div class="warranty-icon animate-pulse">
                 <i data-lucide="badge-check"></i>
             </div>
             <div class="warranty-content">
@@ -2481,13 +3072,13 @@
     <section id="contact" class="contact">
         <div class="section-container">
             <div class="contact-grid">
-                <div class="contact-info">
+                <div class="contact-info reveal-left">
                     <p class="section-label">Liên hệ</p>
                     <h3>Nhận báo giá ngay hôm nay</h3>
                     <p>Liên hệ với đội ngũ tư vấn của chúng tôi để được hỗ trợ lựa chọn thiết bị phù hợp với nhu cầu kinh doanh của bạn.</p>
 
                     <div class="contact-item">
-                        <div class="contact-item-icon">
+                        <div class="contact-item-icon icon-rotate">
                             <i data-lucide="building-2" style="width: 24px; height: 24px;"></i>
                         </div>
                         <div class="contact-item-content">
@@ -2497,7 +3088,7 @@
                     </div>
 
                     <div class="contact-item">
-                        <div class="contact-item-icon">
+                        <div class="contact-item-icon icon-rotate">
                             <i data-lucide="phone" style="width: 24px; height: 24px;"></i>
                         </div>
                         <div class="contact-item-content">
@@ -2507,7 +3098,7 @@
                     </div>
 
                     <div class="contact-item">
-                        <div class="contact-item-icon">
+                        <div class="contact-item-icon icon-rotate">
                             <i data-lucide="mail" style="width: 24px; height: 24px;"></i>
                         </div>
                         <div class="contact-item-content">
@@ -2517,7 +3108,7 @@
                     </div>
                 </div>
 
-                <div class="contact-form">
+                <div class="contact-form reveal-right">
                     <h3>Yêu cầu báo giá</h3>
                     <form class="form-grid">
                         <input type="text" placeholder="Họ và tên *" class="form-input" required>
@@ -2551,8 +3142,13 @@
             <div class="footer-grid">
                 <div>
                     <div class="footer-brand">
-                        <div class="footer-logo">CV</div>
-                        <div class="footer-brand-name">CHÍ VĨ</div>
+                        <img src="../../pictures/logo.png" alt="Chí Vĩ Logo" class="footer-logo-img">
+                        <div class="footer-brand-text">
+                            <span class="footer-brand-line1">Chí Vĩ</span>
+                            <span class="footer-brand-line2">Self Service</span>
+                            <span class="footer-brand-line3">ECO SYSTEM</span>
+                            <span class="footer-brand-line4">powered by VHITEK</span>
+                        </div>
                     </div>
                     <p class="footer-description">
                         10 năm chuyên sâu trong lĩnh vực giặt sấy thương mại. Cung cấp thiết bị chính hãng Skyworth & LG cho doanh nghiệp trên toàn quốc.
@@ -3158,6 +3754,155 @@
                 input.style.borderColor = '';
             });
         });
+
+        // ============================================
+        // SCROLL REVEAL ANIMATIONS
+        // ============================================
+        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ============================================
+        // COUNTER ANIMATION
+        // ============================================
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start);
+                }
+            }, 16);
+        }
+
+        // Animate counters when they come into view
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                    entry.target.classList.add('counted');
+                    const target = parseInt(entry.target.getAttribute('data-target'));
+                    animateCounter(entry.target, target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // ============================================
+        // PARALLAX EFFECT
+        // ============================================
+        const parallaxElements = document.querySelectorAll('.parallax');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            parallaxElements.forEach(el => {
+                const speed = el.getAttribute('data-speed') || 0.5;
+                el.style.setProperty('--parallax-offset', `${scrollY * speed}px`);
+            });
+        });
+
+        // ============================================
+        // NAVBAR SCROLL EFFECT
+        // ============================================
+        const nav = document.querySelector('.nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.scrollY;
+
+            if (currentScroll > 50) {
+                nav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // ============================================
+        // SMOOTH HOVER EFFECTS FOR FEATURE CARDS (3D Tilt)
+        // ============================================
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+
+        // ============================================
+        // TYPING EFFECT FOR HERO (Optional)
+        // ============================================
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.textContent = '';
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // ============================================
+        // MAGNETIC BUTTON EFFECT
+        // ============================================
+        document.querySelectorAll('.nav-cta, .hero-cta-primary').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
     </script>
+
+    <!-- FLOATING BUTTON -->
+    <a href="https://zalo.me/0934001247" class="floating-btn" target="_blank" rel="noopener noreferrer" aria-label="Chat Zalo">
+        <div class="floating-btn-logo">
+            <img src="../../pictures/logo.png" alt="Chí Vĩ Logo">
+        </div>
+        <div class="floating-btn-zalo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.37-.49 1.02-.74 3.99-1.74 6.65-2.89 7.99-3.45 3.8-1.6 4.59-1.88 5.1-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.27-.04.42z"/>
+            </svg>
+            Zalo
+        </div>
+    </a>
 </body>
 </html>
