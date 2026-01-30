@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(powershell -Command \"& {[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -X utf8 -c @''\nimport sys\nsys.stdout.reconfigure\\(encoding=\"\"utf-8\"\"\\)\n\nfrom docx import Document\n\ndoc = Document\\(r\"\"d:\\\\WORK\\\\kinhdoanh\\\\baogia\\\\LG\\\\Bảng báo giá máy giặt sấy Chí Vĩ.docx\"\"\\)\n\nprint\\(\"\"=== DOCUMENT STRUCTURE ===\"\"\\)\nfor i, section in enumerate\\(doc.sections\\):\n    print\\(f\"\"Page: {section.page_width.cm:.1f} x {section.page_height.cm:.1f} cm\"\"\\)\n    print\\(f\"\"Margins L/R/T/B: {section.left_margin.cm:.1f}/{section.right_margin.cm:.1f}/{section.top_margin.cm:.1f}/{section.bottom_margin.cm:.1f} cm\"\"\\)\n\nprint\\(\"\"\\\\n=== PARAGRAPHS ===\"\"\\)\nfor i, para in enumerate\\(doc.paragraphs\\):\n    if para.text.strip\\(\\):\n        alignment = para.alignment.name if para.alignment else \"\"None\"\"\n        print\\(f\"\"P{i}: [{alignment}] {para.text[:80]}\"\"\\)\n\nprint\\(\"\"\\\\n=== TABLES ===\"\"\\)\nfor t_idx, table in enumerate\\(doc.tables\\):\n    print\\(f\"\"\\\\nTable {t_idx}: {len\\(table.rows\\)} rows x {len\\(table.columns\\)} cols\"\"\\)\n    for r_idx, row in enumerate\\(table.rows\\):\n        row_text = []\n        for cell in row.cells:\n            text = cell.text.replace\\(chr\\(10\\), \"\" \"\"\\)[:35]\n            row_text.append\\(text\\)\n        print\\(f\"\"  R{r_idx}: {row_text}\"\"\\)\n''@}\")",
+      "Bash(git init:*)"
+    ]
+  }
+}
