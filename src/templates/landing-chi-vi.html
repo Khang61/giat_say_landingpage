@@ -1740,6 +1740,136 @@
         }
 
         /* ============================================
+           PROJECTS SECTION
+        ============================================ */
+        .projects {
+            padding: 120px 24px;
+            background: var(--color-light);
+        }
+
+        @media (max-width: 768px) {
+            .projects {
+                padding: 80px 16px;
+            }
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .project-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .project-location svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .project-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .project-desc {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .project-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gray-200) 0%, var(--gray-300) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+        }
+
+        .project-placeholder svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .project-placeholder span {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* ============================================
            CONTACT SECTION
         ============================================ */
         .contact {
@@ -3071,6 +3201,120 @@
             <div class="warranty-content">
                 <h3>Giải pháp tự động hóa trọn gói - Bảo hành 3 năm</h3>
                 <p>Tư vấn lắp đặt hệ thống tự động hóa từ A-Z. Thiết bị chính hãng, bảo hành toàn quốc. Đội ngũ kỹ thuật hỗ trợ từ xa 24/7.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="projects">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <p class="section-label">Dự án đã triển khai</p>
+                <h2 class="section-title">Hệ thống <span>Toàn Quốc</span></h2>
+                <p class="section-description">
+                    Hơn 500+ dự án đã triển khai thành công trên khắp cả nước
+                </p>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card reveal delay-100">
+                    <div class="project-placeholder">
+                        <i data-lucide="image-plus"></i>
+                        <span>Thêm ảnh dự án</span>
+                    </div>
+                    <!-- Khi có ảnh thật, thay thế bằng:
+                    <img src="./pictures/project-1.jpg" alt="Dự án tại TP.HCM">
+                    -->
+                    <div class="project-overlay">
+                        <div class="project-location">
+                            <i data-lucide="map-pin"></i>
+                            TP. Hồ Chí Minh
+                        </div>
+                        <h4 class="project-title">Tiệm giặt tự phục vụ</h4>
+                        <p class="project-desc">10 máy giặt + 8 máy sấy Skyworth</p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card reveal delay-200">
+                    <div class="project-placeholder">
+                        <i data-lucide="image-plus"></i>
+                        <span>Thêm ảnh dự án</span>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-location">
+                            <i data-lucide="map-pin"></i>
+                            Hà Nội
+                        </div>
+                        <h4 class="project-title">Khách sạn 5 sao</h4>
+                        <p class="project-desc">Hệ thống LG Giant Max 13kg</p>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card reveal delay-300">
+                    <div class="project-placeholder">
+                        <i data-lucide="image-plus"></i>
+                        <span>Thêm ảnh dự án</span>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-location">
+                            <i data-lucide="map-pin"></i>
+                            Đà Nẵng
+                        </div>
+                        <h4 class="project-title">Resort cao cấp</h4>
+                        <p class="project-desc">12 máy giặt sấy công nghiệp</p>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card reveal delay-100">
+                    <div class="project-placeholder">
+                        <i data-lucide="image-plus"></i>
+                        <span>Thêm ảnh dự án</span>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-location">
+                            <i data-lucide="map-pin"></i>
+                            Bình Dương
+                        </div>
+                        <h4 class="project-title">Nhà máy may mặc</h4>
+                        <p class="project-desc">LG Titan Max 17kg x 20 máy</p>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card reveal delay-200">
+                    <div class="project-placeholder">
+                        <i data-lucide="image-plus"></i>
+                        <span>Thêm ảnh dự án</span>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-location">
+                            <i data-lucide="map-pin"></i>
+                            Nha Trang
+                        </div>
+                        <h4 class="project-title">Chuỗi giặt ủi</h4>
+                        <p class="project-desc">5 chi nhánh - 50+ máy</p>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card reveal delay-300">
+                    <div class="project-placeholder">
+                        <i data-lucide="image-plus"></i>
+                        <span>Thêm ảnh dự án</span>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-location">
+                            <i data-lucide="map-pin"></i>
+                            Cần Thơ
+                        </div>
+                        <h4 class="project-title">Bệnh viện</h4>
+                        <p class="project-desc">Hệ thống giặt sấy y tế</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
