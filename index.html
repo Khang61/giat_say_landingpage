@@ -442,6 +442,22 @@
             background-clip: text;
         }
 
+        .text-gradient-giant {
+            background: linear-gradient(135deg, #ff4800 0%, #ff8c00 50%, #ffaa00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .text-gradient-titan {
+            background: linear-gradient(135deg, #0055ff 0%, #00aaff 50%, #00ccff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
         .hero-description {
             font-size: 18px;
             color: var(--gray-600);
@@ -2870,8 +2886,8 @@
             <div class="product-tabs reveal delay-200" role="tablist" aria-label="Danh mục sản phẩm">
                 <button class="product-tab active" data-tab="all" role="tab" aria-selected="true" aria-controls="products-grid">Tất cả</button>
                 <button class="product-tab" data-tab="skyworth" role="tab" aria-selected="false" aria-controls="products-grid">Skyworth</button>
-                <button class="product-tab" data-tab="lg-giant" role="tab" aria-selected="false" aria-controls="products-grid">LG <span style="color: #ff4800;">GIANT</span> Max</button>
-                <button class="product-tab" data-tab="lg-titan" role="tab" aria-selected="false" aria-controls="products-grid">LG <span style="color: #0055ff;">TITAN</span> Max</button>
+                <button class="product-tab" data-tab="lg-giant" role="tab" aria-selected="false" aria-controls="products-grid">LG <span class="text-gradient-giant">GIANT</span> Max</button>
+                <button class="product-tab" data-tab="lg-titan" role="tab" aria-selected="false" aria-controls="products-grid">LG <span class="text-gradient-titan">TITAN</span> Max</button>
                 <button class="product-tab" data-tab="accessory" role="tab" aria-selected="false" aria-controls="products-grid">Phụ kiện</button>
             </div>
 
