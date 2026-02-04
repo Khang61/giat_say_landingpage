@@ -37,3 +37,27 @@ We keep all important docs in `./docs` folder and keep updating them, structure 
 ```
 
 **IMPORTANT:** *MUST READ* and *MUST COMPLY* all *INSTRUCTIONS* in project `./CLAUDE.md`, especially *WORKFLOWS* section is *CRITICALLY IMPORTANT*, this rule is *MANDATORY. NON-NEGOTIABLE. NO EXCEPTIONS. MUST REMEMBER AT ALL TIMES!!!*
+
+## Server Deployment
+
+### Server Landing
+- **Name:** server-landing
+- **Host:** 167.71.124.244
+- **User:** root
+- **SSH Key:** `~/.ssh/server_landing`
+- **Domain:** thietbigiatsay.vn
+- **Web Root:** `/var/www/html/thanhtoanqr`
+- **Web Server:** Nginx
+
+**Connect via SSH:**
+```bash
+ssh -i ~/.ssh/server_landing root@167.71.124.244
+```
+
+**Deploy update:**
+```bash
+# SSH vào server và pull code mới (nếu có internet)
+ssh -i ~/.ssh/server_landing root@167.71.124.244 "cd /var/www/html/thanhtoanqr && git pull"
+
+# Hoặc dùng SFTP upload qua Bitvise
+```
